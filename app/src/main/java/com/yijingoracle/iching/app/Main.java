@@ -5,11 +5,14 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import com.yijingoracle.iching.core.*;
 import com.yijingoracle.iching.core.util.*;
 
 
@@ -35,6 +38,9 @@ public class Main extends Application
             stage.setMinHeight(Const.MIN_HEIGHT);
             stage.setWidth(Const.DEFAULT_WIDTH);
             stage.setHeight(Const.DEFAULT_HEIGHT);
+
+            loadPlugins();
+
             stage.show();
         }
         catch(Exception e)
@@ -48,5 +54,24 @@ public class Main extends Application
     {
         launch(args);
     }
+
+    private void loadPlugins()
+    {
+        PluginLoader pl = new PluginLoader();
+
+        Node[] plugins = pl.loadPlugins(Const.PLUGIN_PATH);
+
+        for (Node plugin : plugins)
+        {
+            Tab tab = new Tab();
+
+            tab.setContent(plugin);
+
+            _tabs.getTabs().add(tab);
+        }
+    }
+
+    @FXML
+    private TabPane _tabs;
 }
 

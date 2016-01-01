@@ -1,14 +1,11 @@
 package com.yijingoracle.iching.core;
 
-import javafx.scene.paint.Color;
-import javafx.scene.layout.Region;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.geometry.Orientation;
 
-
-public class Trigram extends Region
+public class Trigram
 {
+    public static final int COUNT = 8;
+    public static final int LINES = 3;
+
     public enum Relation
     {
         Nurturing (1),
@@ -21,139 +18,74 @@ public class Trigram extends Region
         private int _eval;
     };
 
-    public static final int TRIGRAM_COUNT = 8;
-
-    public static int getIdFromEarlyHeaven(int id)
+    public enum Name
     {
-        if (id < 1 || id >= HoTu.length || HoTu[id] < 0)
-            throw new IndexOutOfBoundsException(String.format("Trigram id %d is out of bounds", id));
+        Heaven (0),
+        Earth (1),
+        Lake (2),
+        Mountain (3),
+        Fire (4),
+        Water (5),
+        Thunder (6),
+        Wind (7);
 
-        return HoTu[id];
-    }
+        Name(int id) { _id = id; }
 
-    public static int getIdFromLaterHeaven(int id)
-    {
-        if (id < 1 || id >= LoSu.length || LoSu[id] < 0)
-            throw new IndexOutOfBoundsException(String.format("Trigram id %d is out of bounds", id));
+        public int getId() { return _id; }
 
-        return LoSu[id];
-    }
-
-    public static Relation getTrigramsRelation(int i, int j)
-    {
-        if (i < 1 || i > TRIGRAM_COUNT)
-            throw new IndexOutOfBoundsException(String.format("Trigram id %d is out of bounds", i));
-        if (j < 1 || j > TRIGRAM_COUNT)
-            throw new IndexOutOfBoundsException(String.format("Trigram id %d is out of bounds", j));
-
-        return RELATION[i-1][j-1];
-    }
-
-    public Trigram(int id)
-    {
-        getChildren().add(_canvas);
-
-        setTrigramId(id);
-    }
-
-    public Trigram() { this(ID_BLANK); }
-
-    public int getTrigramId()
-    {
-        return _id;
-    }
-
-    public void setTrigramId(int id)
-    {
-        if(id < 0 || id > TRIGRAM_COUNT)
-            throw new IndexOutOfBoundsException(String.format("Trigram id %d is out of bounds", id));
-
-        _id = id;
-
-        redraw();
-    }
-
-    @Override
-    public Orientation getContentBias()
-    {
-        return Orientation.HORIZONTAL;
-    }
-
-    @Override
-    protected double computePrefHeight(double width)
-    {
-        return (1.0 / ASPECT_RATIO) * width;
-    }
-
-    @Override
-    protected double computeMinHeight(double width)
-    {
-        return computePrefHeight(width);
-    }
-
-    @Override
-    protected double computePrefWidth(double height)
-    {
-        return ASPECT_RATIO * height;
-    }
-
-    @Override
-    protected double computeMinWidth(double height)
-    {
-        return computePrefWidth(height);
-    }
-
-    @Override
-    protected void layoutChildren()
-    {
-        double x = 0;
-        double y = 0;
-        double w = getWidth();
-        double h = getHeight();
-
-        _canvas.setWidth(w);
-        _canvas.setHeight(h);
-
-        redraw();
-
-        layoutInArea(_canvas, x, y, w, h, 0, HPos.CENTER, VPos.CENTER);
-    }
-
-    private void redraw()
-    {
-        _canvas.clear();
-
-        if (_id == ID_BLANK)
-            return;
-
-        _canvas.setLineProperties(1, Color.BLACK);
-
-        int[] trig = TABLE[_id - 1];
-
-        for (int i = 0; i < trig.length; ++i)
-        {
-            if(trig[i] > 0)
-                _canvas.drawYangLine(i);
-            else
-                _canvas.drawYinLine(i);
-        }
-    }
-
-    private static final int LINE_COUNT = 3;
-    private static final double ASPECT_RATIO = 2.0;
-    private static final int ID_BLANK = 0;
-
-    private static final int[][] TABLE = {
-                          // N  HoTu LoSu Name
-            { 1, 1, 1 },  // 1  1    6    Heaven
-            { 0, 0, 0 },  // 2  8    2    Earth
-            { 1, 1, 0 },  // 3  2    7    Lake
-            { 0, 0, 1 },  // 4  7    8    Mountain
-            { 1, 0, 1 },  // 5  3    9    Fire
-            { 0, 1, 0 },  // 6  6    1    Water
-            { 1, 0, 0 },  // 7  4    3    Thunder
-            { 0, 1, 1 },  // 8  5    4    Wind
+        private int _id;
     };
+
+    public static Name getNameFromEarlyHeavenValue(int i)
+    {
+        return getNameFromNameArrayWithGuardingIndex(i, HOTU_NAME);
+    }
+
+    public static Name getNameFromLaterHeavenValue(int i)
+    {
+        return getNameFromNameArrayWithGuardingIndex(i, LOSU_NAME);
+    }
+
+    public Trigram(Name name)
+    {
+        if (name == null)
+            throw new NullPointerException("Name from trigram required");
+
+        _name = name;
+    }
+
+    public Name getName()
+    {
+        return _name;
+    }
+
+    public int getEarlyHeavenValue()
+    {
+        return HOTU_VALUE[getName().getId()];
+    }
+
+    public int getLateHeavenValue()
+    {
+        return HOTU_VALUE[getName().getId()];
+    }
+
+    public Relation getRelationToTrigram(Trigram trigram)
+    {
+        int i = getName().getId();
+        int j = trigram.getName().getId();
+
+        return RELATION[i][j];
+    }
+
+    private static Name getNameFromNameArrayWithGuardingIndex(int i, Name[] array)
+    {
+        --i;
+
+        if (i < 0 || i >= array.length || array[i] == null)
+            throw new IndexOutOfBoundsException(String.format("Index %d is out of bounds", i));
+
+        return array[i];
+    }
 
     private static final Relation[][] RELATION = {
             // Heaven               Earth                 Lake                  Mountain              Fire                  Water                 Thunder               Wind
@@ -167,17 +99,23 @@ public class Trigram extends Region
             { Relation.Injuring   , Relation.Controlling, Relation.Injuring   , Relation.Controlling, Relation.Nurturing  , Relation.Exhausting , Relation.Nurturing  , Relation.Nurturing   },  // Wind
     };
 
-    private static final int[] HoTu = {
-            //  1  2  3  4  5  6  7  8  9
-            -1, 0, 2, 4, 6, 7, 5, 3, 1, -1
+    private static final int[] HOTU_VALUE = {
+            // Heaven  Earth  Lake  Mountain  Fire  Water  Thunder  Wind
+               1,      8,     2,    7,        3,    6,     4,       5
     };
 
-    private static final int[] LoSu = {
-            //  1  2  3  4   5  6  7  8  9
-            -1, 5, 1, 6, 7, -1, 0, 2, 3, 4
+    private static final Name[] HOTU_NAME = {
+            Name.Heaven, Name.Lake, Name.Fire, Name.Thunder, Name.Wind, Name.Water, Name.Mountain, Name.Earth
     };
 
-    private LineCanvas _canvas = new LineCanvas(LINE_COUNT);
-    private int _id;
+    private static final int[] LOSU_VALUE = {
+            // Heaven  Earth  Lake  Mountain  Fire  Water  Thunder  Wind
+               6,      2,     7,    8,        9,    1,     3,       4
+    };
+
+    private static final Name[] LOSU_NAME = {
+            Name.Water, Name.Earth, Name.Thunder, Name.Wind, null, Name.Heaven, Name.Lake, Name.Mountain, Name.Fire
+    };
+
+    private Name _name;
 }
-

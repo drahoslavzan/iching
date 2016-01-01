@@ -15,8 +15,8 @@ public final class TextFactory
         InputStream hex = getClass().getResourceAsStream("/text/hexagrams.xml");
         InputStream tri = getClass().getResourceAsStream("/text/trigrams.xml");
 
-        text.renderHexagram(hex, xslHexagram);
-        text.renderTrigram(tri, xslTrigram);
+        text.renderHexagrams(hex, xslHexagram);
+        text.renderTrigrams(tri, xslTrigram);
 
         return text;
     }

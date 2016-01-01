@@ -17,7 +17,7 @@ import org.w3c.dom.NodeList;
 
 public class Text
 {
-    public void renderHexagram(InputStream file, InputStream style)
+    public void renderHexagrams(InputStream file, InputStream style)
     {
         try
         {
@@ -44,7 +44,7 @@ public class Text
                 Node attr = node.getAttributes().getNamedItem("id");
 
                 if(attr == null)
-                    throw new RuntimeException(String.format("%s: Missing hexagram attribute id", file, hexNodes.getLength()));
+                    throw new RuntimeException(String.format("%s: Missing hexagram attribute id", file));
 
                 int id = Integer.parseInt(attr.getNodeValue());
 
@@ -63,7 +63,7 @@ public class Text
         }
     }
 
-    public void renderTrigram(InputStream file, InputStream style)
+    public void renderTrigrams(InputStream file, InputStream style)
     {
         try
         {
@@ -90,9 +90,9 @@ public class Text
                 Node attr = node.getAttributes().getNamedItem("id");
 
                 if(attr == null)
-                    throw new RuntimeException(String.format("%s: Missing trigram attribute id", file, trigNodes.getLength()));
+                    throw new RuntimeException(String.format("%s: Missing trigram attribute id", file));
 
-                int id = Integer.parseInt(attr.getNodeValue());
+                Trigram.Name id = Trigram.Name.valueOf(attr.getNodeValue());
 
                 Source xml = new DOMSource(node);
 
@@ -100,7 +100,7 @@ public class Text
 
                 transformer.transform(xml, new StreamResult(writer));
 
-                _trigram[calculateTrigramIndex(id)] = writer.toString();
+                _trigram[id.getId()] = writer.toString();
             }
         }
         catch(Exception e)
@@ -114,20 +114,12 @@ public class Text
         return _hexagram[calculateHexagramIndex(id)];
     }
 
-    public String getTrigramText(int id) { return _trigram[calculateTrigramIndex(id)]; }
+    public String getTrigramText(Trigram.Name name) { return _trigram[name.getId()]; }
 
     private int calculateHexagramIndex(int id)
     {
         if(id < 1 || id > _hexagram.length)
             throw new IndexOutOfBoundsException(String.format("Hexagram id %d is out of bounds", id));
-
-        return id - 1;
-    }
-
-    private int calculateTrigramIndex(int id)
-    {
-        if(id < 1 || id > _trigram.length)
-            throw new IndexOutOfBoundsException(String.format("Trigram id %d is out of bounds", id));
 
         return id - 1;
     }
@@ -159,7 +151,7 @@ public class Text
         return getClass().getResourceAsStream("/text/trigram.xsd");
     }
 
-    private String [] _hexagram = new String[Hexagram.HEXAGRAM_COUNT];
-    private String [] _trigram = new String[Trigram.TRIGRAM_COUNT];
+    private String [] _hexagram = new String[Hexagram.COUNT];
+    private String [] _trigram = new String[Trigram.COUNT];
 }
 

@@ -5,7 +5,7 @@
 
 
 <Scene xmlns:fx="http://javafx.com/fxml">
-    <TabPane tabClosingPolicy="UNAVAILABLE">
+    <TabPane fx:id="_tabs" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="%tabAbout">
                 <content>

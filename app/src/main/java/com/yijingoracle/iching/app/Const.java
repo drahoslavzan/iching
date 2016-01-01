@@ -5,6 +5,8 @@ public class Const
 {
     public static final String SITE = "http://yijingoracle.com";
 
+    public static final String PLUGIN_PATH = "plugins";
+
     public static final int MIN_WIDTH = 640;
     public static final int MIN_HEIGHT = 480;
     public static final int DEFAULT_WIDTH = 1024;

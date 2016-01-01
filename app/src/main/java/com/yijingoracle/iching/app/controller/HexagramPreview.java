@@ -41,40 +41,35 @@ public class HexagramPreview implements Initializable
 
                 try
                 {
-                    int val = Integer.parseInt(_text);
-
-                    if(val >= 1 && val <= Hexagram.HEXAGRAM_COUNT)
-                    {
-                        VBox group = (VBox)((VBox)_preview.getContent()).getChildren().get(val - 1);
-
-                        if(_selectedHexagram == group)
-                            return;
-
-                        if(_selectedHexagram != null)
-                        {
-                            _selectedHexagram.getStyleClass().remove(SELECTED_CLASS);
-                            _selectedHexagram.getStyleClass().add(DEFAULT_CLASS);
-                        }
-
-                        _selectedHexagram = group;
-                        group.getStyleClass().remove(DEFAULT_CLASS);
-                        group.getStyleClass().add(SELECTED_CLASS);
-
-                        Hexagram hex = (Hexagram)group.getChildren().get(1);
-
-                        _preview.setVvalue((val - 1) / (double)(Hexagram.HEXAGRAM_COUNT - 1));
-                        _browser.load(_textFactory.getText().getHexagramText(hex.getHexagramId()));
-                    }
+                    previewHexagram(_text);
                 }
                 catch(Exception e)
                 {
                     _text = "";
                 }
 
-                if(_text.length() >= 2)
+                if (_text.length() >= 2)
                     _text = "";
             }
         });
+    }
+
+    private void previewHexagram(String id)
+    {
+        int val = Integer.parseInt(id);
+
+        if(val >= 1 && val <= Hexagram.COUNT)
+        {
+            VBox group = (VBox)((VBox)_preview.getContent()).getChildren().get(val - 1);
+
+            if(!selectNode(group))
+                return;
+
+            HexagramRegion hex = (HexagramRegion)group.getChildren().get(1);
+
+            _preview.setVvalue((val - 1) / (double)(Hexagram.COUNT - 1));
+            _browser.load(_textFactory.getText().getHexagramText(hex.getHexagram().getId()));
+        }
     }
 
     private void fillPreview()
@@ -82,9 +77,9 @@ public class HexagramPreview implements Initializable
         VBox stack = new VBox();
         stack.setSpacing(30);
 
-        for(int i = 1; i <= Hexagram.HEXAGRAM_COUNT; ++i)
+        for(int i = 1; i <= Hexagram.COUNT; ++i)
         {
-            Hexagram hex = new Hexagram(i);
+            HexagramRegion hex = new HexagramRegion(new Hexagram(i));
 
             javafx.scene.text.Text label = new javafx.scene.text.Text();
             label.setText(String.format("%d", i));
@@ -101,20 +96,13 @@ public class HexagramPreview implements Initializable
                 @Override
                 public void handle(MouseEvent e)
                 {
-                    if(_selectedHexagram != null)
-                    {
-                        _selectedHexagram.getStyleClass().remove(SELECTED_CLASS);
-                        _selectedHexagram.getStyleClass().add(DEFAULT_CLASS);
-                    }
+                    if(!selectNode(group))
+                        return;
 
-                    _selectedHexagram = group;
-                    group.getStyleClass().remove(DEFAULT_CLASS);
-                    group.getStyleClass().add(SELECTED_CLASS);
-
-                    Hexagram hex = (Hexagram)group.getChildren().get(1);
+                    HexagramRegion hex = (HexagramRegion)group.getChildren().get(1);
 
                     _preview.requestFocus();
-                    _browser.load(_textFactory.getText().getHexagramText(hex.getHexagramId()));
+                    _browser.load(_textFactory.getText().getHexagramText(hex.getHexagram().getId()));
                 }
             });
 
@@ -124,16 +112,32 @@ public class HexagramPreview implements Initializable
         _preview.setContent(stack);
     }
 
+    private boolean selectNode(Node node)
+    {
+        if (_lastNodeSelected == node)
+            return false;
+
+        if(_lastNodeSelected != null)
+        {
+            _lastNodeSelected.getStyleClass().remove(SELECTED_CLASS);
+            _lastNodeSelected.getStyleClass().add(DEFAULT_CLASS);
+        }
+
+        node.getStyleClass().remove(DEFAULT_CLASS);
+        node.getStyleClass().add(SELECTED_CLASS);
+
+        _lastNodeSelected = node;
+
+        return true;
+    }
+
     private static final String DEFAULT_CLASS = "hexagram";
     private static final String SELECTED_CLASS = "hexagram-selected";
 
     private TextFactory _textFactory = new TextFactory();
-    private Node _selectedHexagram;
+    private Node _lastNodeSelected;
 
-    @FXML
-    private ScrollPane _preview;
-
-    @FXML
-    private Browser _browser;
+    @FXML private ScrollPane _preview;
+    @FXML private Browser _browser;
 }
 

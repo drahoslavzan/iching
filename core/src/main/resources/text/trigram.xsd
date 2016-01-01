@@ -2,9 +2,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
 <xs:simpleType name="trigramIdType">
-  <xs:restriction base="xs:integer">
-    <xs:minInclusive value="1"/>
-    <xs:maxInclusive value="8"/>
+  <xs:restriction base="xs:string">
+    <xs:pattern value="Heaven|Earth|Lake|Mountain|Fire|Water|Thunder|Wind"/>
   </xs:restriction>
 </xs:simpleType>
 

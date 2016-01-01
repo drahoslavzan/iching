@@ -25,21 +25,46 @@ public class TrigramPreview implements Initializable
             if(str.length() < 1)
                 return;
 
-            int id = (str.length() - 1) % 8 + 1;
+            int value = str.length() % 8;
 
-            if(_lastNodeSelected != null)
+            Node node = getNodeFromGridPane(_preview, value - 1, 0);
+
+            if(!selectNode(node))
+                return;
+
+            _browser.load(_textFactory.getText().getTrigramText(Trigram.getNameFromEarlyHeavenValue(value)));
+        }
+    }
+
+    private void fillPreview()
+    {
+        for(int i = 0; i < Trigram.COUNT; ++i)
+        {
+            VBox group = new VBox();
+
+            Trigram trigram = new Trigram(Trigram.getNameFromEarlyHeavenValue(i + 1));
+            TrigramRegion trigramRegion = new TrigramRegion(trigram);
+
+            group.getChildren().add(trigramRegion);
+            group.getStyleClass().add(DEFAULT_CLASS);
+
+            group.setOnMouseClicked(new EventHandler<MouseEvent>()
             {
-                _lastNodeSelected.getStyleClass().remove(SELECTED_CLASS);
-                _lastNodeSelected.getStyleClass().add(DEFAULT_CLASS);
-            }
+                @Override
+                public void handle(MouseEvent e)
+                {
+                    if(!selectNode(group))
+                        return;
 
-            Node node = getNodeFromGridPane(_preview, id - 1, 0);
+                    _browser.load(_textFactory.getText().getTrigramText(trigram.getName()));
+                }
+            });
 
-            _lastNodeSelected = node;
-            node.getStyleClass().remove(DEFAULT_CLASS);
-            node.getStyleClass().add(SELECTED_CLASS);
+            ColumnConstraints column = new ColumnConstraints();
+            column.setPercentWidth(100.0 / Trigram.COUNT);
+            _preview.getColumnConstraints().add(column);
 
-            _browser.load(_textFactory.getText().getTrigramText(id));
+            _preview.add(group, i, 0);
         }
     }
 
@@ -58,42 +83,23 @@ public class TrigramPreview implements Initializable
         return null;
     }
 
-    private void fillPreview()
+    private boolean selectNode(Node node)
     {
-        for(int i = 1; i <= Trigram.TRIGRAM_COUNT; ++i)
+        if (_lastNodeSelected == node)
+            return false;
+
+        if(_lastNodeSelected != null)
         {
-            VBox group = new VBox();
-
-            Trigram trig = new Trigram(i);
-
-            group.getChildren().add(trig);
-            group.getStyleClass().add(DEFAULT_CLASS);
-
-            group.setOnMouseClicked(new EventHandler<MouseEvent>()
-            {
-                @Override
-                public void handle(MouseEvent e)
-                {
-                    if(_lastNodeSelected != null)
-                    {
-                        _lastNodeSelected.getStyleClass().remove(SELECTED_CLASS);
-                        _lastNodeSelected.getStyleClass().add(DEFAULT_CLASS);
-                    }
-
-                    _lastNodeSelected = group;
-                    group.getStyleClass().remove(DEFAULT_CLASS);
-                    group.getStyleClass().add(SELECTED_CLASS);
-
-                    _browser.load(_textFactory.getText().getTrigramText(trig.getTrigramId()));
-                }
-            });
-
-            ColumnConstraints column = new ColumnConstraints();
-            column.setPercentWidth(100.0 / Trigram.TRIGRAM_COUNT);
-            _preview.getColumnConstraints().add(column);
-
-            _preview.add(group, i - 1, 0);
+            _lastNodeSelected.getStyleClass().remove(SELECTED_CLASS);
+            _lastNodeSelected.getStyleClass().add(DEFAULT_CLASS);
         }
+
+        node.getStyleClass().remove(DEFAULT_CLASS);
+        node.getStyleClass().add(SELECTED_CLASS);
+
+        _lastNodeSelected = node;
+
+        return true;
     }
 
     private static final String DEFAULT_CLASS = "trigram";
@@ -102,13 +108,8 @@ public class TrigramPreview implements Initializable
     private TextFactory _textFactory = new TextFactory();
     private Node _lastNodeSelected;
 
-    @FXML
-    private TextField _query;
-
-    @FXML
-    private Browser _browser;
-
-    @FXML
-    private GridPane _preview;
+    @FXML private TextField _query;
+    @FXML private Browser _browser;
+    @FXML private GridPane _preview;
 }
 

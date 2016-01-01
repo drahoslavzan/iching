@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="trigram.xsl"?>
 <trigrams>
   <language>en</language>
-  <trigram id="1">
+  <trigram id="Heaven">
     <name>Chien</name>
     <name>Qián</name>
     <content>
@@ -125,7 +125,7 @@
       </cite>
     </sources>
   </trigram>
-  <trigram id="2">
+  <trigram id="Earth">
     <name>K'un</name>
     <name>Kun</name>
     <content>
@@ -241,7 +241,7 @@
       </cite>
     </sources>
   </trigram>
-  <trigram id="3">
+  <trigram id="Lake">
     <name>Tui</name>
     <name>Dui</name>
     <content>
@@ -350,7 +350,7 @@
       </cite>
     </sources>
   </trigram>
-  <trigram id="4">
+  <trigram id="Mountain">
     <name>Ken</name>
     <name>Gèn</name>
     <content>
@@ -451,7 +451,7 @@
       </cite>
     </sources>
   </trigram>
-  <trigram id="5">
+  <trigram id="Fire">
     <name>Li</name>
     <content>
       <title>General Attributions</title>
@@ -571,7 +571,7 @@
       </cite>
     </sources>
   </trigram>
-  <trigram id="6">
+  <trigram id="Water">
     <name>K'an</name>
     <content>
       <title>General Attributions</title>
@@ -673,7 +673,7 @@
       </cite>
     </sources>
   </trigram>
-  <trigram id="7">
+  <trigram id="Thunder">
     <name>Chen</name>
     <name>Zhèn</name>
     <content>
@@ -783,7 +783,7 @@
       </cite>
     </sources>
   </trigram>
-  <trigram id="8">
+  <trigram id="Wind">
     <name>Sun</name>
     <name>Xùn</name>
     <content>
