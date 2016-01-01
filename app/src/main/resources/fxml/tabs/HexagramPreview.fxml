@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import com.yijingoracle.iching.core.*?>
+
+
+<SplitPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.yijingoracle.iching.app.controller.HexagramPreview"
+           orientation="HORIZONTAL" dividerPositions="0.25">
+
+    <ScrollPane fx:id="_preview" fitToWidth="True" prefWidth="300" minWidth="250" maxWidth="400" prefHeight="480" >
+        <padding>
+            <Insets left="30" top="30" bottom="30" right="30"/>
+        </padding>
+    </ScrollPane>
+
+    <Browser styleClass="browser-text" fx:id="_browser"/>
+</SplitPane>

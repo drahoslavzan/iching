@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.yijingoracle.iching.core.*?>
+
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.yijingoracle.iching.app.controller.TrigramPreview"
+            fitToWidth="True" fitToHeight="True">
+    <VBox spacing="15">
+        <TextField fx:id="_query" styleClass="query" onKeyPressed="#onQueryKeyPressed" promptText="Query ..." HBox.hgrow="ALWAYS"/>
+
+        <GridPane fx:id="_preview" VBox.vgrow="NEVER" hgap="15">
+            <VBox.margin>
+                <Insets left="15" right="15"/>
+            </VBox.margin>
+        </GridPane>
+
+        <Browser styleClass="browser-text" fx:id="_browser" VBox.vgrow="ALWAYS"/>
+    </VBox>
+</ScrollPane>

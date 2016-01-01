@@ -1,0 +1,7 @@
+*~
+*.sw?
+.gradle
+.idea
+gradle*
+build
+bin

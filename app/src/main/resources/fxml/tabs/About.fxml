@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Hyperlink?>
+<?import com.yijingoracle.iching.core.util.*?>
+<?import com.yijingoracle.iching.app.*?>
+
+
+<VBox xmlns:fx="http://javafx.co/fxml" alignment="CENTER">
+    <Text text="%name" styleClass="about-title"/>
+
+    <AutoScalingStackPane VBox.vgrow="ALWAYS">
+        <children>
+            <ImageView layoutX="0.0"
+                       layoutY="0.0"
+                       fitHeight="10.0"
+                       fitWidth="10.0"
+                       pickOnBounds="true"
+                       preserveRatio="true">
+                <image>
+                    <Image
+                        url="/image/iching.png"
+                        backgroundLoading="true"/>
+                </image>
+            </ImageView>
+        </children>
+    </AutoScalingStackPane>
+
+    <HBox alignment="BOTTOM_RIGHT">
+        <Hyperlink styleClass="about-foot">
+            <text>
+                <Const fx:constant="SITE"/>
+            </text>
+        </Hyperlink>
+    </HBox>
+</VBox>
+

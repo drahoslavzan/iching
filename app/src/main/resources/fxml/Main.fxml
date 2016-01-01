@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Scene?>
+
+
+<Scene xmlns:fx="http://javafx.com/fxml">
+    <TabPane tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="%tabAbout">
+                <content>
+                    <fx:include source="tabs/About.fxml"/>
+                </content>
+            </Tab>
+            <Tab text="%tabTrigramPreviewTitle">
+                <content>
+                    <fx:include source="tabs/TrigramPreview.fxml"/>
+                </content>
+            </Tab>
+            <Tab text="%tabHexagramPreviewTitle">
+                <content>
+                    <fx:include source="tabs/HexagramPreview.fxml"/>
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+</Scene>
+
+
+

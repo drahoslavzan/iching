@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="trigram.xsl"?>
+<trigrams>
+  <language>en</language>
+  <trigram id="1">
+    <name>Chien</name>
+    <name>Qián</name>
+    <content>
+      <title>General Attributions</title>
+      <entry>
+        <key>Meaning</key>
+        <value>Heaven, Sky, Air</value>
+      </entry>
+      <entry>
+        <key>Direction</key>
+        <value>South</value>
+      </entry>
+      <entry>
+        <key>Season</key>
+        <value>Summer</value>
+      </entry>
+      <entry>
+        <key>Yin-Yang</key>
+        <value>Supreme Yang</value>
+      </entry>
+      <entry>
+        <key>Eastern Cosmos</key>
+        <value>Chien</value>
+        <value>Heaven</value>
+        <value>South</value>
+        <value>Summer</value>
+      </entry>
+      <entry>
+        <key>Western Cosmos</key>
+        <value>Will, Spirit</value>
+        <value>Intutition</value>
+        <value>Wood</value>
+        <value>Fire</value>
+        <value>South</value>
+        <value>Youth</value>
+        <value>Midday</value>
+        <value>Summer</value>
+        <value>Full Moon</value>
+      </entry>
+      <entry>
+        <key>Five Elements</key>
+        <value>Metal, Sky</value>
+        <value>West</value>
+        <value>White Tiger</value>
+        <value>Lung, Taste</value>
+        <value>Father</value>
+      </entry>
+      <entry>
+        <key>Daily Cycle</key>
+        <value>Noon</value>
+        <value>12pm - 3pm</value>
+      </entry>
+      <entry>
+        <key>Annual Cycle</key>
+        <value>June 21st - September 21st</value>
+        <value>Summer Solstice</value>
+        <value>Lithia</value>
+      </entry>
+    </content>
+    <content>
+      <title>Martial Arts Attributions</title>
+      <entry>
+        <key>T'ai Chi Ch'uan</key>
+        <value>Peng</value>
+        <value>Wardoff</value>
+        <value>Step Forward</value>
+      </entry>
+      <entry>
+        <key>Qigong</key>
+        <value>Direct Qi</value>
+        <value>Transmit Qi</value>
+      </entry>
+    </content>
+    <content>
+      <title>Taijiquan and Yoga Exercise Workout Cycle</title>
+      <entry>
+        <key>Energy Levels</key>
+        <value>Vigorous</value>
+        <value>Summertime</value>
+        <value>Fire in the Heavens</value>
+        <value>Pure Yang</value>
+      </entry>
+      <entry>
+        <key>Eight Brocades Qigong</key>
+        <value>Bear</value>
+      </entry>
+      <entry>
+        <key>Eight Rivers Qigong</key>
+        <value>Salutation to the Stars</value>
+      </entry>
+    </content>
+    <content>
+      <title>Medical Attributions</title>
+      <entry>
+        <key>Bodily Associations</key>
+        <value>Head</value>
+        <value>Lungs</value>
+        <value>Taste</value>
+      </entry>
+    </content>
+    <content>
+      <title>Other Attributions</title>
+      <entry>
+        <key>Buddhism Eightfold Path</key>
+        <value>Skillful</value>
+        <value>Understanding</value>
+      </entry>
+      <entry>
+        <key>Mountains Rivers Zen Order</key>
+        <value>Zen Study</value>
+      </entry>
+    </content>
+    <sources>
+      <title>Bibliography</title>
+      <cite>
+        <name>Eight Trigrams</name>
+        <author>Michael P. Garofalo</author>
+        <date>(2013)</date>
+        <url>http://www.egreenway.com/taichichuan/trigram.htm</url>
+      </cite>
+    </sources>
+  </trigram>
+  <trigram id="2">
+    <name>K'un</name>
+    <name>Kun</name>
+    <content>
+      <title>General Attributions</title>
+      <entry>
+        <key>Meaning</key>
+        <value>Earth</value>
+      </entry>
+      <entry>
+        <key>Direction</key>
+        <value>North</value>
+      </entry>
+      <entry>
+        <key>Season</key>
+        <value>Winter</value>
+      </entry>
+      <entry>
+        <key>Yin-Yang</key>
+        <value>Supreme Yin</value>
+      </entry>
+      <entry>
+        <key>Eastern Cosmos</key>
+        <value>K'un</value>
+        <value>Earth</value>
+        <value>North</value>
+        <value>Winter</value>
+      </entry>
+      <entry>
+        <key>Western Cosmos</key>
+        <value>Body</value>
+        <value>Sensations</value>
+        <value>Earth, Coins</value>
+        <value>Old Age</value>
+        <value>Night</value>
+        <value>New Moon</value>
+        <value>North</value>
+        <value>Winter</value>
+      </entry>
+      <entry>
+        <key>Five Elements</key>
+        <value>Earth</value>
+        <value>Center</value>
+        <value>Yellow Dragon</value>
+        <value>Spleen, Smell</value>
+        <value>Mother</value>
+      </entry>
+      <entry>
+        <key>Daily Cycle</key>
+        <value>Midnight</value>
+        <value>12 am - 3 am</value>
+      </entry>
+      <entry>
+        <key>Annual Cycle</key>
+        <value>December 21st - March 19th</value>
+      </entry>
+    </content>
+    <content>
+      <title>Martial Arts Attributions</title>
+      <entry>
+        <key>T'ai Chi Ch'uan</key>
+        <value>Lu</value>
+        <value>Roll Back</value>
+        <value>Centered</value>
+      </entry>
+      <entry>
+        <key>Qigong</key>
+        <value>Store Qi</value>
+      </entry>
+    </content>
+    <content>
+      <title>Taijiquan and Yoga Exercise Workout Cycle</title>
+      <entry>
+        <key>Energy Levels</key>
+        <value>Resting</value>
+        <value>Relaxing</value>
+        <value>Pure Yin</value>
+        <value>Winter</value>
+        <value>Snow on the Earth</value>
+      </entry>
+      <entry>
+        <key>Eight Brocades Qigong</key>
+        <value>Wise Owl</value>
+      </entry>
+    </content>
+    <content>
+      <title>Medical Attributions</title>
+      <entry>
+        <key>Bodily Associations</key>
+        <value>Belly</value>
+        <value>Spleen</value>
+        <value>Smell</value>
+      </entry>
+    </content>
+    <content>
+      <title>Other Attributions</title>
+      <entry>
+        <key>Buddhism Eightfold Path</key>
+        <value>Skillful</value>
+        <value>Understanding</value>
+      </entry>
+      <entry>
+        <key>Mountains Rivers Zen Order</key>
+        <value>Zen Study</value>
+      </entry>
+    </content>
+    <sources>
+      <title>Bibliography</title>
+      <cite>
+        <name>Eight Trigrams</name>
+        <author>Michael P. Garofalo</author>
+        <date>(2013)</date>
+        <url>http://www.egreenway.com/taichichuan/trigram.htm</url>
+      </cite>
+    </sources>
+  </trigram>
+  <trigram id="3">
+    <name>Tui</name>
+    <name>Dui</name>
+    <content>
+      <title>General Attributions</title>
+      <entry>
+        <key>Meaning</key>
+        <value>Lake Valley</value>
+      </entry>
+      <entry>
+        <key>Direction</key>
+        <value>Southeast</value>
+      </entry>
+      <entry>
+        <key>Season</key>
+        <value>Mid-Spring</value>
+      </entry>
+      <entry>
+        <key>Yin-Yang</key>
+        <value>Mature Yang</value>
+      </entry>
+      <entry>
+        <key>Eastern Cosmos</key>
+        <value>Tui</value>
+        <value>Lake</value>
+        <value>Valley</value>
+        <value>Irrigated</value>
+        <value>Field</value>
+      </entry>
+      <entry>
+        <key>Five Elements</key>
+        <value>Metal, Lake</value>
+        <value>West</value>
+        <value>White Tiger</value>
+        <value>Lung, Taste</value>
+        <value>First Son</value>
+      </entry>
+      <entry>
+        <key>Daily Cycle</key>
+        <value>Mid-Morning</value>
+        <value>9am - 12pm</value>
+      </entry>
+      <entry>
+        <key>Annual Cycle</key>
+        <value>May 1st - June 20th</value>
+        <value>Beltane</value>
+      </entry>
+    </content>
+    <content>
+      <title>Martial Arts Attributions</title>
+      <entry>
+        <key>T'ai Chi Ch'uan</key>
+        <value>Shou</value>
+        <value>Elbow Strike</value>
+        <value>Step Forward</value>
+      </entry>
+      <entry>
+        <key>Qigong</key>
+        <value>Purify Qi</value>
+      </entry>
+    </content>
+    <content>
+      <title>Taijiquan and Yoga Exercise Workout Cycle</title>
+      <entry>
+        <key>Energy Levels</key>
+        <value>Energetic and Joyful</value>
+        <value>Rivers Run Down to the Warm Valley</value>
+        <value>Increase Circulation</value>
+      </entry>
+      <entry>
+        <key>Eight Brocades Qigong</key>
+        <value>Bending Down and Bending Back</value>
+      </entry>
+      <entry>
+        <key>Eight Rivers Qigong</key>
+        <value>The Wild Geese joyfully return to the Lake in the Valley</value>
+      </entry>
+    </content>
+    <content>
+      <title>Medical Attributions</title>
+      <entry>
+        <key>Bodily Associations</key>
+        <value>Mouth</value>
+        <value>Lung</value>
+        <value>Taste</value>
+      </entry>
+    </content>
+    <content>
+      <title>Other Attributions</title>
+      <entry>
+        <key>Buddhism Eightfold Path</key>
+        <value>Skillful</value>
+        <value>Understanding</value>
+      </entry>
+      <entry>
+        <key>Mountains Rivers Zen Order</key>
+        <value>Zen Study</value>
+      </entry>
+    </content>
+    <sources>
+      <title>Bibliography</title>
+      <cite>
+        <name>Eight Trigrams</name>
+        <author>Michael P. Garofalo</author>
+        <date>(2013)</date>
+        <url>http://www.egreenway.com/taichichuan/trigram.htm</url>
+      </cite>
+    </sources>
+  </trigram>
+  <trigram id="4">
+    <name>Ken</name>
+    <name>Gèn</name>
+    <content>
+      <title>General Attributions</title>
+      <entry>
+        <key>Meaning</key>
+        <value>Mountain</value>
+      </entry>
+      <entry>
+        <key>Direction</key>
+        <value>Northwest</value>
+      </entry>
+      <entry>
+        <key>Season</key>
+        <value>Mid-Autumn</value>
+      </entry>
+      <entry>
+        <key>Yin-Yang</key>
+        <value>Mature Yin</value>
+      </entry>
+      <entry>
+        <key>Eastern Cosmos</key>
+        <value>Ken</value>
+        <value>Mountain</value>
+      </entry>
+      <entry>
+        <key>Five Elements</key>
+        <value>Earth</value>
+        <value>Center</value>
+        <value>Yellow Dragon</value>
+        <value>Spleen. Smell</value>
+        <value>First Daughter</value>
+      </entry>
+      <entry>
+        <key>Daily Cycle</key>
+        <value>Evening</value>
+        <value>9pm - 12pm</value>
+      </entry>
+      <entry>
+        <key>Annual Cycle</key>
+        <value>October 31st - December 20th</value>
+      </entry>
+    </content>
+    <content>
+      <title>Martial Arts Attributions</title>
+      <entry>
+        <key>T'ai Chi Ch'uan</key>
+        <value>Kao</value>
+        <value>Shoulder</value>
+      </entry>
+      <entry>
+        <key>Qigong</key>
+        <value>Transform Qi</value>
+      </entry>
+    </content>
+    <content>
+      <title>Taijiquan and Yoga Exercise Workout Cycle</title>
+      <entry>
+        <key>Energy Levels</key>
+        <value>Calming</value>
+        <value>Cooling</value>
+        <value>Pausing</value>
+        <value>Rest on the Mountain</value>
+      </entry>
+      <entry>
+        <key>Eight Brocades Qigong</key>
+        <value>Separate Heaven and Earth</value>
+      </entry>
+    </content>
+    <content>
+      <title>Medical Attributions</title>
+      <entry>
+        <key>Bodily Associations</key>
+        <value>Hands</value>
+        <value>Spleen</value>
+        <value>Smell</value>
+      </entry>
+    </content>
+    <content>
+      <title>Other Attributions</title>
+      <entry>
+        <key>Buddhism Eightfold Path</key>
+        <value>Skillful</value>
+        <value>Understanding</value>
+      </entry>
+      <entry>
+        <key>Mountains Rivers Zen Order</key>
+        <value>Zen Study</value>
+      </entry>
+    </content>
+    <sources>
+      <title>Bibliography</title>
+      <cite>
+        <name>Eight Trigrams</name>
+        <author>Michael P. Garofalo</author>
+        <date>(2013)</date>
+        <url>http://www.egreenway.com/taichichuan/trigram.htm</url>
+      </cite>
+    </sources>
+  </trigram>
+  <trigram id="5">
+    <name>Li</name>
+    <content>
+      <title>General Attributions</title>
+      <entry>
+        <key>Meaning</key>
+        <value>Fire</value>
+      </entry>
+      <entry>
+        <key>Direction</key>
+        <value>East</value>
+      </entry>
+      <entry>
+        <key>Season</key>
+        <value>Spring</value>
+      </entry>
+      <entry>
+        <key>Yin-Yang</key>
+        <value>Middle Yang</value>
+      </entry>
+      <entry>
+        <key>Eastern Cosmos</key>
+        <value>Li</value>
+        <value>Fire</value>
+        <value>Spring</value>
+        <value>East</value>
+      </entry>
+      <entry>
+        <key>Western Cosmos</key>
+        <value>Mind</value>
+        <value>Thinking</value>
+        <value>Air</value>
+        <value>Metal, Swords</value>
+        <value>Infancy</value>
+        <value>Dawn</value>
+        <value>Crescent Moon</value>
+        <value>Spring</value>
+        <value>East</value>
+      </entry>
+      <entry>
+        <key>Five Elements</key>
+        <value>Fire</value>
+        <value>South</value>
+        <value>Red Phoenix</value>
+        <value>Heart, Sound</value>
+        <value>Second Son</value>
+      </entry>
+      <entry>
+        <key>Daily Cycle</key>
+        <value>Morning</value>
+        <value>6am - 9am</value>
+      </entry>
+      <entry>
+        <key>Annual Cycle</key>
+        <value>March 20th - June 20th</value>
+        <value>Spring Equinox, Ostara</value>
+      </entry>
+    </content>
+    <content>
+      <title>Martial Arts Attributions</title>
+      <entry>
+        <key>T'ai Chi Ch'uan</key>
+        <value>An</value>
+        <value>Push</value>
+        <value>Look Right</value>
+      </entry>
+      <entry>
+        <key>Qigong</key>
+        <value>Circulate Qi</value>
+      </entry>
+    </content>
+    <content>
+      <title>Taijiquan and Yoga Exercise Workout Cycle</title>
+      <entry>
+        <key>Energy Levels</key>
+        <value>Heat Building</value>
+        <value>Springtime Gusto</value>
+        <value>Starting the Fire</value>
+      </entry>
+      <entry>
+        <key>Eight Brocades Qigong</key>
+        <value>Punching with</value>
+        <value>Angry Eyes</value>
+      </entry>
+      <entry>
+        <key>Eight Rivers Qigong</key>
+        <value>Grasping the Fire Dragon's Tail</value>
+      </entry>
+    </content>
+    <content>
+      <title>Medical Attributions</title>
+      <entry>
+        <key>Bodily Associations</key>
+        <value>Eyes</value>
+        <value>Heart</value>
+        <value>Sound</value>
+      </entry>
+    </content>
+    <content>
+      <title>Other Attributions</title>
+      <entry>
+        <key>Buddhism Eightfold Path</key>
+        <value>Skillful</value>
+        <value>Understanding</value>
+      </entry>
+      <entry>
+        <key>Mountains Rivers Zen Order</key>
+        <value>Zen Study</value>
+      </entry>
+    </content>
+    <sources>
+      <title>Bibliography</title>
+      <cite>
+        <name>Eight Trigrams</name>
+        <author>Michael P. Garofalo</author>
+        <date>(2013)</date>
+        <url>http://www.egreenway.com/taichichuan/trigram.htm</url>
+      </cite>
+    </sources>
+  </trigram>
+  <trigram id="6">
+    <name>K'an</name>
+    <content>
+      <title>General Attributions</title>
+      <entry>
+        <key>Meaning</key>
+        <value>Water</value>
+      </entry>
+      <entry>
+        <key>Direction</key>
+        <value>West</value>
+      </entry>
+      <entry>
+        <key>Season</key>
+        <value>Autumn</value>
+      </entry>
+      <entry>
+        <key>Yin-Yang</key>
+        <value>Middle Yin</value>
+      </entry>
+      <entry>
+        <key>Eastern Cosmos</key>
+        <value>K'an</value>
+        <value>Water</value>
+        <value>West</value>
+        <value>Autumn</value>
+      </entry>
+      <entry>
+        <key>Western Cosmos</key>
+        <value>Emotions</value>
+        <value>Feelings</value>
+        <value>Water, Cups</value>
+        <value>Middle Age</value>
+        <value>Evening</value>
+        <value>Waning Moon</value>
+        <value>West</value>
+        <value>Autumn</value>
+      </entry>
+      <entry>
+        <key>Five Elements</key>
+        <value>Water</value>
+        <value>North</value>
+        <value>Black Tortoise</value>
+        <value>Kidney, Touch</value>
+        <value>Second Daughter</value>
+      </entry>
+      <entry>
+        <key>Daily Cycle</key>
+        <value>Late Afternoon</value>
+        <value>Sunset</value>
+        <value>6pm - 9pm</value>
+      </entry>
+      <entry>
+        <key>Annual Cycle</key>
+        <value>September 22nd - December 20th</value>
+        <value>Autumnal Equinox</value>
+      </entry>
+    </content>
+    <content>
+      <title>Martial Arts Attributions</title>
+      <entry>
+        <key>T'ai Chi Ch'uan</key>
+        <value>Ji</value>
+        <value>Press</value>
+        <value>Face Left</value>
+      </entry>
+      <entry>
+        <key>Qigong</key>
+        <value>Dissolve Qi</value>
+      </entry>
+    </content>
+    <content>
+      <title>Medical Attributions</title>
+      <entry>
+        <key>Bodily Associations</key>
+        <value>Ears</value>
+        <value>Kidney</value>
+        <value>Touch</value>
+      </entry>
+    </content>
+    <content>
+      <title>Other Attributions</title>
+      <entry>
+        <key>Buddhism Eightfold Path</key>
+        <value>Skillful</value>
+        <value>Understanding</value>
+      </entry>
+      <entry>
+        <key>Mountains Rivers Zen Order</key>
+        <value>Zen Study</value>
+      </entry>
+    </content>
+    <sources>
+      <title>Bibliography</title>
+      <cite>
+        <name>Eight Trigrams</name>
+        <author>Michael P. Garofalo</author>
+        <date>(2013)</date>
+        <url>http://www.egreenway.com/taichichuan/trigram.htm</url>
+      </cite>
+    </sources>
+  </trigram>
+  <trigram id="7">
+    <name>Chen</name>
+    <name>Zhèn</name>
+    <content>
+      <title>General Attributions</title>
+      <entry>
+        <key>Meaning</key>
+        <value>Thunder</value>
+      </entry>
+      <entry>
+        <key>Direction</key>
+        <value>Northeast</value>
+      </entry>
+      <entry>
+        <key>Season</key>
+        <value>Mid-Winter</value>
+      </entry>
+      <entry>
+        <key>Yin-Yang</key>
+        <value>Young Yang</value>
+      </entry>
+      <entry>
+        <key>Eastern Cosmos</key>
+        <value>Chen</value>
+        <value>Thunder</value>
+      </entry>
+      <entry>
+        <key>Five Elements</key>
+        <value>Wood</value>
+        <value>East</value>
+        <value>Blue Dragon</value>
+        <value>Liver, Sight</value>
+        <value>Oldest Brother</value>
+      </entry>
+      <entry>
+        <key>Daily Cycle</key>
+        <value>Early Morning</value>
+        <value>Sunrise</value>
+        <value>3am - 6am</value>
+      </entry>
+      <entry>
+        <key>Annual Cycle</key>
+        <value>February 2nd - March 19th</value>
+        <value>Chinese New Year</value>
+        <value>Imbolic</value>
+      </entry>
+    </content>
+    <content>
+      <title>Martial Arts Attributions</title>
+      <entry>
+        <key>T'ai Chi Ch'uan</key>
+        <value>Lie</value>
+        <value>Splitting</value>
+        <value>Move Back</value>
+      </entry>
+      <entry>
+        <key>Qigong</key>
+        <value>Discover Qi</value>
+        <value>Gather Qi</value>
+      </entry>
+    </content>
+    <content>
+      <title>Taijiquan and Yoga Exercise Workout Cycle</title>
+      <entry>
+        <key>Energy Levels</key>
+        <value>Warm-up</value>
+        <value>Thunder over Earth</value>
+      </entry>
+      <entry>
+        <key>Eight Brocades Qigong</key>
+        <value>Bouncing on Toes</value>
+      </entry>
+      <entry>
+        <key>Eight Rivers Qigong</key>
+        <value>Turning the</value>
+        <value>Thunderous</value>
+        <value>Prayer Wheel</value>
+      </entry>
+    </content>
+    <content>
+      <title>Medical Attributions</title>
+      <entry>
+        <key>Bodily Associations</key>
+        <value>Foot</value>
+        <value>Liver</value>
+        <value>Sight</value>
+      </entry>
+    </content>
+    <content>
+      <title>Other Attributions</title>
+      <entry>
+        <key>Buddhism Eightfold Path</key>
+        <value>Skillful</value>
+        <value>Understanding</value>
+      </entry>
+      <entry>
+        <key>Mountains Rivers Zen Order</key>
+        <value>Zen Study</value>
+      </entry>
+    </content>
+    <sources>
+      <title>Bibliography</title>
+      <cite>
+        <name>Eight Trigrams</name>
+        <author>Michael P. Garofalo</author>
+        <date>(2013)</date>
+        <url>http://www.egreenway.com/taichichuan/trigram.htm</url>
+      </cite>
+    </sources>
+  </trigram>
+  <trigram id="8">
+    <name>Sun</name>
+    <name>Xùn</name>
+    <content>
+      <title>General Attributions</title>
+      <entry>
+        <key>Meaning</key>
+        <value>Wind</value>
+      </entry>
+      <entry>
+        <key>Direction</key>
+        <value>Southwest</value>
+      </entry>
+      <entry>
+        <key>Season</key>
+        <value>Mid-Summer</value>
+      </entry>
+      <entry>
+        <key>Yin-Yang</key>
+        <value>Young Yin</value>
+      </entry>
+      <entry>
+        <key>Eastern Cosmos</key>
+        <value>Sun</value>
+        <value>Wind</value>
+      </entry>
+      <entry>
+        <key>Five Elements</key>
+        <value>Wood</value>
+        <value>East</value>
+        <value>Blue Dragon</value>
+        <value>Liver, Sight</value>
+        <value>Oldest Sister</value>
+      </entry>
+      <entry>
+        <key>Daily Cycle</key>
+        <value>Afternoon</value>
+        <value>3pm - 6pm</value>
+      </entry>
+    </content>
+    <content>
+      <title>Martial Arts Attributions</title>
+      <entry>
+        <key>T'ai Chi Ch'uan</key>
+        <value>Cai</value>
+        <value>Pulling</value>
+        <value>Move Back</value>
+      </entry>
+      <entry>
+        <key>Qigong</key>
+        <value>Conserve Qi</value>
+      </entry>
+    </content>
+    <content>
+      <title>Taijiquan and Yoga Exercise Workout Cycle</title>
+      <entry>
+        <key>Energy Levels</key>
+        <value>Lively</value>
+        <value>Moving</value>
+        <value>Following the Wind</value>
+      </entry>
+      <entry>
+        <key>Eight Brocades Qigong</key>
+        <value>Drawing the Bow</value>
+      </entry>
+      <entry>
+        <key>Eight Rivers Qigong</key>
+        <value>The Wind Moves</value>
+        <value>The Clouds</value>
+      </entry>
+    </content>
+    <content>
+      <title>Medical Attributions</title>
+      <entry>
+        <key>Bodily Associations</key>
+        <value>Thighs</value>
+        <value>Liver</value>
+        <value>Sight</value>
+      </entry>
+    </content>
+    <content>
+      <title>Other Attributions</title>
+      <entry>
+        <key>Buddhism Eightfold Path</key>
+        <value>Skillful</value>
+        <value>Understanding</value>
+      </entry>
+      <entry>
+        <key>Mountains Rivers Zen Order</key>
+        <value>Zen Study</value>
+      </entry>
+    </content>
+    <sources>
+      <title>Bibliography</title>
+      <cite>
+        <name>Eight Trigrams</name>
+        <author>Michael P. Garofalo</author>
+        <date>(2013)</date>
+        <url>http://www.egreenway.com/taichichuan/trigram.htm</url>
+      </cite>
+    </sources>
+  </trigram>
+</trigrams>

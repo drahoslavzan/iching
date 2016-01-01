@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:simpleType name="trigramIdType">
+  <xs:restriction base="xs:integer">
+    <xs:minInclusive value="1"/>
+    <xs:maxInclusive value="8"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="languageType">
+  <xs:restriction base="xs:string">
+    <xs:pattern value="[a-z]{2}"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="entryType">
+  <xs:sequence>
+    <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="value" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="contentType">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="entry" type="entryType" minOccurs="1" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="citeType">
+  <xs:sequence>
+    <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="author" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="date" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sourcesType">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="cite" type="citeType" minOccurs="1" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="trigramType">
+  <xs:sequence>
+    <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+    <xs:element name="content" type="contentType" minOccurs="1" maxOccurs="unbounded"/>
+    <xs:element name="sources" type="sourcesType" minOccurs="0" maxOccurs="1"/>
+  </xs:sequence>
+  <xs:attribute name="id" type="trigramIdType" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="trigramsType">
+  <xs:sequence>
+    <xs:element name="language" type="languageType" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="trigram" type="trigramType" minOccurs="8" maxOccurs="8"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:element name="trigrams" type="trigramsType"/>
+
+</xs:schema>

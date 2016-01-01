@@ -1,0 +1,12 @@
+dependencies
+{
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'org.jfxtras', name: 'jfxtras-labs', version: '8.0-r1'
+    compile project(':core')
+}
+
+jar
+{
+    baseName = 'iching-plumblossom-universal'
+    version = '1.0'
+}

@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:simpleType name="hexagramIdType">
+  <xs:restriction base="xs:integer">
+    <xs:minInclusive value="1"/>
+    <xs:maxInclusive value="64"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="lineIdType">
+  <xs:restriction base="xs:integer">
+    <xs:minInclusive value="1"/>
+    <xs:maxInclusive value="6"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="impactType">
+  <xs:restriction base="xs:string">
+    <xs:pattern value="(±|[+-])[0-9]+"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="languageType">
+  <xs:restriction base="xs:string">
+    <xs:pattern value="[a-z]{2}"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="keywordsType">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="keyword" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="contentType">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="subtitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="paragraph" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="lineType">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="impact" type="impactType" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="subtitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="paragraph" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+  </xs:sequence>
+  <xs:attribute name="id" type="lineIdType" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="linesType">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="subtitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="paragraph" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:element name="line" type="lineType" minOccurs="6" maxOccurs="6"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="glossaryType">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="term" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="citeType">
+  <xs:sequence>
+    <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="author" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="date" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sourcesType">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="cite" type="citeType" minOccurs="1" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hexagramType">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="subtitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:element name="keywords" type="keywordsType" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="content" type="contentType" minOccurs="1" maxOccurs="unbounded"/>
+    <xs:element name="lines" type="linesType" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="glossary" type="glossaryType" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="sources" type="sourcesType" minOccurs="0" maxOccurs="1"/>
+  </xs:sequence>
+  <xs:attribute name="id" type="hexagramIdType" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="hexagramsType">
+  <xs:sequence>
+    <xs:element name="language" type="languageType" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="hexagram" type="hexagramType" minOccurs="64" maxOccurs="64"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:element name="hexagrams" type="hexagramsType"/>
+
+</xs:schema>

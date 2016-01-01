@@ -1,0 +1,190 @@
+.tab-pane .tab-header-area .tab-header-background
+{
+    -fx-opacity: 0;
+}
+
+.tab-pane
+{
+    -fx-tab-min-width:90px;
+}
+
+.tab
+{
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+.tab-pane .tab
+{
+    -fx-background-color: #e6e6e6;
+
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #3c3c3c;
+}
+
+.tab .tab-label
+{ 
+    -fx-alignment: center;
+    -fx-text-fill: #828282;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label
+{ 
+    -fx-alignment: center;
+    -fx-text-fill: #96b946;
+}
+
+.tab-content-area
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-padding: 10;
+}
+
+.about-title
+{
+    -fx-font-size: 3em;
+    -fx-font-weight: bold;
+}
+
+.about-foot
+{
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+}
+
+.trigram-selected
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-background-color: #336699;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-min-width: 100;
+    -fx-pref-width: 100;
+    -fx-padding: 15;
+}
+
+.trigram
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-background-color: white;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-min-width: 100;
+    -fx-pref-width: 100;
+    -fx-padding: 15;
+}
+
+.trigram-label
+{
+    -fx-font-size: 24px;
+}
+
+.hexagram-label
+{
+    -fx-font-size: 24px;
+}
+
+.hexagram-selected
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-background-color: #336699;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-min-width: 150;
+    -fx-pref-width: 150;
+    -fx-padding: 15;
+}
+
+.hexagram
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-background-color: white;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-min-width: 150;
+    -fx-pref-width: 150;
+    -fx-padding: 15;
+}
+
+.trigram-raised
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-background-color: lightyellow;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-min-width: 100;
+    -fx-pref-width: 100;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.65), 10, 0.5, 0.0, 0.0);
+    -fx-effect: innershadow(gaussian, rgba(1, 1, 1, 0.65), 10, 0.5, 0.0, 5.0);
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.65), 10, 0.5, 0.0, -5.0);
+}
+
+.hexagram-sunken
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-background-color: white;
+    -fx-alignment: center;
+    -fx-min-width: 130;
+    -fx-pref-width: 130;
+    -fx-padding: 15;
+}
+
+.trigram-sunken
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-background-color: white;
+    -fx-alignment: center;
+    -fx-min-width: 100;
+    -fx-pref-width: 100;
+    -fx-padding: 15;
+    -fx-effect: innershadow(three-pass-box, gray, 12 , 0.5, 1, 1);
+}
+
+.trigram-sunken-highlighted
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-background-color: red;
+    -fx-alignment: center;
+    -fx-min-width: 100;
+    -fx-pref-width: 100;
+    -fx-padding: 15;
+    -fx-effect: innershadow(three-pass-box, gray, 12 , 0.5, 1, 1);
+}
+
+.query
+{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-background-color: lightyellow;
+}
+
+.button-up
+{
+    -fx-background-color: lightyellow;
+}
+
+.button-down
+{
+    -fx-background-color: lightyellow;
+}
+
+.browser-method
+{
+}
+
+.browser-text
+{
+}
