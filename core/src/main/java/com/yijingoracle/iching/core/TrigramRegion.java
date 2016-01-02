@@ -102,15 +102,15 @@ public class TrigramRegion extends Region
     private static final double ASPECT_RATIO = 2.0;
 
     private static final int[][] TABLE = {
-            // N  HoTu LoSu Name
-            { 1, 1, 1 },  // 1  1    6    Heaven
-            { 0, 0, 0 },  // 2  8    2    Earth
-            { 1, 1, 0 },  // 3  2    7    Lake
-            { 0, 0, 1 },  // 4  7    8    Mountain
-            { 1, 0, 1 },  // 5  3    9    Fire
-            { 0, 1, 0 },  // 6  6    1    Water
-            { 1, 0, 0 },  // 7  4    3    Thunder
-            { 0, 1, 1 },  // 8  5    4    Wind
+            //               N  HoTu LoSu Name
+            { 1, 1, 1 },  // 0  1    6    Heaven
+            { 0, 0, 0 },  // 1  8    2    Earth
+            { 1, 1, 0 },  // 2  2    7    Lake
+            { 0, 0, 1 },  // 3  7    8    Mountain
+            { 1, 0, 1 },  // 4  3    9    Fire
+            { 0, 1, 0 },  // 5  6    1    Water
+            { 1, 0, 0 },  // 6  4    3    Thunder
+            { 0, 1, 1 },  // 7  5    4    Wind
     };
 
     private LineCanvas _canvas = new LineCanvas(Trigram.LINES);

@@ -64,10 +64,7 @@ public class Trigram
         return HOTU_VALUE[getName().getId()];
     }
 
-    public int getLateHeavenValue()
-    {
-        return HOTU_VALUE[getName().getId()];
-    }
+    public int getLateHeavenValue() { return LOSU_VALUE[getName().getId()]; }
 
     public Relation getRelationToTrigram(Trigram trigram)
     {
