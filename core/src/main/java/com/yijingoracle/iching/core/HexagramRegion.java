@@ -86,26 +86,24 @@ public class HexagramRegion extends Region
         if(_hexagram == null)
             return;
 
-        int[] hex = TABLE[_hexagram.getId() - 1];
-
-        drawHexagram(hex);
-        drawMarkedLines(hex);
+        drawHexagram();
+        drawMarkedLines();
     }
 
-    private void drawHexagram(int[] hex)
+    private void drawHexagram()
     {
         _canvas.setLineProperties(1, Color.BLACK);
 
-        for(int i = 0; i < hex.length; ++i)
+        for(int i = 0; i < Hexagram.LINES; ++i)
         {
-            if(hex[i] > 0)
+            if(_hexagram.getLine(i + 1) > 0)
                 _canvas.drawYangLine(i);
             else
                 _canvas.drawYinLine(i);
         }
     }
 
-    private void drawMarkedLines(int[] hex)
+    private void drawMarkedLines()
     {
         _canvas.setLineProperties(MOVE_LINE_SIZE, Color.RED);
 
@@ -113,7 +111,7 @@ public class HexagramRegion extends Region
         {
             if(_hexagram.lineChanged(i + 1))
             {
-                if(hex[i] > 0)
+                if(_hexagram.getLine(i + 1) > 0)
                     _canvas.circleLine(i);
                 else
                     _canvas.crossLine(i);
@@ -123,88 +121,6 @@ public class HexagramRegion extends Region
 
     private static final int MOVE_LINE_SIZE = 5;
     private static final double ASPECT_RATIO = 1.0;
-
-    private static final int[][] TABLE = {
-            // 1 - 8
-            { 1, 1, 1, 1, 1, 1 },
-            { 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 0, 0, 1, 0 },
-            { 0, 1, 0, 0, 0, 1 },
-            { 1, 1, 1, 0, 1, 0 },
-            { 0, 1, 0, 1, 1, 1 },
-            { 0, 1, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 1, 0 },
-
-            // 9 - 16
-            { 1, 1, 1, 0, 1, 1 },
-            { 1, 1, 0, 1, 1, 1 },
-            { 1, 1, 1, 0, 0, 0 },
-            { 0, 0, 0, 1, 1, 1 },
-            { 1, 0, 1, 1, 1, 1 },
-            { 1, 1, 1, 1, 0, 1 },
-            { 0, 0, 1, 0, 0, 0 },
-            { 0, 0, 0, 1, 0, 0 },
-
-            // 17 - 24
-            { 1, 0, 0, 1, 1, 0 },
-            { 0, 1, 1, 0, 0, 1 },
-            { 1, 1, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 1, 1 },
-            { 1, 0, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 0, 1 },
-            { 0, 0, 0, 0, 0, 1 },
-            { 1, 0, 0, 0, 0, 0 },
-
-            // 25 - 32
-            { 1, 0, 0, 1, 1, 1 },
-            { 1, 1, 1, 0, 0, 1 },
-            { 1, 0, 0, 0, 0, 1 },
-            { 0, 1, 1, 1, 1, 0 },
-            { 0, 1, 0, 0, 1, 0 },
-            { 1, 0, 1, 1, 0, 1 },
-            { 0, 0, 1, 1, 1, 0 },
-            { 0, 1, 1, 1, 0, 0 },
-
-            // 33 - 40
-            { 0, 0, 1, 1, 1, 1 },
-            { 1, 1, 1, 1, 0, 0 },
-            { 0, 0, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 0, 0 },
-            { 1, 0, 1, 0, 1, 1 },
-            { 1, 1, 0, 1, 0, 1 },
-            { 0, 0, 1, 0, 1, 0 },
-            { 0, 1, 0, 1, 0, 0 },
-
-            // 41 - 48
-            { 1, 1, 0, 0, 0, 1 },
-            { 1, 0, 0, 0, 1, 1 },
-            { 1, 1, 1, 1, 1, 0 },
-            { 0, 1, 1, 1, 1, 1 },
-            { 0, 0, 0, 1, 1, 0 },
-            { 0, 1, 1, 0, 0, 0 },
-            { 0, 1, 0, 1, 1, 0 },
-            { 0, 1, 1, 0, 1, 0 },
-
-            // 49 - 56
-            { 1, 0, 1, 1, 1, 0 },
-            { 0, 1, 1, 1, 0, 1 },
-            { 1, 0, 0, 1, 0, 0 },
-            { 0, 0, 1, 0, 0, 1 },
-            { 0, 0, 1, 0, 1, 1 },
-            { 1, 1, 0, 1, 0, 0 },
-            { 1, 0, 1, 1, 0, 0 },
-            { 0, 0, 1, 1, 0, 1 },
-
-            // 57 - 64
-            { 0, 1, 1, 0, 1, 1 },
-            { 1, 1, 0, 1, 1, 0 },
-            { 0, 1, 0, 0, 1, 1 },
-            { 1, 1, 0, 0, 1, 0 },
-            { 1, 1, 0, 0, 1, 1 },
-            { 0, 0, 1, 1, 0, 0 },
-            { 1, 0, 1, 0, 1, 0 },
-            { 0, 1, 0, 1, 0, 1 },
-    };
 
     private LineCanvas _canvas = new LineCanvas(Hexagram.LINES);
     private Hexagram _hexagram;

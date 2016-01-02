@@ -237,4 +237,125 @@ public class HexagramTests
         checkDecomposition(63, Trigram.Name.Water, Trigram.Name.Fire, Trigram.Name.Water, Trigram.Name.Fire);
         checkDecomposition(64, Trigram.Name.Fire, Trigram.Name.Water, Trigram.Name.Fire, Trigram.Name.Water);
     }
+
+    private void checkHexLines(int hex, int l1, int l2, int l3, int l4, int l5, int l6)
+    {
+        Hexagram hexagram = new Hexagram(hex);
+
+        Assert.assertEquals(l1, hexagram.getLine(1));
+        Assert.assertEquals(l2, hexagram.getLine(2));
+        Assert.assertEquals(l3, hexagram.getLine(3));
+        Assert.assertEquals(l4, hexagram.getLine(4));
+        Assert.assertEquals(l5, hexagram.getLine(5));
+        Assert.assertEquals(l6, hexagram.getLine(6));
+    }
+
+    @Test
+    public void test_GetLine_ReturnsCorrectValuesForHexagram()
+    {
+        checkHexLines(1 , 1, 1, 1, 1, 1, 1);
+        checkHexLines(2 , 0, 0, 0, 0, 0, 0);
+        checkHexLines(3 , 1, 0, 0, 0, 1, 0);
+        checkHexLines(4 , 0, 1, 0, 0, 0, 1);
+        checkHexLines(5 , 1, 1, 1, 0, 1, 0);
+        checkHexLines(6 , 0, 1, 0, 1, 1, 1);
+        checkHexLines(7 , 0, 1, 0, 0, 0, 0);
+        checkHexLines(8 , 0, 0, 0, 0, 1, 0);
+        checkHexLines(9 , 1, 1, 1, 0, 1, 1);
+        checkHexLines(10, 1, 1, 0, 1, 1, 1);
+        checkHexLines(11, 1, 1, 1, 0, 0, 0);
+        checkHexLines(12, 0, 0, 0, 1, 1, 1);
+        checkHexLines(13, 1, 0, 1, 1, 1, 1);
+        checkHexLines(14, 1, 1, 1, 1, 0, 1);
+        checkHexLines(15, 0, 0, 1, 0, 0, 0);
+        checkHexLines(16, 0, 0, 0, 1, 0, 0);
+        checkHexLines(17, 1, 0, 0, 1, 1, 0);
+        checkHexLines(18, 0, 1, 1, 0, 0, 1);
+        checkHexLines(19, 1, 1, 0, 0, 0, 0);
+        checkHexLines(20, 0, 0, 0, 0, 1, 1);
+        checkHexLines(21, 1, 0, 0, 1, 0, 1);
+        checkHexLines(22, 1, 0, 1, 0, 0, 1);
+        checkHexLines(23, 0, 0, 0, 0, 0, 1);
+        checkHexLines(24, 1, 0, 0, 0, 0, 0);
+        checkHexLines(25, 1, 0, 0, 1, 1, 1);
+        checkHexLines(26, 1, 1, 1, 0, 0, 1);
+        checkHexLines(27, 1, 0, 0, 0, 0, 1);
+        checkHexLines(28, 0, 1, 1, 1, 1, 0);
+        checkHexLines(29, 0, 1, 0, 0, 1, 0);
+        checkHexLines(30, 1, 0, 1, 1, 0, 1);
+        checkHexLines(31, 0, 0, 1, 1, 1, 0);
+        checkHexLines(32, 0, 1, 1, 1, 0, 0);
+        checkHexLines(33, 0, 0, 1, 1, 1, 1);
+        checkHexLines(34, 1, 1, 1, 1, 0, 0);
+        checkHexLines(35, 0, 0, 0, 1, 0, 1);
+        checkHexLines(36, 1, 0, 1, 0, 0, 0);
+        checkHexLines(37, 1, 0, 1, 0, 1, 1);
+        checkHexLines(38, 1, 1, 0, 1, 0, 1);
+        checkHexLines(39, 0, 0, 1, 0, 1, 0);
+        checkHexLines(40, 0, 1, 0, 1, 0, 0);
+        checkHexLines(41, 1, 1, 0, 0, 0, 1);
+        checkHexLines(42, 1, 0, 0, 0, 1, 1);
+        checkHexLines(43, 1, 1, 1, 1, 1, 0);
+        checkHexLines(44, 0, 1, 1, 1, 1, 1);
+        checkHexLines(45, 0, 0, 0, 1, 1, 0);
+        checkHexLines(46, 0, 1, 1, 0, 0, 0);
+        checkHexLines(47, 0, 1, 0, 1, 1, 0);
+        checkHexLines(48, 0, 1, 1, 0, 1, 0);
+        checkHexLines(49, 1, 0, 1, 1, 1, 0);
+        checkHexLines(50, 0, 1, 1, 1, 0, 1);
+        checkHexLines(51, 1, 0, 0, 1, 0, 0);
+        checkHexLines(52, 0, 0, 1, 0, 0, 1);
+        checkHexLines(53, 0, 0, 1, 0, 1, 1);
+        checkHexLines(54, 1, 1, 0, 1, 0, 0);
+        checkHexLines(55, 1, 0, 1, 1, 0, 0);
+        checkHexLines(56, 0, 0, 1, 1, 0, 1);
+        checkHexLines(57, 0, 1, 1, 0, 1, 1);
+        checkHexLines(58, 1, 1, 0, 1, 1, 0);
+        checkHexLines(59, 0, 1, 0, 0, 1, 1);
+        checkHexLines(60, 1, 1, 0, 0, 1, 0);
+        checkHexLines(61, 1, 1, 0, 0, 1, 1);
+        checkHexLines(62, 0, 0, 1, 1, 0, 0);
+        checkHexLines(63, 1, 0, 1, 0, 1, 0);
+        checkHexLines(64, 0, 1, 0, 1, 0, 1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void test_GetLine_ThrowsForLineZero()
+    {
+        Hexagram hexagram = new Hexagram(1);
+        hexagram.getLine(0);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void test_GetLine_ThrowsForLineSeven()
+    {
+        Hexagram hexagram = new Hexagram(1);
+        hexagram.getLine(7);
+    }
+
+    private void checkHexagramChanged(int i)
+    {
+        Hexagram hexagram = new Hexagram(i);
+        Hexagram changed = hexagram.getChangingHexagram();
+
+        Assert.assertEquals(hexagram.getId(), changed.getId());
+    }
+
+    @Test
+    public void test_GetChangingHexagram_ReturnsSameHexagramIfNoLineWasChanged()
+    {
+        for (int i = 1; i <= Hexagram.COUNT; ++i)
+            checkHexagramChanged(i);
+    }
+
+    @Test
+    public void test_GetChangingHexagram_ReturnsCorrectlyChangedHexagram_38_Line_3()
+    {
+        Hexagram hexagram = new Hexagram(38);
+        hexagram.changeLine(3);
+
+        Hexagram changed = hexagram.getChangingHexagram();
+
+        Assert.assertEquals(14, changed.getId());
+    }
 }
