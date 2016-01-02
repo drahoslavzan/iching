@@ -8,7 +8,7 @@
 <?import com.yijingoracle.iching.app.*?>
 
 
-<VBox xmlns:fx="http://javafx.co/fxml" alignment="CENTER">
+<VBox xmlns:fx="http://javafx.co/fxml" alignment="CENTER" minHeight="300">
     <Text text="%name" styleClass="about-title"/>
 
     <AutoScalingStackPane VBox.vgrow="ALWAYS">

@@ -45,7 +45,8 @@
 
 <xs:complexType name="trigramType">
   <xs:sequence>
-    <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+    <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
     <xs:element name="content" type="contentType" minOccurs="1" maxOccurs="unbounded"/>
     <xs:element name="sources" type="sourcesType" minOccurs="0" maxOccurs="1"/>
   </xs:sequence>

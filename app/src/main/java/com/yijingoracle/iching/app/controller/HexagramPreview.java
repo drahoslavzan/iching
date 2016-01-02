@@ -1,6 +1,6 @@
 package com.yijingoracle.iching.app.controller;
  
-import javafx.scene.*;
+import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
@@ -20,6 +20,9 @@ public class HexagramPreview implements Initializable
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
         fillPreview();
+
+        _decomposition.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+        _decompositionController.setBrowser(_browser);
 
         _preview.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>()
         {
@@ -62,14 +65,18 @@ public class HexagramPreview implements Initializable
         {
             VBox group = (VBox)((VBox)_preview.getContent()).getChildren().get(val - 1);
 
-            if(!selectNode(group))
-                return;
-
-            HexagramRegion hex = (HexagramRegion)group.getChildren().get(1);
-
-            _preview.setVvalue((val - 1) / (double)(Hexagram.COUNT - 1));
-            _browser.load(_textFactory.getText().getHexagramText(hex.getHexagram().getId()));
+            _selector.selectNode(group, () ->
+            {
+                HexagramRegion hex = (HexagramRegion)group.getChildren().get(1);
+                _preview.setVvalue((val - 1) / (double)(Hexagram.COUNT - 1));
+                loadHexagram(hex.getHexagram());
+            });
         }
+    }
+
+    private void loadHexagram(Hexagram hex)
+    {
+        _decompositionController.setHexagram(hex);
     }
 
     private void fillPreview()
@@ -96,13 +103,12 @@ public class HexagramPreview implements Initializable
                 @Override
                 public void handle(MouseEvent e)
                 {
-                    if(!selectNode(group))
-                        return;
-
-                    HexagramRegion hex = (HexagramRegion)group.getChildren().get(1);
-
-                    _preview.requestFocus();
-                    _browser.load(_textFactory.getText().getHexagramText(hex.getHexagram().getId()));
+                    _selector.selectNode(group, () ->
+                    {
+                        HexagramRegion hex = (HexagramRegion)group.getChildren().get(1);
+                        _preview.requestFocus();
+                        loadHexagram(hex.getHexagram());
+                    });
                 }
             });
 
@@ -112,32 +118,13 @@ public class HexagramPreview implements Initializable
         _preview.setContent(stack);
     }
 
-    private boolean selectNode(Node node)
-    {
-        if (_lastNodeSelected == node)
-            return false;
-
-        if(_lastNodeSelected != null)
-        {
-            _lastNodeSelected.getStyleClass().remove(SELECTED_CLASS);
-            _lastNodeSelected.getStyleClass().add(DEFAULT_CLASS);
-        }
-
-        node.getStyleClass().remove(DEFAULT_CLASS);
-        node.getStyleClass().add(SELECTED_CLASS);
-
-        _lastNodeSelected = node;
-
-        return true;
-    }
-
     private static final String DEFAULT_CLASS = "hexagram";
-    private static final String SELECTED_CLASS = "hexagram-selected";
 
-    private TextFactory _textFactory = new TextFactory();
-    private Node _lastNodeSelected;
+    private NodeSelectGroup _selector = new NodeSelectGroup("white", "#336699");
 
     @FXML private ScrollPane _preview;
     @FXML private Browser _browser;
+    @FXML private GridPane _decomposition;
+    @FXML private Decomposition _decompositionController;
 }
 

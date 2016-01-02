@@ -26,7 +26,7 @@ public class HexagramRegion extends Region
         return _hexagram;
     }
 
-    private void setHexagram(Hexagram hexagram)
+    public void setHexagram(Hexagram hexagram)
     {
         _hexagram = hexagram;
 

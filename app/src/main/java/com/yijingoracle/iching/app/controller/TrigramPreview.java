@@ -29,10 +29,8 @@ public class TrigramPreview implements Initializable
 
             Node node = getNodeFromGridPane(_preview, value - 1, 0);
 
-            if(!selectNode(node))
-                return;
-
-            _browser.load(_textFactory.getText().getTrigramText(Trigram.getNameFromEarlyHeavenValue(value)));
+            _selector.selectNode(node,
+                () -> _browser.load(_textFactory.getText().getTrigramText(Trigram.getNameFromEarlyHeavenValue(value))));
         }
     }
 
@@ -53,10 +51,8 @@ public class TrigramPreview implements Initializable
                 @Override
                 public void handle(MouseEvent e)
                 {
-                    if(!selectNode(group))
-                        return;
-
-                    _browser.load(_textFactory.getText().getTrigramText(trigram.getName()));
+                    _selector.selectNode(group,
+                        () -> _browser.load(_textFactory.getText().getTrigramText(trigram.getName())));
                 }
             });
 
@@ -83,30 +79,10 @@ public class TrigramPreview implements Initializable
         return null;
     }
 
-    private boolean selectNode(Node node)
-    {
-        if (_lastNodeSelected == node)
-            return false;
-
-        if(_lastNodeSelected != null)
-        {
-            _lastNodeSelected.getStyleClass().remove(SELECTED_CLASS);
-            _lastNodeSelected.getStyleClass().add(DEFAULT_CLASS);
-        }
-
-        node.getStyleClass().remove(DEFAULT_CLASS);
-        node.getStyleClass().add(SELECTED_CLASS);
-
-        _lastNodeSelected = node;
-
-        return true;
-    }
-
     private static final String DEFAULT_CLASS = "trigram";
-    private static final String SELECTED_CLASS = "trigram-selected";
 
     private TextFactory _textFactory = new TextFactory();
-    private Node _lastNodeSelected;
+    private NodeSelectGroup _selector = new NodeSelectGroup("white", "#336699");
 
     @FXML private TextField _query;
     @FXML private Browser _browser;

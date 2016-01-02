@@ -3,7 +3,7 @@
 <trigrams>
   <language>en</language>
   <trigram id="Heaven">
-    <name>Chien</name>
+    <title>Chien</title>
     <name>Qián</name>
     <content>
       <title>General Attributions</title>
@@ -126,7 +126,7 @@
     </sources>
   </trigram>
   <trigram id="Earth">
-    <name>K'un</name>
+    <title>K'un</title>
     <name>Kun</name>
     <content>
       <title>General Attributions</title>
@@ -242,7 +242,7 @@
     </sources>
   </trigram>
   <trigram id="Lake">
-    <name>Tui</name>
+    <title>Tui</title>
     <name>Dui</name>
     <content>
       <title>General Attributions</title>
@@ -351,7 +351,7 @@
     </sources>
   </trigram>
   <trigram id="Mountain">
-    <name>Ken</name>
+    <title>Ken</title>
     <name>Gèn</name>
     <content>
       <title>General Attributions</title>
@@ -452,7 +452,7 @@
     </sources>
   </trigram>
   <trigram id="Fire">
-    <name>Li</name>
+    <title>Li</title>
     <content>
       <title>General Attributions</title>
       <entry>
@@ -572,7 +572,7 @@
     </sources>
   </trigram>
   <trigram id="Water">
-    <name>K'an</name>
+    <title>K'an</title>
     <content>
       <title>General Attributions</title>
       <entry>
@@ -674,7 +674,7 @@
     </sources>
   </trigram>
   <trigram id="Thunder">
-    <name>Chen</name>
+    <title>Chen</title>
     <name>Zhèn</name>
     <content>
       <title>General Attributions</title>
@@ -784,7 +784,7 @@
     </sources>
   </trigram>
   <trigram id="Wind">
-    <name>Sun</name>
+    <title>Sun</title>
     <name>Xùn</name>
     <content>
       <title>General Attributions</title>

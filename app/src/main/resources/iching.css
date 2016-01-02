@@ -56,18 +56,6 @@
     -fx-font-weight: bold;
 }
 
-.trigram-selected
-{
-    -fx-border-width: 2px;
-    -fx-border-color: black;
-    -fx-background-color: #336699;
-    -fx-cursor: hand;
-    -fx-alignment: center;
-    -fx-min-width: 100;
-    -fx-pref-width: 100;
-    -fx-padding: 15;
-}
-
 .trigram
 {
     -fx-border-width: 2px;
@@ -88,18 +76,6 @@
 .hexagram-label
 {
     -fx-font-size: 24px;
-}
-
-.hexagram-selected
-{
-    -fx-border-width: 2px;
-    -fx-border-color: black;
-    -fx-background-color: #336699;
-    -fx-cursor: hand;
-    -fx-alignment: center;
-    -fx-min-width: 150;
-    -fx-pref-width: 150;
-    -fx-padding: 15;
 }
 
 .hexagram

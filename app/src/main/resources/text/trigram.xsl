@@ -56,11 +56,11 @@
   <body>
     <xsl:for-each select="//trigram">
       <h1>
-        <xsl:value-of select="name"/>
-        <xsl:if test="name[position() &gt; 1]">
+        <xsl:value-of select="title"/>
+        <xsl:if test="name[position() &gt; 0]">
           (
           <span class="csv">
-            <xsl:for-each select="name[position() &gt; 1]">
+            <xsl:for-each select="name">
               <xsl:if test="position() != last()"><xsl:value-of select="normalize-space(.)"/>, </xsl:if>
               <xsl:if test="position()  = last()"><xsl:value-of select="normalize-space(.)"/></xsl:if>
             </xsl:for-each>

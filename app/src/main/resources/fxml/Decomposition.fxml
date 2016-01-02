@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import com.yijingoracle.iching.core.TrigramRegion?>
+<?import com.yijingoracle.iching.core.HexagramRegion?>
+
+
+<GridPane xmlns:fx="http://javafx.co/fxml" alignment="CENTER" minHeight="400"
+          fx:controller="com.yijingoracle.iching.app.controller.Decomposition">
+
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="10"/>
+        <RowConstraints percentHeight="50"/>
+        <RowConstraints percentHeight="40"/>
+    </rowConstraints>
+
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" percentWidth="20" fillWidth="true"/>
+        <ColumnConstraints halignment="CENTER" percentWidth="20" fillWidth="true"/>
+        <ColumnConstraints halignment="CENTER" percentWidth="20" fillWidth="true"/>
+        <ColumnConstraints halignment="CENTER" percentWidth="20" fillWidth="true"/>
+    </columnConstraints>
+
+    <VBox spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4">
+        <Label fx:id="_hexagramTitle" styleClass="hexagram-label"/>
+    </VBox>
+
+    <VBox spacing="10" styleClass="hexagram" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="2">
+        <HexagramRegion fx:id="_hexagram"/>
+    </VBox>
+
+    <VBox spacing="5" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="2">
+        <Label text="%UT" styleClass="trigram-label"/>
+        <VBox styleClass="trigram">
+            <TrigramRegion fx:id="_ut"/>
+        </VBox>
+    </VBox>
+
+    <VBox spacing="5" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Label text="%UCT" styleClass="trigram-label"/>
+        <VBox styleClass="trigram">
+            <TrigramRegion fx:id="_uct"/>
+        </VBox>
+    </VBox>
+
+    <VBox spacing="5" alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
+        <Label text="%LCT" styleClass="trigram-label"/>
+        <VBox styleClass="trigram">
+            <TrigramRegion fx:id="_lct"/>
+        </VBox>
+    </VBox>
+
+    <VBox spacing="5" alignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="2">
+        <Label text="%LT" styleClass="trigram-label"/>
+        <VBox styleClass="trigram">
+            <TrigramRegion fx:id="_lt"/>
+        </VBox>
+    </VBox>
+</GridPane>
+

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
 <?import com.yijingoracle.iching.core.*?>
 
 
@@ -14,5 +15,15 @@
         </padding>
     </ScrollPane>
 
-    <Browser styleClass="browser-text" fx:id="_browser"/>
+    <ScrollPane fitToWidth="True" fitToHeight="True">
+        <VBox>
+            <TitledPane text="%Decomposition">
+                <fx:include fx:id="_decomposition" source="../Decomposition.fxml"/>
+            </TitledPane>
+
+            <TitledPane text="%Description">
+                <Browser styleClass="browser-text" fx:id="_browser"/>
+            </TitledPane>
+        </VBox>
+    </ScrollPane>
 </SplitPane>

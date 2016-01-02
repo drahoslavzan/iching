@@ -11,6 +11,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 import javax.xml.XMLConstants;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -55,6 +56,13 @@ public class Text
                 transformer.transform(xml, new StreamResult(writer));
 
                 _hexagram[calculateHexagramIndex(id)] = writer.toString();
+
+                NodeList name = ((Element)node).getElementsByTagName("title");
+
+                if(name.getLength() < 1)
+                    throw new RuntimeException(String.format("%s: Missing title for hexagram %d", file, id));
+
+                _hexagramName[calculateHexagramIndex(id)] = name.item(0).getTextContent();
             }
         }
         catch(Exception e)
@@ -109,6 +117,8 @@ public class Text
         }
     }
 
+    public String getHexagramTitle(int id) { return _hexagramName[calculateHexagramIndex(id)]; }
+
     public String getHexagramText(int id)
     {
         return _hexagram[calculateHexagramIndex(id)];
@@ -152,6 +162,7 @@ public class Text
     }
 
     private String [] _hexagram = new String[Hexagram.COUNT];
+    private String [] _hexagramName = new String[Hexagram.COUNT];
     private String [] _trigram = new String[Trigram.COUNT];
 }
 

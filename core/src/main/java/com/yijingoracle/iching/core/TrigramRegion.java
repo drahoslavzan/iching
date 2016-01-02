@@ -46,10 +46,7 @@ public class TrigramRegion extends Region
     }
 
     @Override
-    protected double computeMinHeight(double width)
-    {
-        return computePrefHeight(width);
-    }
+    protected double computeMinHeight(double width) { return computePrefHeight(width); }
 
     @Override
     protected double computePrefWidth(double height)
