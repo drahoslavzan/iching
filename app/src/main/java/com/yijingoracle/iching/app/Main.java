@@ -23,6 +23,8 @@ public class Main extends Application
     {
         try
         {
+            ResultWindowFactory.setOwner(stage);
+
             FXMLLoader loader = new FXMLLoader();
 
             ResourceBundle bundle = ResourceBundle.getBundle("iching", new Locale("en"));
@@ -57,6 +59,10 @@ public class Main extends Application
 
     private void loadPlugins()
     {
+        ResultWindowFactory rwf = new ResultWindowFactory();
+
+        rwf.getResultWindow().show();
+
         PluginLoader pl = new PluginLoader();
 
         Node[] plugins = pl.loadPlugins(Const.PLUGIN_PATH);

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.Stage?>
+<?import javafx.scene.Scene?>
+<?import com.yijingoracle.iching.core.Browser?>
+
+
+<Stage xmlns:fx="http://javafx.com/fxml"
+       fx:id="_stage"
+       fx:controller="com.yijingoracle.iching.app.controller.ResultWindow">
+
+    <scene>
+        <Scene>
+            <Browser styleClass="browser-text" fx:id="" VBox.vgrow="ALWAYS"/>
+        </Scene>
+    </scene>
+</Stage>
+

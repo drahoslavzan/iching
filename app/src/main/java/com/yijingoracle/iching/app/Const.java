@@ -11,4 +11,5 @@ public class Const
     public static final int MIN_HEIGHT = 480;
     public static final int DEFAULT_WIDTH = 1024;
     public static final int DEFAULT_HEIGHT = 768;
+    public static final int RESULT_WINDOW_OFFSET = 80;
 }
