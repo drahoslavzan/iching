@@ -3,6 +3,8 @@ package com.yijingoracle.iching.app;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import com.yijingoracle.iching.core.DesktopLauncher;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -44,6 +46,10 @@ public class Main extends Application
             loadPlugins();
 
             stage.show();
+
+            ResultWindowFactory rwf = new ResultWindowFactory();
+
+            rwf.getResultWindow().show();
         }
         catch(Exception e)
         {

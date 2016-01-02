@@ -8,7 +8,9 @@
 <?import com.yijingoracle.iching.app.*?>
 
 
-<VBox xmlns:fx="http://javafx.co/fxml" alignment="CENTER" minHeight="300">
+<VBox xmlns:fx="http://javafx.co/fxml" alignment="CENTER" minHeight="300"
+      fx:controller="com.yijingoracle.iching.app.controller.About">
+
     <Text text="%name" styleClass="about-title"/>
 
     <AutoScalingStackPane VBox.vgrow="ALWAYS">
@@ -29,7 +31,7 @@
     </AutoScalingStackPane>
 
     <HBox alignment="BOTTOM_RIGHT">
-        <Hyperlink styleClass="about-foot">
+        <Hyperlink fx:id="_link" styleClass="about-foot">
             <text>
                 <Const fx:constant="SITE"/>
             </text>

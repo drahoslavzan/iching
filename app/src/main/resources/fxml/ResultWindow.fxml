@@ -12,7 +12,7 @@
 
     <scene>
         <Scene>
-            <Browser styleClass="browser-text" fx:id="" VBox.vgrow="ALWAYS"/>
+            <fx:include fx:id="" source="Decomposition.fxml"/>
         </Scene>
     </scene>
 </Stage>
