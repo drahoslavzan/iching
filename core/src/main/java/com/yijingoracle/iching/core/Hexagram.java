@@ -24,7 +24,7 @@ public class Hexagram
         private Trigram.Name _uct;
         private Trigram.Name _lct;
         private Trigram.Name _lt;
-    };
+    }
 
     public static final int COUNT = 64;
     public static final int LINES = 6;
@@ -109,7 +109,7 @@ public class Hexagram
         _changedLines[line - 1] = mark;
     }
 
-    private static final HashMap<String, Integer> LINES_TO_HEXAGRAM = new HashMap<String, Integer>();
+    private static final HashMap<String, Integer> LINES_TO_HEXAGRAM = new HashMap<>();
 
     static
     {

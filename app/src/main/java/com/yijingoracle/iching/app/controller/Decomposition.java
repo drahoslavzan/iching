@@ -1,16 +1,15 @@
 package com.yijingoracle.iching.app.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.EventHandler;
+import com.yijingoracle.iching.app.NodeSelectGroup;
+import com.yijingoracle.iching.app.TextFactory;
+import com.yijingoracle.iching.core.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import com.yijingoracle.iching.app.NodeSelectGroup;
-import com.yijingoracle.iching.app.TextFactory;
-import com.yijingoracle.iching.core.*;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 public class Decomposition implements Initializable
@@ -61,20 +60,16 @@ public class Decomposition implements Initializable
 
     private void setOnClick(Node node, Runnable action)
     {
-        node.setOnMouseClicked(new EventHandler<MouseEvent>()
+        node.setOnMouseClicked(e ->
         {
-            @Override
-            public void handle(MouseEvent e)
-            {
-                if (!_initialized)
-                    return;
+            if (!_initialized)
+                return;
 
-                _selector.selectNode(node, () ->
-                {
-                    if (_browser != null)
-                        action.run();
-                });
-            }
+            _selector.selectNode(node, () ->
+            {
+                if (_browser != null)
+                    action.run();
+            });
         });
     }
 

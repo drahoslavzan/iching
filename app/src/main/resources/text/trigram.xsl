@@ -57,7 +57,7 @@
     <xsl:for-each select="//trigram">
       <h1>
         <xsl:value-of select="title"/>
-        <xsl:if test="name[position() &gt; 0]">
+        <xsl:if test="name">
           (
           <span class="csv">
             <xsl:for-each select="name">

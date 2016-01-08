@@ -73,7 +73,7 @@ public class AutoScalingStackPane extends StackPane
     }
 
     private ObjectProperty<AutoScale> autoScale =
-        new SimpleObjectProperty<AutoScale>(this, "autoScale", AutoScale.FIT);
+            new SimpleObjectProperty<>(this, "autoScale", AutoScale.FIT);
 
     public ObjectProperty<AutoScale> autoScaleProperty()
     {

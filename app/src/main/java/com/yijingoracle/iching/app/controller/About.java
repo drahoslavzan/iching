@@ -14,10 +14,7 @@ public class About implements Initializable
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
-        _link.setOnAction(event ->
-        {
-            DesktopLauncher.launchDesktopBrowser(Const.SITE);
-        });
+        _link.setOnAction(event -> DesktopLauncher.launchDesktopBrowser(Const.SITE));
     }
 
     @FXML private Hyperlink _link;

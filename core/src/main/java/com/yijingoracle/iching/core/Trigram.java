@@ -16,7 +16,7 @@ public class Trigram
         Relation(int eval) { _eval = eval; }
 
         private int _eval;
-    };
+    }
 
     public enum Name
     {
@@ -34,7 +34,7 @@ public class Trigram
         public int getId() { return _id; }
 
         private int _id;
-    };
+    }
 
     public static Name getNameFromEarlyHeavenValue(int i)
     {

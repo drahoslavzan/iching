@@ -1,26 +1,19 @@
-package com.yijingoracle.iching.plugin.plumblossom.universal;
- 
+package com.yijingoracle.iching.plugin.plumblossom.universal.controller;
+
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.input.*;
-import javafx.fxml.*;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import jfxtras.scene.control.*;
-import com.yijingoracle.iching.core.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import jfxtras.scene.control.LocalDateTimeTextField;
+import com.yijingoracle.iching.core.Browser;
 
 
-public class Main implements Initializable
+public class Method implements Initializable
 {
-    private String _text = "";
-
-    @FXML
-    private Browser _browser;
-
-    @FXML
-    private LocalDateTimeTextField _date;
-
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
@@ -50,5 +43,10 @@ public class Main implements Initializable
             _text += event.getText();
         }
     }
+
+    private String _text = "";
+
+    @FXML private Browser _browser;
+    @FXML private LocalDateTimeTextField _date;
 }
 

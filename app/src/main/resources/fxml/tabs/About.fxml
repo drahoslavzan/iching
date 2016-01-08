@@ -14,27 +14,21 @@
     <Text text="%name" styleClass="about-title"/>
 
     <AutoScalingStackPane VBox.vgrow="ALWAYS">
-        <children>
-            <ImageView layoutX="0.0"
-                       layoutY="0.0"
-                       fitHeight="10.0"
-                       fitWidth="10.0"
-                       pickOnBounds="true"
-                       preserveRatio="true">
-                <image>
-                    <Image
-                        url="/image/iching.png"
-                        backgroundLoading="true"/>
-                </image>
-            </ImageView>
-        </children>
+        <ImageView layoutX="0.0"
+                   layoutY="0.0"
+                   fitHeight="10.0"
+                   fitWidth="10.0"
+                   pickOnBounds="true"
+                   preserveRatio="true">
+            <Image
+                url="/image/iching.png"
+                backgroundLoading="true"/>
+        </ImageView>
     </AutoScalingStackPane>
 
     <HBox alignment="BOTTOM_RIGHT">
         <Hyperlink fx:id="_link" styleClass="about-foot">
-            <text>
-                <Const fx:constant="SITE"/>
-            </text>
+            <Const fx:constant="SITE"/>
         </Hyperlink>
     </HBox>
 </VBox>

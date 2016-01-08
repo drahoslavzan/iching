@@ -8,7 +8,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
 import com.yijingoracle.iching.app.*;
 import com.yijingoracle.iching.core.*;
 
@@ -97,19 +96,12 @@ public class HexagramPreview implements Initializable
             group.getChildren().add(hex);
             group.getStyleClass().add(DEFAULT_CLASS);
 
-            group.setOnMouseClicked(new EventHandler<MouseEvent>()
+            group.setOnMouseClicked(e -> _selector.selectNode(group, () ->
             {
-                @Override
-                public void handle(MouseEvent e)
-                {
-                    _selector.selectNode(group, () ->
-                    {
-                        HexagramRegion hex = (HexagramRegion)group.getChildren().get(1);
-                        _preview.requestFocus();
-                        loadHexagram(hex.getHexagram());
-                    });
-                }
-            });
+                HexagramRegion hex1 = (HexagramRegion)group.getChildren().get(1);
+                _preview.requestFocus();
+                loadHexagram(hex1.getHexagram());
+            }));
 
             stack.getChildren().add(group);
         }

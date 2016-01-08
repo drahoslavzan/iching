@@ -24,7 +24,7 @@ public class HexagramTests
     }
 
     @Test
-    public void test_LineChanged_ReturnsFalseAfterUnchagedLine()
+    public void test_LineChanged_ReturnsFalseAfterUnchangedLine()
     {
         Hexagram hexagram = new Hexagram(1);
         hexagram.changeLine(3);

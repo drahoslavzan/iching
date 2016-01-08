@@ -5,12 +5,12 @@
 
 .tab-pane
 {
-    -fx-tab-min-width:90px;
+    -fx-tab-min-width: 90px;
 }
 
 .tab
 {
-    -fx-background-insets: 0 1 0 1,0,0;
+    -fx-background-insets: 0 1 0 1, 0, 0;
 }
 .tab-pane .tab
 {

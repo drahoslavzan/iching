@@ -1,22 +1,21 @@
 package com.yijingoracle.iching.core;
 
-import javafx.scene.layout.Region;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.scene.input.ScrollEvent;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.event.EventHandler;
-
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Region;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventTarget;
+
 import java.net.URL;
 
 
@@ -38,20 +37,16 @@ public class Browser extends Region
             {
                 if (newState == Worker.State.SUCCEEDED)
                 {
-                    EventListener listener = new EventListener()
+                    EventListener listener = (ev) ->
                     {
-                        @Override
-                        public void handleEvent(Event ev)
+                        String domEventType = ev.getType();
+
+                        if (domEventType.equals(EVENT_TYPE_CLICK))
                         {
-                            String domEventType = ev.getType();
+                            //String href = ((Element)ev.getTarget()).getAttribute("href");
+                            //System.out.println(href);
 
-                            if (domEventType.equals(EVENT_TYPE_CLICK))
-                            {
-                                //String href = ((Element)ev.getTarget()).getAttribute("href");
-                                //System.out.println(href);
-
-                                ev.preventDefault();
-                            } 
+                            ev.preventDefault();
                         }
                     };
 
@@ -106,9 +101,9 @@ public class Browser extends Region
                 if(e.isControlDown())
                 {
                     if(e.getDeltaY() > 0)
-                        _zoom += 0.1;
+                        _zoom += ZOOM_STEP;
                     else
-                        _zoom -= 0.1;
+                        _zoom -= ZOOM_STEP;
 
                     _zoom = Math.min(_zoom, MAX_ZOOM);
                     _zoom = Math.max(_zoom, MIN_ZOOM);
@@ -123,4 +118,4 @@ public class Browser extends Region
 
     private static final String EVENT_TYPE_CLICK = "click";
     private final WebView _view = new WebView();
-};
+}

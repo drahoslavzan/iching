@@ -6,22 +6,14 @@
 
 <Scene xmlns:fx="http://javafx.com/fxml">
     <TabPane fx:id="_tabs" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-            <Tab text="%tabAbout">
-                <content>
-                    <fx:include source="tabs/About.fxml"/>
-                </content>
-            </Tab>
-            <Tab text="%tabTrigramPreviewTitle">
-                <content>
-                    <fx:include source="tabs/TrigramPreview.fxml"/>
-                </content>
-            </Tab>
-            <Tab text="%tabHexagramPreviewTitle">
-                <content>
-                    <fx:include source="tabs/HexagramPreview.fxml"/>
-                </content>
-            </Tab>
-        </tabs>
+        <Tab text="%tabAbout">
+            <fx:include source="tabs/About.fxml"/>
+        </Tab>
+        <Tab text="%tabTrigramPreviewTitle">
+            <fx:include source="tabs/TrigramPreview.fxml"/>
+        </Tab>
+        <Tab text="%tabHexagramPreviewTitle">
+            <fx:include source="tabs/HexagramPreview.fxml"/>
+        </Tab>
     </TabPane>
 </Scene>

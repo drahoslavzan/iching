@@ -1,13 +1,11 @@
 package com.yijingoracle.iching.app;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import com.yijingoracle.iching.core.DesktopLauncher;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -16,9 +14,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import com.yijingoracle.iching.core.util.*;
+import com.yijingoracle.iching.app.controller.ResultWindow;
+import com.yijingoracle.iching.core.AppPlugin;
+import com.yijingoracle.iching.core.AppPluginCallback;
 
 
-public class Main extends Application
+public class Main extends Application implements AppPluginCallback
 {
     @Override
     public void start(Stage stage)
@@ -27,10 +28,10 @@ public class Main extends Application
         {
             ResultWindowFactory.setOwner(stage);
 
-            FXMLLoader loader = new FXMLLoader();
-
             ResourceBundle bundle = ResourceBundle.getBundle("iching", new Locale("en"));
-            Scene root = loader.load(getClass().getResource("/fxml/Main.fxml"), bundle);
+            Scene root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"), bundle);
+
+            _tabs = (TabPane) root.lookup("#_tabs");
 
             URL style = getClass().getResource("/iching.css");
             root.getStylesheets().add(style.toExternalForm());
@@ -47,15 +48,23 @@ public class Main extends Application
 
             stage.show();
 
-            ResultWindowFactory rwf = new ResultWindowFactory();
-
-            rwf.getResultWindow().show();
+            UpdateChecker.checkForUpdates();
         }
         catch(Exception e)
         {
             Dialog.showException(e);
             Platform.exit();
         }
+    }
+
+    @Override
+    public void onResult()
+    {
+        ResultWindowFactory rwf = new ResultWindowFactory();
+
+        ResultWindow result = rwf.getResultWindow();
+
+        result.show();
     }
 
     public static void main(String[] args)
@@ -65,21 +74,47 @@ public class Main extends Application
 
     private void loadPlugins()
     {
-        PluginLoader pl = new PluginLoader();
-
-        Node[] plugins = pl.loadPlugins(Const.PLUGIN_PATH);
-
-        for (Node plugin : plugins)
+        try
         {
-            Tab tab = new Tab();
+            PluginLoader pl = new PluginLoader();
 
-            tab.setContent(plugin);
+            List<AppPlugin> plugins = pl.loadPlugins();
 
+            plugins.forEach(this::insertPlugin);
+
+            ResourceBundle bundle = ResourceBundle.getBundle("iching", new Locale("en"));
+            Node more = FXMLLoader.load(getClass().getResource("/fxml/tabs/About.fxml"), bundle);
+
+            Tab tab = new Tab(bundle.getString("morePlugins"));
+            tab.setStyle("-fx-background-color: #ff5555;");
+            tab.setContent(more);
             _tabs.getTabs().add(tab);
+        }
+        catch (Exception e)
+        {
+            Dialog.showException(e);
         }
     }
 
-    @FXML
+    private void insertPlugin(AppPlugin plugin)
+    {
+        assert _tabs != null;
+
+        try
+        {
+            Tab tab = new Tab();
+
+            tab.setContent(plugin.getMethod());
+            tab.setText(plugin.getName());
+
+            _tabs.getTabs().add(tab);
+        }
+        catch (Exception e)
+        {
+            Dialog.showException(e);
+        }
+    }
+
     private TabPane _tabs;
 }
 

@@ -6,5 +6,8 @@ import javafx.scene.Node;
 public interface AppPlugin
 {
     String getName();
-    Node getNode();
+
+    Node getMethod();
+
+    void register(AppPluginCallback subscriber);
 }

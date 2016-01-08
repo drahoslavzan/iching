@@ -14,7 +14,7 @@ public class DesktopLauncher
             {
                 Desktop.getDesktop().browse(java.net.URI.create(url));
             }
-            catch (IOException e)
+            catch (IOException ignored)
             {
             }
         }).start();

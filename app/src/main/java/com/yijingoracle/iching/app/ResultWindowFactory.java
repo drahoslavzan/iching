@@ -10,7 +10,7 @@ import com.yijingoracle.iching.app.controller.ResultWindow;
 import com.yijingoracle.iching.core.util.Dialog;
 
 
-public class ResultWindowFactory
+class ResultWindowFactory
 {
     public ResultWindowFactory()
     {

@@ -1,16 +1,22 @@
 package com.yijingoracle.iching.app.controller;
  
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.scene.input.*;
-import javafx.event.EventHandler;
-import javafx.fxml.*;
+import com.yijingoracle.iching.app.NodeSelectGroup;
+import com.yijingoracle.iching.app.TextFactory;
+import com.yijingoracle.iching.core.Browser;
+import com.yijingoracle.iching.core.Trigram;
+import com.yijingoracle.iching.core.TrigramRegion;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
-import com.yijingoracle.iching.app.*;
-import com.yijingoracle.iching.core.*;
 
 
 public class TrigramPreview implements Initializable
@@ -46,15 +52,8 @@ public class TrigramPreview implements Initializable
             group.getChildren().add(trigramRegion);
             group.getStyleClass().add(DEFAULT_CLASS);
 
-            group.setOnMouseClicked(new EventHandler<MouseEvent>()
-            {
-                @Override
-                public void handle(MouseEvent e)
-                {
-                    _selector.selectNode(group,
-                        () -> _browser.load(_textFactory.getText().getTrigramText(trigram.getName())));
-                }
-            });
+            group.setOnMouseClicked(e -> _selector.selectNode(group,
+                () -> _browser.load(_textFactory.getText().getTrigramText(trigram.getName()))));
 
             ColumnConstraints column = new ColumnConstraints();
             column.setPercentWidth(100.0 / Trigram.COUNT);

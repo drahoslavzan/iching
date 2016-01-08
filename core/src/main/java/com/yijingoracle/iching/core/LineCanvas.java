@@ -90,10 +90,8 @@ class LineCanvas extends Canvas
 
     private boolean lineInRange(int i)
     {
-        if (i < 0 && i >= _count)
-            return false;
+        return !(i < 0 && i >= _count);
 
-        return true;
     }
 
     private int remapLineId(int i)

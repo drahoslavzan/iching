@@ -6,13 +6,12 @@
 <?import com.yijingoracle.iching.core.*?>
 
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.yijingoracle.iching.plugin.plumblossom.universal.Main"
-      spacing="10">
+<VBox xmlns:fx="http://javafx.com/fxml" spacing="10"
+      fx:controller="com.yijingoracle.iching.plugin.plumblossom.universal.controller.Method">
 
     <Browser styleClass="browser-method" fx:id="_browser" VBox.vgrow="ALWAYS"/>
 
-    <TextField onKeyPressed="#onKeyPressed" styleClass="query" promptText="Query ..."/>
+    <TextField styleClass="query" promptText="Query ..."/>
 
     <LocalDateTimeTextField fx:id="_date"/>
 </VBox>
