@@ -19,7 +19,6 @@ public class HexagramPreview implements Initializable
     {
         fillPreview();
 
-        _decomposition.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         _decompositionController.setBrowser(_browser);
 
         _preview.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>()
@@ -115,7 +114,7 @@ public class HexagramPreview implements Initializable
 
     @FXML private ScrollPane _preview;
     @FXML private Browser _browser;
-    @FXML private GridPane _decomposition;
+    @FXML private VBox _decomposition;
     @FXML private Decomposition _decompositionController;
 }
 

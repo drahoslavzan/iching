@@ -2,18 +2,29 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.Scene?>
-
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
 
 <Scene xmlns:fx="http://javafx.com/fxml">
-    <TabPane fx:id="_tabs" tabClosingPolicy="UNAVAILABLE">
-        <Tab text="%tabAbout">
-            <fx:include source="tabs/About.fxml"/>
-        </Tab>
-        <Tab text="%tabTrigramPreviewTitle">
-            <fx:include source="tabs/TrigramPreview.fxml"/>
-        </Tab>
-        <Tab text="%tabHexagramPreviewTitle">
-            <fx:include source="tabs/HexagramPreview.fxml"/>
-        </Tab>
-    </TabPane>
+    <VBox>
+        <TabPane fx:id="_tabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+            <Tab text="%tabAbout">
+                <fx:include source="tabs/About.fxml"/>
+            </Tab>
+            <Tab text="%tabTrigramPreviewTitle">
+                <fx:include source="tabs/TrigramPreview.fxml"/>
+            </Tab>
+            <Tab text="%tabHexagramPreviewTitle">
+                <fx:include source="tabs/HexagramPreview.fxml"/>
+            </Tab>
+        </TabPane>
+        <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
+            <VBox.margin>
+                <Insets left="5" right="5" top="5" bottom="5"/>
+            </VBox.margin>
+            <Label text="Texts: "/>
+            <ComboBox fx:id="_texts" HBox.hgrow="ALWAYS" minWidth="150"/>
+        </HBox>
+    </VBox>
 </Scene>

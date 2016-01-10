@@ -1,7 +1,6 @@
 apply plugin: 'application'
 
-dependencies
-{
+dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile group: 'org.jfxtras', name: 'jfxtras-labs', version: '8.0-r1'
     compile project(':core')
@@ -9,18 +8,15 @@ dependencies
 
 mainClassName = 'com.yijingoracle.iching.app.Main'
 
-jar
-{
+jar {
     baseName = 'iching'
     version = '1.0'
 
-    manifest
-    { 
+    manifest { 
         attributes "Main-Class": "$mainClassName"
     }  
 
-    from
-    {
+    from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }

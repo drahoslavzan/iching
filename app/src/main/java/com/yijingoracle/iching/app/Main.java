@@ -1,22 +1,26 @@
 package com.yijingoracle.iching.app;
 
-import java.net.URL;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import com.yijingoracle.iching.app.controller.ResultWindow;
+import com.yijingoracle.iching.core.AppPlugin;
+import com.yijingoracle.iching.core.AppPluginCallback;
+import com.yijingoracle.iching.core.Browser;
+import com.yijingoracle.iching.core.util.Dialog;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Node;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-import com.yijingoracle.iching.core.util.*;
-import com.yijingoracle.iching.app.controller.ResultWindow;
-import com.yijingoracle.iching.core.AppPlugin;
-import com.yijingoracle.iching.core.AppPluginCallback;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class Main extends Application implements AppPluginCallback
@@ -32,6 +36,7 @@ public class Main extends Application implements AppPluginCallback
             Scene root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"), bundle);
 
             _tabs = (TabPane) root.lookup("#_tabs");
+            _texts = (ComboBox<String>) root.lookup("#_texts");
 
             URL style = getClass().getResource("/iching.css");
             root.getStylesheets().add(style.toExternalForm());
@@ -44,9 +49,11 @@ public class Main extends Application implements AppPluginCallback
             stage.setWidth(Const.DEFAULT_WIDTH);
             stage.setHeight(Const.DEFAULT_HEIGHT);
 
-            loadPlugins();
+            loadPlugins(bundle);
+            loadTexts(bundle);
 
             stage.show();
+            onResult();
 
             UpdateChecker.checkForUpdates();
         }
@@ -72,7 +79,23 @@ public class Main extends Application implements AppPluginCallback
         launch(args);
     }
 
-    private void loadPlugins()
+    private void loadTexts(ResourceBundle bundle)
+    {
+        try
+        {
+            _texts.getItems().add("Text 2");
+            _texts.getItems().add("Text 1");
+            _texts.getItems().add("Text 3");
+
+            _texts.setValue("Text 2");
+        }
+        catch (Exception e)
+        {
+            Dialog.showException(e);
+        }
+    }
+
+    private void loadPlugins(ResourceBundle bundle)
     {
         try
         {
@@ -82,12 +105,13 @@ public class Main extends Application implements AppPluginCallback
 
             plugins.forEach(this::insertPlugin);
 
-            ResourceBundle bundle = ResourceBundle.getBundle("iching", new Locale("en"));
-            Node more = FXMLLoader.load(getClass().getResource("/fxml/tabs/About.fxml"), bundle);
+            Browser browser = new Browser();
+            browser.enableJavaScript();
+            browser.loadUrl(new URL("http://google.sk"));
 
             Tab tab = new Tab(bundle.getString("morePlugins"));
             tab.setStyle("-fx-background-color: #ff5555;");
-            tab.setContent(more);
+            tab.setContent(browser);
             _tabs.getTabs().add(tab);
         }
         catch (Exception e)
@@ -104,6 +128,7 @@ public class Main extends Application implements AppPluginCallback
         {
             Tab tab = new Tab();
 
+            tab.setStyle("-fx-background-color: #55ff55;");
             tab.setContent(plugin.getMethod());
             tab.setText(plugin.getName());
 
@@ -116,5 +141,6 @@ public class Main extends Application implements AppPluginCallback
     }
 
     private TabPane _tabs;
+    private ComboBox<String> _texts;
 }
 

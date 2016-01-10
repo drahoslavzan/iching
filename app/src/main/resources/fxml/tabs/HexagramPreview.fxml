@@ -17,13 +17,11 @@
 
     <ScrollPane fitToWidth="True" fitToHeight="True">
         <VBox>
-            <TitledPane text="%Decomposition">
+            <TitledPane text="%decomposition">
                 <fx:include fx:id="_decomposition" source="../Decomposition.fxml"/>
             </TitledPane>
 
-            <TitledPane text="%Description">
-                <Browser styleClass="browser-text" fx:id="_browser"/>
-            </TitledPane>
+            <Browser styleClass="browser-text" fx:id="_browser" VBox.vgrow="ALWAYS"/>
         </VBox>
     </ScrollPane>
 </SplitPane>

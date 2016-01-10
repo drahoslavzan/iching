@@ -1,12 +1,16 @@
 package com.yijingoracle.iching.app;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 import com.yijingoracle.iching.core.AppPlugin;
+import com.yijingoracle.iching.core.util.Dialog;
 
 
 class PluginLoader
@@ -32,10 +36,28 @@ class PluginLoader
             for (final AppPlugin plugin : plugins)
                 ret.add(plugin);
         }
-        catch (Exception ignored)
+        catch (Exception e)
         {
+            Dialog.showException(e);
         }
 
         return ret;
+    }
+
+    public void installPlugin(String id)
+    {
+        try
+        {
+            URL remote = new URL(Const.SITE_PLUGINS + "/" + id);
+            ReadableByteChannel rbc = Channels.newChannel(remote.openStream());
+
+            String local = id + ".jar";
+            FileOutputStream fos = new FileOutputStream("." + File.separator + Const.PLUGIN_PATH + File.separator + local);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        }
+        catch(Exception e)
+        {
+            Dialog.showException(e);
+        }
     }
 }

@@ -26,7 +26,11 @@
         </ImageView>
     </AutoScalingStackPane>
 
-    <HBox alignment="BOTTOM_RIGHT">
+    <HBox alignment="BOTTOM_LEFT">
+        <Text>
+            <Const fx:constant="VERSION"/>
+        </Text>
+        <Pane HBox.hgrow="ALWAYS" />
         <Hyperlink fx:id="_link" styleClass="about-foot">
             <Const fx:constant="SITE"/>
         </Hyperlink>

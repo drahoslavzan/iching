@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
@@ -23,12 +24,13 @@ public class Browser extends Region
 {
     public Browser()
     {
-        WebEngine engine = _view.getEngine();
-        engine.setJavaScriptEnabled(false);
-
         _view.setContextMenuEnabled(false);
 
+        disableJavaScript();
+
         setZoomOnScroll();
+
+        WebEngine engine = _view.getEngine();
 
         engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>()
         {
@@ -43,8 +45,10 @@ public class Browser extends Region
 
                         if (domEventType.equals(EVENT_TYPE_CLICK))
                         {
-                            //String href = ((Element)ev.getTarget()).getAttribute("href");
-                            //System.out.println(href);
+                            String href = ((Element)ev.getTarget()).getAttribute("href");
+
+                            if (href != null)
+                                DesktopLauncher.launchDesktopBrowser(href);
 
                             ev.preventDefault();
                         }
@@ -61,6 +65,16 @@ public class Browser extends Region
         });
 
         getChildren().add(_view);
+    }
+
+    public void disableJavaScript()
+    {
+        _view.getEngine().setJavaScriptEnabled(false);
+    }
+
+    public void enableJavaScript()
+    {
+        _view.getEngine().setJavaScriptEnabled(true);
     }
 
     public void loadUrl(URL file)
