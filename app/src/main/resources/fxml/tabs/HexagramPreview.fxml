@@ -18,7 +18,9 @@
     <ScrollPane fitToWidth="True" fitToHeight="True">
         <VBox>
             <TitledPane text="%decomposition">
-                <fx:include fx:id="_decomposition" source="../Decomposition.fxml"/>
+                <HexagramDecomposition utName="%ut" uctName="%uct" lctName="%lct" ltName="%lt"
+                                       onSelectElement="#onSelectElement"
+                                       fx:id="_decomposition"/>
             </TitledPane>
 
             <Browser styleClass="browser-text" fx:id="_browser" VBox.vgrow="ALWAYS"/>

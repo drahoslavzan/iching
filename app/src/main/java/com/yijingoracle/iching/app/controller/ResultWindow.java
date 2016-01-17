@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import com.yijingoracle.iching.app.Const;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -21,14 +23,18 @@ public class ResultWindow implements Initializable
         _stage.setTitle(title);
     }
 
+    public void setResult(Node node)
+    {
+        _root.getChildren().clear();
+        _root.getChildren().add(node);
+    }
+
     public void show()
     {
-        _stage.setX(_stage.getOwner().getX() + Const.RESULT_WINDOW_OFFSET);
-        _stage.setY(_stage.getOwner().getY() + Const.RESULT_WINDOW_OFFSET);
-
         _stage.show();
     }
 
     @FXML private Stage _stage;
+    @FXML private VBox _root;
 }
 

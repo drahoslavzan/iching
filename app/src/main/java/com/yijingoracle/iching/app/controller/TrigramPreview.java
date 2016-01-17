@@ -1,6 +1,6 @@
 package com.yijingoracle.iching.app.controller;
  
-import com.yijingoracle.iching.app.NodeSelectGroup;
+import com.yijingoracle.iching.core.util.NodeSelectGroup;
 import com.yijingoracle.iching.app.TextFactory;
 import com.yijingoracle.iching.core.Browser;
 import com.yijingoracle.iching.core.Trigram;

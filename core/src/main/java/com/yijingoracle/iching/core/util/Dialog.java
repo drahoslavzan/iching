@@ -24,13 +24,29 @@ public class Dialog
 
     public static void showException(Exception e)
     {
+        Alert alert = getAlert(e, null);
+
+        alert.showAndWait();
+    }
+
+    public static void showException(Exception e, String msg)
+    {
+        Alert alert = getAlert(e, msg);
+
+        alert.showAndWait();
+    }
+
+    private static Alert getAlert(Exception e, String msg)
+    {
         Alert alert = new Alert(AlertType.ERROR);
 
         alert.setTitle("Error");
-        alert.setContentText(String.format("%s", String.join("\n", getExceptionMessageChain(e))));
+        alert.setContentText(String.format("%s%s",
+            msg != null ? msg + ":\n" : "",
+            String.join("\n", getExceptionMessageChain(e))));
         alert.setResizable(true);
         alert.getDialogPane().setPrefSize(480, 320);
 
-        alert.showAndWait();
+        return alert;
     }
 }

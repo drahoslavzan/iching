@@ -8,6 +8,7 @@ public interface AppPlugin
     String getName();
 
     Node getMethod();
+    Node getResult();
 
     void register(AppPluginCallback subscriber);
 }

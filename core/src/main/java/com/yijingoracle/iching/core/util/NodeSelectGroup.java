@@ -1,4 +1,4 @@
-package com.yijingoracle.iching.app;
+package com.yijingoracle.iching.core.util;
 
 import javafx.scene.Node;
 

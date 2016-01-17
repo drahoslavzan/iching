@@ -117,6 +117,10 @@ public class Text
         }
     }
 
+    public void setName(String name) { _name = name; }
+
+    public String getName() { return _name; }
+
     public String getHexagramTitle(int id) { return _hexagramName[calculateHexagramIndex(id)]; }
 
     public String getHexagramText(int id)
@@ -164,5 +168,6 @@ public class Text
     private String [] _hexagram = new String[Hexagram.COUNT];
     private String [] _hexagramName = new String[Hexagram.COUNT];
     private String [] _trigram = new String[Trigram.COUNT];
+    private String _name;
 }
 

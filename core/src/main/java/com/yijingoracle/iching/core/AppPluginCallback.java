@@ -3,5 +3,5 @@ package com.yijingoracle.iching.core;
 
 public interface AppPluginCallback
 {
-    void onResult();
+    void onResult(AppPlugin plugin);
 }

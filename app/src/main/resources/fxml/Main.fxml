@@ -5,10 +5,39 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.geometry.Insets?>
+<?import com.yijingoracle.iching.app.Const?>
 
+<?import com.yijingoracle.iching.core.Browser?>
+<?import javafx.scene.layout.Pane?>
+<?import com.yijingoracle.iching.core.HexagramDecomposition?>
+<?import com.yijingoracle.iching.core.util.Arrow?>
 <Scene xmlns:fx="http://javafx.com/fxml">
     <VBox>
         <TabPane fx:id="_tabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+            <Tab>
+            <ScrollPane fitToWidth="True" fitToHeight="True">
+                <VBox alignment="CENTER">
+
+                    <HBox alignment="CENTER_LEFT">
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <HexagramDecomposition utName="%ut" uctName="%uct" lctName="%lct" ltName="%lt"
+                                               fx:id="_decompositionLeft"/>
+
+                        <VBox alignment="CENTER">
+                            <Arrow/>
+                        </VBox>
+
+                        <HexagramDecomposition utName="%ut" uctName="%uct" lctName="%lct" ltName="%lt"
+                                               fx:id="_decompositionRight"/>
+                        <Pane HBox.hgrow="ALWAYS" />
+                    </HBox>
+
+                    <VBox VBox.vgrow="ALWAYS">
+                        <Browser styleClass="browser-text" fx:id="_browser" VBox.vgrow="ALWAYS"/>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+            </Tab>
             <Tab text="%tabAbout">
                 <fx:include source="tabs/About.fxml"/>
             </Tab>
@@ -25,6 +54,9 @@
             </VBox.margin>
             <Label text="Texts: "/>
             <ComboBox fx:id="_texts" HBox.hgrow="ALWAYS" minWidth="150"/>
+            <Hyperlink text="... get more texts" fx:id="_linkTexts">
+                <Const fx:constant="SITE"/>
+            </Hyperlink>
         </HBox>
     </VBox>
 </Scene>

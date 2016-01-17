@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.yijingoracle.iching.core.Browser?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.stage.Stage?>
 <?import javafx.scene.Scene?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Label?>
+<?import javafx.stage.Stage?>
+<?import javafx.scene.layout.VBox?>
 
 <Stage xmlns:fx="http://javafx.com/fxml"
        fx:id="_stage"
@@ -15,24 +10,8 @@
 
     <scene>
         <Scene>
-            <ScrollPane fitToWidth="True" fitToHeight="True">
-                <VBox alignment="CENTER">
-                    <HBox alignment="CENTER_LEFT">
-                        <Pane HBox.hgrow="ALWAYS" />
-                        <fx:include fx:id="_dleft" source="Decomposition.fxml"/>
-
-                        <VBox alignment="CENTER">
-                            <Label text="------------>"/>
-                            <Pane HBox.hgrow="ALWAYS" />
-                        </VBox>
-
-                        <fx:include fx:id="_dright" source="Decomposition.fxml"/>
-                        <Pane HBox.hgrow="ALWAYS" />
-                    </HBox>
-
-                    <Browser styleClass="browser-text" fx:id="_browser" VBox.vgrow="ALWAYS"/>
-                </VBox>
-            </ScrollPane>
+            <VBox fx:id="_root">
+            </VBox>
         </Scene>
     </scene>
 </Stage>

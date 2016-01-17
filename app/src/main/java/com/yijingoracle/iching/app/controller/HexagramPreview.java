@@ -1,5 +1,7 @@
 package com.yijingoracle.iching.app.controller;
  
+import com.yijingoracle.iching.app.TextFactory;
+import com.yijingoracle.iching.core.util.NodeSelectGroup;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
@@ -8,7 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-import com.yijingoracle.iching.app.*;
+
 import com.yijingoracle.iching.core.*;
 
 
@@ -18,8 +20,6 @@ public class HexagramPreview implements Initializable
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
         fillPreview();
-
-        _decompositionController.setBrowser(_browser);
 
         _preview.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>()
         {
@@ -73,7 +73,31 @@ public class HexagramPreview implements Initializable
 
     private void loadHexagram(Hexagram hex)
     {
-        _decompositionController.setHexagram(hex);
+        _decomposition.setHexagram(hex, _textFactory.getText().getHexagramTitle(hex.getId()));
+        loadHexagramText(hex);
+    }
+
+    private void loadHexagramText(Hexagram hex)
+    {
+        _browser.load(_textFactory.getText().getHexagramText(hex.getId()));
+    }
+
+    private void loadTrigramText(Trigram trig)
+    {
+        _browser.load(_textFactory.getText().getTrigramText(trig.getName()));
+    }
+
+    @FXML
+    private void onSelectElement(SelectEvent event)
+    {
+        if (event.getSelected() instanceof Hexagram)
+        {
+            loadHexagramText((Hexagram)event.getSelected());
+        }
+        else if  (event.getSelected() instanceof Trigram)
+        {
+            loadTrigramText((Trigram)event.getSelected());
+        }
     }
 
     private void fillPreview()
@@ -86,9 +110,8 @@ public class HexagramPreview implements Initializable
             HexagramRegion hex = new HexagramRegion(new Hexagram(i));
 
             javafx.scene.text.Text label = new javafx.scene.text.Text();
+            label.getStyleClass().add("hex-preview-label");
             label.setText(String.format("%d", i));
-            label.setTextAlignment(TextAlignment.CENTER);
-            label.setFont(new Font("Arial", 32));
 
             VBox group = new VBox();
             group.getChildren().add(label);
@@ -111,10 +134,10 @@ public class HexagramPreview implements Initializable
     private static final String DEFAULT_CLASS = "hexagram";
 
     private NodeSelectGroup _selector = new NodeSelectGroup("white", "#336699");
+    private TextFactory _textFactory = new TextFactory();
 
     @FXML private ScrollPane _preview;
     @FXML private Browser _browser;
-    @FXML private VBox _decomposition;
-    @FXML private Decomposition _decompositionController;
+    @FXML private HexagramDecomposition _decomposition;
 }
 

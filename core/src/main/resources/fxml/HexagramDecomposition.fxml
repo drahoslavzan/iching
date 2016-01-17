@@ -5,9 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.co/fxml" alignment="CENTER" minHeight="400" spacing="30"
-      fx:controller="com.yijingoracle.iching.app.controller.Decomposition">
-
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" minHeight="400" spacing="30">
     <padding>
         <Insets top="20" bottom="20" left="20" right="20"/>
     </padding>
@@ -22,33 +20,33 @@
     </HBox>
 
     <HBox spacing="15" alignment="CENTER">
-        <VBox alignment="CENTER">
-            <Label text="%ut" styleClass="trigram-label"/>
+        <VBox spacing="10" alignment="CENTER">
+            <Label fx:id="_utName" styleClass="trigram-label"/>
             <VBox styleClass="trigram">
                 <TrigramRegion fx:id="_ut"/>
             </VBox>
         </VBox>
 
-        <VBox alignment="CENTER">
-            <Label text="%uct" styleClass="trigram-label"/>
+        <VBox spacing="10" alignment="CENTER">
+            <Label fx:id="_uctName" styleClass="trigram-label"/>
             <VBox styleClass="trigram">
                 <TrigramRegion fx:id="_uct"/>
             </VBox>
         </VBox>
 
-        <VBox alignment="CENTER">
-            <Label text="%lct" styleClass="trigram-label"/>
+        <VBox spacing="10" alignment="CENTER">
+            <Label fx:id="_lctName" styleClass="trigram-label"/>
             <VBox styleClass="trigram">
                 <TrigramRegion fx:id="_lct"/>
             </VBox>
         </VBox>
 
-        <VBox alignment="CENTER">
-            <Label text="%lt" styleClass="trigram-label"/>
+        <VBox spacing="10" alignment="CENTER">
+            <Label fx:id="_ltName" styleClass="trigram-label"/>
             <VBox styleClass="trigram">
                 <TrigramRegion fx:id="_lt"/>
             </VBox>
         </VBox>
     </HBox>
-</VBox>
+</fx:root>
 

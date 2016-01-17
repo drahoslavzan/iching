@@ -21,7 +21,7 @@ class ResultWindowFactory
 
         try
         {
-            ResourceBundle bundle = ResourceBundle.getBundle("iching", new Locale("en"));
+            ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ResultWindow.fxml"), bundle);
 
             Stage stage = loader.load();
@@ -29,7 +29,7 @@ class ResultWindowFactory
 
             _window = loader.getController();
 
-            URL style = getClass().getResource("/iching.css");
+            URL style = getClass().getResource("/app.css");
             stage.getScene().getStylesheets().add(style.toExternalForm());
 
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/image/icon.png")));
@@ -37,6 +37,9 @@ class ResultWindowFactory
             stage.setMinHeight(Const.MIN_HEIGHT);
             stage.setWidth(Const.DEFAULT_WIDTH);
             stage.setHeight(Const.DEFAULT_HEIGHT);
+
+            stage.setX(_owner.getX() + Const.RESULT_WINDOW_OFFSET);
+            stage.setY(_owner.getY() + Const.RESULT_WINDOW_OFFSET);
         }
         catch(Exception e)
         {

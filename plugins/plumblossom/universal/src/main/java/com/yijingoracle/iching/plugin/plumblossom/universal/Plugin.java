@@ -1,8 +1,11 @@
 package com.yijingoracle.iching.plugin.plumblossom.universal;
- 
+
+import com.yijingoracle.iching.core.*;
+import com.yijingoracle.iching.plugin.plumblossom.universal.controller.Method;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import com.yijingoracle.iching.core.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class Plugin implements AppPlugin
@@ -10,7 +13,7 @@ public class Plugin implements AppPlugin
     @Override
     public String getName()
     {
-        return "Plugin1";
+        return _name;
     }
 
     @Override
@@ -20,9 +23,15 @@ public class Plugin implements AppPlugin
 
         try
         {
-            FXMLLoader.setDefaultClassLoader(getClass().getClassLoader());
+            FXMLLoader loader = new FXMLLoader();
+            loader.setDefaultClassLoader(getClass().getClassLoader());
 
-            node = FXMLLoader.load(getClass().getResource("/fxml/Method.fxml"));
+            loader.setResources(_bundle);
+            node = loader.load(getClass().getResource("/fxml/Method.fxml").openStream());
+
+            Method controller = loader.getController();
+
+            controller.register(this);
         }
         catch (Exception e)
         {
@@ -33,11 +42,39 @@ public class Plugin implements AppPlugin
     }
 
     @Override
+    public Node getResult()
+    {
+        return _result;
+    }
+
+    public void onResult(Node node)
+    {
+        _result = node;
+        _subscriber.onResult(this);
+    }
+
+    @Override
     public void register(AppPluginCallback subscriber)
     {
         _subscriber = subscriber;
     }
 
+    public Plugin()
+    {
+        try
+        {
+            _bundle = ResourceBundle.getBundle("plugin", new Locale("en"));
+            _name = _bundle.getString("name");
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     private AppPluginCallback _subscriber;
+    private ResourceBundle _bundle;
+    private String _name;
+    private Node _result;
 }
 
