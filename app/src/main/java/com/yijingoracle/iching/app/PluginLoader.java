@@ -6,10 +6,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 import com.yijingoracle.iching.core.AppPlugin;
+import com.yijingoracle.iching.core.Const;
 import com.yijingoracle.iching.core.util.Dialog;
 
 
@@ -21,9 +24,16 @@ class PluginLoader
 
         try
         {
-            File loc = new File(Const.PLUGIN_PATH);
+            Path exePath = Paths.get(PluginLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+
+            File loc = new File(exePath.getParent() + File.separator + Const.PLUGIN_PATH);
 
             File[] flist = loc.listFiles(file -> file.getPath().toLowerCase().endsWith(".jar"));
+
+            if (flist == null)
+            {
+                return ret;
+            }
 
             URL[] urls = new URL[flist.length];
             for (int i = 0; i < flist.length; i++)

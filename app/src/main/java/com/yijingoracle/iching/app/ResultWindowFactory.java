@@ -3,6 +3,8 @@ package com.yijingoracle.iching.app;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import com.yijingoracle.iching.core.Const;
 import javafx.scene.image.*;
 import javafx.stage.Stage;
 import javafx.fxml.*;

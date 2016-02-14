@@ -1,10 +1,13 @@
 package com.yijingoracle.iching.app;
 
+import com.yijingoracle.iching.core.Const;
 import com.yijingoracle.iching.core.Text;
 import com.yijingoracle.iching.core.util.Dialog;
 
 import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -19,8 +22,15 @@ public class TextLoader
 
         try
         {
-            File loc = new File(Const.TEXT_PATH);
+            Path exePath = Paths.get(TextLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+
+            File loc = new File(exePath.getParent() + File.separator + Const.TEXT_PATH);
             File[] flist = loc.listFiles(file -> file.getPath().toLowerCase().endsWith(".zip"));
+
+            if (flist == null)
+            {
+                return ret;
+            }
 
             for (File file : flist)
             {

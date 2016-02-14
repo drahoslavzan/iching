@@ -130,6 +130,32 @@ public class Text
 
     public String getTrigramText(Trigram.Name name) { return _trigram[name.getId()]; }
 
+    public Text()
+    {
+        _name = "Empty";
+
+        for (int i = 0; i < _hexagram.length; i++)
+        {
+            _hexagram[i] = getHtmlDefaultText("Hexagram " + (i + 1));
+            _hexagramName[i] = "Hexagram";
+        }
+
+        for (Trigram.Name name : Trigram.Name.values())
+        {
+            _trigram[name.getId()] = getHtmlDefaultText("Trigram " + name);
+        }
+    }
+
+    private String getHtmlDefaultText(String name)
+    {
+        String url = Const.SITE_TEXTS;
+        return String.format(
+                "<html><body>" +
+                    "<h1>%s</h1><p>The text is missing.</p>" +
+                    "<p>For more information how to get texts please visit <a href=\"%s\">%s</a>.</p>" +
+                "</body></html>", name, url, url);
+    }
+
     private int calculateHexagramIndex(int id)
     {
         if(id < 1 || id > _hexagram.length)

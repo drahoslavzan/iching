@@ -1,5 +1,7 @@
 package com.yijingoracle.iching.app.controller;
  
+import com.yijingoracle.iching.app.TextFactoryCallback;
+import com.yijingoracle.iching.core.Text;
 import com.yijingoracle.iching.core.util.NodeSelectGroup;
 import com.yijingoracle.iching.app.TextFactory;
 import com.yijingoracle.iching.core.Browser;
@@ -19,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class TrigramPreview implements Initializable
+public class TrigramPreview implements Initializable, TextFactoryCallback
 {
     @FXML
     public void onQueryKeyPressed(KeyEvent event)
@@ -35,8 +37,7 @@ public class TrigramPreview implements Initializable
 
             Node node = getNodeFromGridPane(_preview, value - 1, 0);
 
-            _selector.selectNode(node,
-                () -> _browser.load(_textFactory.getText().getTrigramText(Trigram.getNameFromEarlyHeavenValue(value))));
+            _selector.selectNode(node, () -> loadTrigramText(Trigram.getNameFromEarlyHeavenValue(value)));
         }
     }
 
@@ -52,8 +53,7 @@ public class TrigramPreview implements Initializable
             group.getChildren().add(trigramRegion);
             group.getStyleClass().add(DEFAULT_CLASS);
 
-            group.setOnMouseClicked(e -> _selector.selectNode(group,
-                () -> _browser.load(_textFactory.getText().getTrigramText(trigram.getName()))));
+            group.setOnMouseClicked(e -> _selector.selectNode(group, () -> loadTrigramText(trigram.getName())));
 
             ColumnConstraints column = new ColumnConstraints();
             column.setPercentWidth(100.0 / Trigram.COUNT);
@@ -63,10 +63,26 @@ public class TrigramPreview implements Initializable
         }
     }
 
+    private void loadTrigramText(Trigram.Name name)
+    {
+        _lastText = () -> _browser.load(_textFactory.getText().getTrigramText(name));
+
+        _lastText.run();
+    }
+
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
+        _textFactory.Register(this);
+
         fillPreview();
+    }
+
+    @Override
+    public void OnTextChanged(Text text)
+    {
+        if (_lastText != null)
+            _lastText.run();
     }
 
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row)
@@ -82,6 +98,7 @@ public class TrigramPreview implements Initializable
 
     private TextFactory _textFactory = new TextFactory();
     private NodeSelectGroup _selector = new NodeSelectGroup("white", "#336699");
+    private Runnable _lastText;
 
     @FXML private TextField _query;
     @FXML private Browser _browser;

@@ -1,32 +1,27 @@
 package com.yijingoracle.iching.app;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.yijingoracle.iching.core.*;
 
 
 public final class TextFactory
 {
-    public TextFactory()
+    public static void setText(Text text)
     {
-        if(!_initialized)
-        {
-            InputStream xslHexagram = getClass().getResourceAsStream("/text/hexagram.xsl");
-            InputStream xslTrigram = getClass().getResourceAsStream("/text/trigram.xsl");
-            InputStream hex = getClass().getResourceAsStream("/text/hexagrams.xml");
-            InputStream tri = getClass().getResourceAsStream("/text/trigrams.xml");
-
-            _text.renderHexagrams(hex, xslHexagram);
-            _text.renderTrigrams(tri, xslTrigram);
-
-            _initialized = true;
-        }
+        _text = text;
+        _subscribers.forEach(s -> s.OnTextChanged(text));
     }
 
-    public Text getText()
+    public static Text getText() { return _text; }
+
+    public static void Register(TextFactoryCallback subscriber)
     {
-        return _text;
+        _subscribers.add(subscriber);
     }
 
     private static Text _text = new Text();
-    private static boolean _initialized;
+    private static List<TextFactoryCallback> _subscribers = new ArrayList<>();
 }

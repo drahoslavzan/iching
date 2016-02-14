@@ -1,6 +1,8 @@
 package com.yijingoracle.iching.app.controller;
  
 import com.yijingoracle.iching.app.TextFactory;
+import com.yijingoracle.iching.app.TextFactoryCallback;
+import com.yijingoracle.iching.core.Text;
 import com.yijingoracle.iching.core.util.NodeSelectGroup;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -14,11 +16,13 @@ import java.util.ResourceBundle;
 import com.yijingoracle.iching.core.*;
 
 
-public class HexagramPreview implements Initializable
+public class HexagramPreview implements Initializable, TextFactoryCallback
 {
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
+        _textFactory.Register(this);
+
         fillPreview();
 
         _preview.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>()
@@ -54,6 +58,13 @@ public class HexagramPreview implements Initializable
         });
     }
 
+    @Override
+    public synchronized void OnTextChanged(Text text)
+    {
+        if (_lastText != null)
+            _lastText.run();
+    }
+
     private void previewHexagram(String id)
     {
         int val = Integer.parseInt(id);
@@ -77,14 +88,18 @@ public class HexagramPreview implements Initializable
         loadHexagramText(hex);
     }
 
-    private void loadHexagramText(Hexagram hex)
+    private synchronized void loadHexagramText(Hexagram hex)
     {
-        _browser.load(_textFactory.getText().getHexagramText(hex.getId()));
+        _lastText = () -> _browser.load(_textFactory.getText().getHexagramText(hex.getId()));
+
+        _lastText.run();
     }
 
-    private void loadTrigramText(Trigram trig)
+    private synchronized void loadTrigramText(Trigram trig)
     {
-        _browser.load(_textFactory.getText().getTrigramText(trig.getName()));
+        _lastText = () -> _browser.load(_textFactory.getText().getTrigramText(trig.getName()));
+
+        _lastText.run();
     }
 
     @FXML
@@ -135,6 +150,7 @@ public class HexagramPreview implements Initializable
 
     private NodeSelectGroup _selector = new NodeSelectGroup("white", "#336699");
     private TextFactory _textFactory = new TextFactory();
+    private Runnable _lastText;
 
     @FXML private ScrollPane _preview;
     @FXML private Browser _browser;

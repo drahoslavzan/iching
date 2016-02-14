@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.geometry.Insets?>
-<?import com.yijingoracle.iching.app.Const?>
+<?import com.yijingoracle.iching.core.Const?>
 
 <?import com.yijingoracle.iching.core.Browser?>
 <?import javafx.scene.layout.Pane?>

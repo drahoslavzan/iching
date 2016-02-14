@@ -3,7 +3,6 @@ package com.yijingoracle.iching.app.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.yijingoracle.iching.app.Const;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;

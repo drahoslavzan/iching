@@ -13,10 +13,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
 import java.net.URL;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 
 public class Main extends Application implements AppPluginCallback
@@ -33,7 +33,7 @@ public class Main extends Application implements AppPluginCallback
 
             ((Hyperlink) root.lookup("#_linkTexts")).setOnAction(event -> DesktopLauncher.launchDesktopBrowser(Const.SITE_TEXTS));
             _tabs = (TabPane) root.lookup("#_tabs");
-            _texts = (ComboBox<String>) root.lookup("#_texts");
+            _textCombo = (ComboBox<String>) root.lookup("#_texts");
 
             URL style = getClass().getResource("/app.css");
             root.getStylesheets().add(style.toExternalForm());
@@ -86,12 +86,22 @@ public class Main extends Application implements AppPluginCallback
 
             List<Text> texts = tl.loadTexts();
 
-            texts.forEach((t) -> _texts.getItems().add(t.getName()));
+            texts.forEach((t) ->
+            {
+                _texts.put(t.getName(), t);
+                _textCombo.getItems().add(t.getName());
+            });
 
             if (!texts.isEmpty())
             {
-                _texts.setValue(texts.get(0).getName());
+                TextFactory.setText(texts.get(0));
+                _textCombo.setValue(texts.get(0).getName());
             }
+
+            _textCombo.valueProperty().addListener((selected, oldVal, newVal) ->
+            {
+                TextFactory.setText(_texts.get(newVal));
+            });
         }
         catch (Exception e)
         {
@@ -147,6 +157,7 @@ public class Main extends Application implements AppPluginCallback
     }
 
     private TabPane _tabs;
-    private ComboBox<String> _texts;
+    private ComboBox<String> _textCombo;
+    private Dictionary<String, Text> _texts = new Hashtable<>();
 }
 

@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
 import java.net.URL;
 import java.util.ResourceBundle;
-import com.yijingoracle.iching.app.Const;
+import com.yijingoracle.iching.core.Const;
 import com.yijingoracle.iching.core.DesktopLauncher;
 
 
