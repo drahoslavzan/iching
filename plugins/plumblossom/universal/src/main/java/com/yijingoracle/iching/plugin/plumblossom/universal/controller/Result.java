@@ -1,22 +1,24 @@
 package com.yijingoracle.iching.plugin.plumblossom.universal.controller;
 
-import com.yijingoracle.iching.core.Hexagram;
-import com.yijingoracle.iching.core.HexagramDecomposition;
-import com.yijingoracle.iching.core.SelectEvent;
-import com.yijingoracle.iching.core.Trigram;
+import com.yijingoracle.iching.core.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class Result implements Initializable
+public class Result implements Initializable, TextFactoryCallback
 {
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
         try
         {
+            _decompositionRight.setSelector(_decompositionLeft.getSelector());
+
+            _textFactory.Register(this);
         }
         catch(Exception e)
         {
@@ -24,19 +26,59 @@ public class Result implements Initializable
         }
     }
 
+    public void loadResult(Hexagram left, int queryLength, String date)
+    {
+        Hexagram right = left.getChangingHexagram();
+
+        _decompositionRight.setHexagram(right, _textFactory.getText().getHexagramTitle(right.getId()));
+        _decompositionLeft.setHexagram(left, _textFactory.getText().getHexagramTitle(left.getId()));
+
+        _calcQueryLength.setText(String.valueOf(queryLength));
+        _calcDate.setText(date);
+
+        loadHexagramText(left);
+    }
+
+    @Override
+    public synchronized void OnTextChanged(Text text)
+    {
+        if (_lastText != null)
+            _lastText.run();
+    }
+
+    private synchronized void loadHexagramText(Hexagram hex)
+    {
+        _lastText = () -> _browser.load(_textFactory.getText().getHexagramText(hex.getId()));
+
+        _lastText.run();
+    }
+
+    private synchronized void loadTrigramText(Trigram trig)
+    {
+        _lastText = () -> _browser.load(_textFactory.getText().getTrigramText(trig.getName()));
+
+        _lastText.run();
+    }
+
     @FXML
     private void onSelectElement(SelectEvent event)
     {
         if (event.getSelected() instanceof Hexagram)
         {
-            System.out.println("HEX");
+            loadHexagramText((Hexagram)event.getSelected());
         }
         else if  (event.getSelected() instanceof Trigram)
         {
-            System.out.println("TRIG");
+            loadTrigramText((Trigram)event.getSelected());
         }
     }
 
+    private Runnable _lastText;
+    private TextFactory _textFactory = new TextFactory();
+
+    @FXML private Browser _browser;
     @FXML private HexagramDecomposition _decompositionLeft;
     @FXML private HexagramDecomposition _decompositionRight;
+    @FXML private TextField _calcQueryLength;
+    @FXML private TextField _calcDate;
 }

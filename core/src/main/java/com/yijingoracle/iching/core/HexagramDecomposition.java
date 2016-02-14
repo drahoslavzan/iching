@@ -3,11 +3,11 @@ package com.yijingoracle.iching.core;
 import com.yijingoracle.iching.core.util.NodeSelectGroup;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.util.Callback;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 
 
@@ -65,6 +65,8 @@ public class HexagramDecomposition extends VBox
         _onSelect = onSelectElement;
         setEventHandler(SelectEvent.SELECT_ACTION, onSelectElement);
     }
+
+    public NodeSelectGroup getSelector() { return _selector; }
 
     public void setSelector(NodeSelectGroup selector)
     {

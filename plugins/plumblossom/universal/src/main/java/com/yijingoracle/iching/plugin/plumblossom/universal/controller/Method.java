@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.yijingoracle.iching.core.AppPlugin;
+import com.yijingoracle.iching.core.Hexagram;
 import com.yijingoracle.iching.plugin.plumblossom.universal.Plugin;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,9 +69,16 @@ public class Method implements Initializable
         try
         {
             FXMLLoader.setDefaultClassLoader(getClass().getClassLoader());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Result.fxml"));
             ResourceBundle bundle = ResourceBundle.getBundle("plugin", new Locale("en"));
+            loader.setResources(bundle);
 
-            node = FXMLLoader.load(getClass().getResource("/fxml/Result.fxml"), bundle);
+            node = loader.load();
+            Result result = loader.getController();
+
+            Hexagram hex = new Hexagram(28);
+            hex.changeLine(2);
+            result.loadResult(hex, 10, _date.toString());
         }
         catch (Exception e)
         {

@@ -90,7 +90,11 @@ public class Hexagram
         for (int i = 0; i < LINES; ++i)
             key.append(table[i] ^ (_changedLines[i] ? 1 : 0));
 
-        return new Hexagram(LINES_TO_HEXAGRAM.get(key.toString()));
+        Hexagram ret = new Hexagram(LINES_TO_HEXAGRAM.get(key.toString()));
+
+        System.arraycopy(_changedLines, 0, ret._changedLines, 0, _changedLines.length);
+
+        return ret;
     }
 
     private int getLineIndexWithGuard(int line)

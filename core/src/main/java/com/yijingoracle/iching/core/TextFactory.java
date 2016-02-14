@@ -1,10 +1,7 @@
-package com.yijingoracle.iching.app;
+package com.yijingoracle.iching.core;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.yijingoracle.iching.core.*;
 
 
 public final class TextFactory

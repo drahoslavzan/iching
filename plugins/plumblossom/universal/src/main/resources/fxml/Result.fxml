@@ -6,12 +6,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.ScrollPane?>
 
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.yijingoracle.iching.plugin.plumblossom.universal.controller.Result"
             fitToWidth="True" fitToHeight="True">
-    <VBox alignment="CENTER">
 
-            <HBox alignment="CENTER_LEFT">
+    <VBox alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" VBox.vgrow="SOMETIMES">
                 <Pane HBox.hgrow="ALWAYS" />
                 <HexagramDecomposition utName="%ut" uctName="%uct" lctName="%lct" ltName="%lt"
                                        onSelectElement="#onSelectElement"
@@ -26,6 +30,16 @@
                                        fx:id="_decompositionRight"/>
                 <Pane HBox.hgrow="ALWAYS" />
             </HBox>
+
+            <TitledPane expanded="false" text="%calculation">
+                <GridPane hgap="20">
+                    <Label text="%calcQueryLength" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <TextField editable="false" fx:id="_calcQueryLength" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                    <Label text="%calcDate" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <TextField editable="false" fx:id="_calcDate" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                </GridPane>
+            </TitledPane>
 
             <VBox VBox.vgrow="ALWAYS">
                 <Browser styleClass="browser-text" fx:id="_browser" VBox.vgrow="ALWAYS"/>

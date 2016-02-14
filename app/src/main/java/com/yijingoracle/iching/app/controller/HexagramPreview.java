@@ -1,13 +1,12 @@
 package com.yijingoracle.iching.app.controller;
  
-import com.yijingoracle.iching.app.TextFactory;
-import com.yijingoracle.iching.app.TextFactoryCallback;
+import com.yijingoracle.iching.core.TextFactory;
+import com.yijingoracle.iching.core.TextFactoryCallback;
 import com.yijingoracle.iching.core.Text;
 import com.yijingoracle.iching.core.util.NodeSelectGroup;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
-import javafx.scene.text.*;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
 import java.net.URL;
@@ -58,13 +57,6 @@ public class HexagramPreview implements Initializable, TextFactoryCallback
         });
     }
 
-    @Override
-    public synchronized void OnTextChanged(Text text)
-    {
-        if (_lastText != null)
-            _lastText.run();
-    }
-
     private void previewHexagram(String id)
     {
         int val = Integer.parseInt(id);
@@ -86,6 +78,13 @@ public class HexagramPreview implements Initializable, TextFactoryCallback
     {
         _decomposition.setHexagram(hex, _textFactory.getText().getHexagramTitle(hex.getId()));
         loadHexagramText(hex);
+    }
+
+    @Override
+    public synchronized void OnTextChanged(Text text)
+    {
+        if (_lastText != null)
+            _lastText.run();
     }
 
     private synchronized void loadHexagramText(Hexagram hex)

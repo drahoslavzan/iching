@@ -1,9 +1,9 @@
 package com.yijingoracle.iching.app.controller;
  
-import com.yijingoracle.iching.app.TextFactoryCallback;
+import com.yijingoracle.iching.core.TextFactoryCallback;
 import com.yijingoracle.iching.core.Text;
 import com.yijingoracle.iching.core.util.NodeSelectGroup;
-import com.yijingoracle.iching.app.TextFactory;
+import com.yijingoracle.iching.core.TextFactory;
 import com.yijingoracle.iching.core.Browser;
 import com.yijingoracle.iching.core.Trigram;
 import com.yijingoracle.iching.core.TrigramRegion;

@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -26,6 +27,7 @@ public class ResultWindow implements Initializable
     {
         _root.getChildren().clear();
         _root.getChildren().add(node);
+        _root.setVgrow(node, Priority.ALWAYS);
     }
 
     public void show()
