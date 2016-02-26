@@ -39,8 +39,9 @@ public class HexagramDecomposition extends VBox
 
     public void setHexagram(Hexagram hex, String title)
     {
-        _hexagramTitle.setText(String.format("%d. %s", hex.getId(), title));
         _hexagram.setHexagram(hex);
+
+        setHexagramTitle(title);
 
         Hexagram.Decomposition decs = hex.decompose();
 
@@ -69,6 +70,11 @@ public class HexagramDecomposition extends VBox
     {
         _onSelect = onSelectElement;
         setEventHandler(SelectEvent.SELECT_ACTION, onSelectElement);
+    }
+
+    public void setHexagramTitle(String title)
+    {
+        _hexagramTitle.setText(String.format("%d. %s", _hexagram.getHexagram().getId(), title));
     }
 
     public NodeSelectGroup getSelector() { return _selector; }

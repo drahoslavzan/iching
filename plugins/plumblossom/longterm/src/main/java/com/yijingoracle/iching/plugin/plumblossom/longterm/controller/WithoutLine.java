@@ -1,4 +1,4 @@
-package com.yijingoracle.iching.plugin.plumblossom.universal.controller;
+package com.yijingoracle.iching.plugin.plumblossom.longterm.controller;
 
 import com.yijingoracle.iching.core.*;
 import javafx.fxml.FXML;
@@ -12,15 +12,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class Result implements Initializable, TextFactoryCallback
+public class WithoutLine implements Initializable, TextFactoryCallback
 {
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
         try
         {
-            _decompositionRight.setSelector(_decompositionLeft.getSelector());
-
             _textFactory.register(this);
         }
         catch(Exception e)
@@ -29,24 +27,21 @@ public class Result implements Initializable, TextFactoryCallback
         }
     }
 
-    public void loadResult(Hexagram left, String query, int queryLength, String date, int line)
+    public void loadResult(Hexagram hex, String queryUp, int queryUpLength, String queryDown, int queryDownLength)
     {
-        loadHexagram(left);
+        loadHexagram(hex);
 
-        _calcQuery.setText(query);
-        _calcQueryLength.setText(String.valueOf(queryLength));
-        _calcDate.setText(date);
-        _calcLine.setText(String.valueOf(line));
+        _calcQueryUp.setText(queryUp);
+        _calcQueryUpLength.setText(String.valueOf(queryUpLength));
+        _calcQueryDown.setText(queryDown);
+        _calcQueryDownLength.setText(String.valueOf(queryDownLength));
 
-        loadHexagramText(left);
+        loadHexagramText(hex);
     }
 
-    private void loadHexagram(Hexagram left)
+    private void loadHexagram(Hexagram hex)
     {
-        Hexagram right = left.getChangingHexagram();
-
-        _decompositionRight.setHexagram(right, _textFactory.getText().getHexagramTitle(right.getId()));
-        _decompositionLeft.setHexagram(left, _textFactory.getText().getHexagramTitle(left.getId()));
+        _decomposition.setHexagram(hex, _textFactory.getText().getHexagramTitle(hex.getId()));
     }
 
     @Override
@@ -55,14 +50,10 @@ public class Result implements Initializable, TextFactoryCallback
         if (_lastText != null)
             _lastText.run();
 
-        Hexagram hexLeft = _decompositionLeft.getHexagram();
-        Hexagram hexRight = _decompositionRight.getHexagram();
+        Hexagram hex = _decomposition.getHexagram();
 
-        if (hexLeft != null && hexRight != null)
-        {
-            _decompositionLeft.setHexagramTitle(_textFactory.getText().getHexagramTitle(hexLeft.getId()));
-            _decompositionRight.setHexagramTitle(_textFactory.getText().getHexagramTitle(hexRight.getId()));
-        }
+        if (hex != null)
+            _decomposition.setHexagramTitle(_textFactory.getText().getHexagramTitle(hex.getId()));
     }
 
     private synchronized void loadHexagramText(Hexagram hex)
@@ -96,10 +87,9 @@ public class Result implements Initializable, TextFactoryCallback
     private TextFactory _textFactory = new TextFactory();
 
     @FXML private Browser _browser;
-    @FXML private HexagramDecomposition _decompositionLeft;
-    @FXML private HexagramDecomposition _decompositionRight;
-    @FXML private TextField _calcQuery;
-    @FXML private TextField _calcQueryLength;
-    @FXML private TextField _calcDate;
-    @FXML private TextField _calcLine;
+    @FXML private HexagramDecomposition _decomposition;
+    @FXML private TextField _calcQueryUp;
+    @FXML private TextField _calcQueryDown;
+    @FXML private TextField _calcQueryUpLength;
+    @FXML private TextField _calcQueryDownLength;
 }

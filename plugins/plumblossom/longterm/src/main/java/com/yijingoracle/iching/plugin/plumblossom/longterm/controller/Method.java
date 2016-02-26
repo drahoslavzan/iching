@@ -1,8 +1,6 @@
 package com.yijingoracle.iching.plugin.plumblossom.longterm.controller;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -13,13 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import jfxtras.scene.control.LocalDateTimeTextField;
 import com.yijingoracle.iching.core.Browser;
 
 
@@ -30,14 +25,17 @@ public class Method implements Initializable
     {
         try
         {
-            URL method = getClass().getResource("/longterm/description.html");
-
-            _browser.loadUrl(method);
-
             FXMLLoader.setDefaultClassLoader(getClass().getClassLoader());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/longterm/fxml/Result.fxml"));
             ResourceBundle bundle = ResourceBundle.getBundle("longterm/plugin", new Locale("en"));
             loader.setResources(bundle);
+
+            URL method = getClass().getResource("/longterm/description.html");
+
+            _browser.loadUrl(method);
+
+            _queryUp.setTooltip(new Tooltip(bundle.getString("compute")));
+            _queryDown.setTooltip(new Tooltip(bundle.getString("compute")));
 
             _node = loader.load();
             _result = loader.getController();
@@ -90,8 +88,11 @@ public class Method implements Initializable
         if (queryUpLength < 1 || queryDownLength < 1)
             return false;
 
-        int hexIndex = 20;
-        int line = 2;
+        int line = modulateNumber(queryUpLength + queryDownLength, Hexagram.LINES);
+        int top = modulateNumber(queryUpLength, Trigram.COUNT);
+        int bottom = modulateNumber(queryDownLength, Trigram.COUNT);
+
+        int hexIndex = Hexagram.getHexagramIdFromTrigrams(Trigram.getNameFromEarlyHeavenValue(top), Trigram.getNameFromEarlyHeavenValue(bottom));
 
         Hexagram hex = new Hexagram(hexIndex);
         hex.changeLine(line);

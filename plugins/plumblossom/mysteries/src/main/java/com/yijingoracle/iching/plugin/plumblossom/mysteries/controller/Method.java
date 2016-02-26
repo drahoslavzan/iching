@@ -13,7 +13,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import jfxtras.scene.control.LocalDateTimeTextField;
@@ -27,13 +31,6 @@ public class Method implements Initializable
     {
         try
         {
-            _date.setDateTimeFormatter(DateTimeFormatter.ofPattern(DATE_FORMAT));
-            _date.setLocalDateTime(LocalDateTime.now());
-
-            URL method = getClass().getResource("/mysteries/description.html");
-
-            _browser.loadUrl(method);
-
             FXMLLoader.setDefaultClassLoader(getClass().getClassLoader());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mysteries/fxml/Result.fxml"));
             ResourceBundle bundle = ResourceBundle.getBundle("mysteries/plugin", new Locale("en"));
@@ -41,10 +38,32 @@ public class Method implements Initializable
 
             _node = loader.load();
             _result = loader.getController();
+
+            URL method = getClass().getResource("/mysteries/description.html");
+            _browser.loadUrl(method);
+
+            Image btnIcon = new Image(getClass().getResourceAsStream("/image/method.png"));
+            ImageView btnIconView = new ImageView(btnIcon);
+            btnIconView.setFitWidth(18);
+            btnIconView.setFitHeight(18);
+            _compute.setGraphic(btnIconView);
+            _compute.setTooltip(new Tooltip(bundle.getString("compute")));
+
+            _date.setDateTimeFormatter(DateTimeFormatter.ofPattern(DATE_FORMAT));
+            _date.setLocalDateTime(LocalDateTime.now());
         }
         catch(Exception e)
         {
             com.yijingoracle.iching.core.util.Dialog.showException(e);
+        }
+    }
+
+    public void onClick()
+    {
+        if (_subscriber != null)
+        {
+            if(computeHexagramAndLoadResult())
+                _subscriber.onResult(_node);
         }
     }
 
@@ -53,22 +72,17 @@ public class Method implements Initializable
         _subscriber = subscriber;
     }
 
-    private String filterText(String text)
-    {
-        return text.replaceAll("[^a-zA-Z0-9 ]", "").replaceAll("  +", " ");
-    }
-
-    private int getLengthWithoutWhitespace(String text)
-    {
-        return text.replaceAll(" ", "").length();
-    }
-
     private boolean computeHexagramAndLoadResult()
     {
         LocalDateTime date = _date.getLocalDateTime();
 
-        int hexIndex = 20;
-        int line = 2;
+        int dateSum = date.getYear() + date.getMonthValue() + date.getDayOfMonth();
+        int top = modulateNumber(dateSum, Trigram.COUNT);
+        int bottom = modulateNumber(top + date.getHour(), Trigram.COUNT);
+        int line = modulateNumber(top + date.getHour(), Hexagram.LINES);
+
+        int hexIndex = Hexagram.getHexagramIdFromTrigrams(Trigram.getNameFromEarlyHeavenValue(top),
+                Trigram.getNameFromEarlyHeavenValue(bottom));
 
         Hexagram hex = new Hexagram(hexIndex);
         hex.changeLine(line);
@@ -88,6 +102,7 @@ public class Method implements Initializable
     private Node _node;
     private Result _result;
 
+    @FXML private Button _compute;
     @FXML private Browser _browser;
     @FXML private LocalDateTimeTextField _date;
 }

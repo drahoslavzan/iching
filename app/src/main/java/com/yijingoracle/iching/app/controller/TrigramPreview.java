@@ -29,11 +29,12 @@ public class TrigramPreview implements Initializable, TextFactoryCallback
         if(event.getCode() == KeyCode.ENTER)
         {
             String str = _query.getText().replaceAll("\\s", "");
+            int len = str.length();
 
-            if(str.length() < 1)
+            if(len < 1)
                 return;
 
-            int value = str.length() % 8;
+            int value = ((len - 1) % Trigram.COUNT) + 1;
 
             Node node = getNodeFromGridPane(_preview, value - 1, 0);
 

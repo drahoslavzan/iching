@@ -85,6 +85,11 @@ public class HexagramPreview implements Initializable, TextFactoryCallback
     {
         if (_lastText != null)
             _lastText.run();
+
+        Hexagram hex = _decomposition.getHexagram();
+
+        if (hex != null)
+            _decomposition.setHexagramTitle(_textFactory.getText().getHexagramTitle(hex.getId()));
     }
 
     private synchronized void loadHexagramText(Hexagram hex)

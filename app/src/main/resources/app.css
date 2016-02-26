@@ -108,6 +108,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.65), 10, 0.5, 0.0, 0.0);
     -fx-effect: innershadow(gaussian, rgba(1, 1, 1, 0.65), 10, 0.5, 0.0, 5.0);
     -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.65), 10, 0.5, 0.0, -5.0);
+    -fx-padding: 15;
 }
 
 .hexagram-sunken
@@ -118,6 +119,7 @@
     -fx-alignment: center;
     -fx-min-width: 130;
     -fx-pref-width: 130;
+    -fx-padding: 15;
 }
 
 .trigram-sunken
@@ -129,6 +131,7 @@
     -fx-min-width: 100;
     -fx-pref-width: 100;
     -fx-effect: innershadow(three-pass-box, gray, 12 , 0.5, 1, 1);
+    -fx-padding: 15;
 }
 
 .trigram-sunken-highlighted
@@ -140,6 +143,7 @@
     -fx-min-width: 100;
     -fx-pref-width: 100;
     -fx-effect: innershadow(three-pass-box, gray, 12 , 0.5, 1, 1);
+    -fx-padding: 15;
 }
 
 .query

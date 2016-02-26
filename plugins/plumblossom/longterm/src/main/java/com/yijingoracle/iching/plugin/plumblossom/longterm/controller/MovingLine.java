@@ -1,4 +1,4 @@
-package com.yijingoracle.iching.plugin.plumblossom.universal.controller;
+package com.yijingoracle.iching.plugin.plumblossom.longterm.controller;
 
 import com.yijingoracle.iching.core.*;
 import javafx.fxml.FXML;
@@ -7,18 +7,50 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-public class Result implements Initializable, TextFactoryCallback
+public class MovingLine implements Initializable, TextFactoryCallback
 {
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
         try
         {
+            Image arrowUp = new Image(getClass().getResourceAsStream("/longterm/image/up.png"));
+            ImageView viewUp = new ImageView(arrowUp);
+            ImageView viewDown = new ImageView(arrowUp);
+            viewDown.setRotate(180);
+
+            _up.setGraphic(viewUp);
+            _down.setGraphic(viewDown);
+
+            _up.setOnAction(e ->
+            {
+                Hexagram hex = _decompositionLeft.getHexagram();
+
+                if (_line < Hexagram.LINES)
+                {
+                    ++_line;
+                    hex.changeLine(_line);
+                }
+
+                loadHexagram(hex);
+            });
+
+            _down.setOnAction(e ->
+            {
+                Hexagram hex = _decompositionLeft.getHexagram();
+
+                if (_line > 1)
+                {
+                    hex.unchangeLine(_line);
+                    --_line;
+                }
+
+                loadHexagram(hex);
+            });
+
             _decompositionRight.setSelector(_decompositionLeft.getSelector());
 
             _textFactory.register(this);
@@ -29,16 +61,36 @@ public class Result implements Initializable, TextFactoryCallback
         }
     }
 
-    public void loadResult(Hexagram left, String query, int queryLength, String date, int line)
+    public void loadResult(Hexagram left, String queryUp, int queryUpLength, String queryDown, int queryDownLength)
     {
+        _line = 1;
+        left.changeLine(_line);
+
         loadHexagram(left);
 
-        _calcQuery.setText(query);
-        _calcQueryLength.setText(String.valueOf(queryLength));
-        _calcDate.setText(date);
-        _calcLine.setText(String.valueOf(line));
+        _calcQueryUp.setText(queryUp);
+        _calcQueryUpLength.setText(String.valueOf(queryUpLength));
+        _calcQueryDown.setText(queryDown);
+        _calcQueryDownLength.setText(String.valueOf(queryDownLength));
 
         loadHexagramText(left);
+    }
+
+    private void moveHexagramLines(Hexagram hexagram, int dir)
+    {
+        int lStart = dir < 0 ? 2 : (Hexagram.LINES - 1);
+        int lStop = dir < 0 ? (Hexagram.LINES + 1) : 0;
+
+        for (int i = lStart; i != lStop; i -= dir)
+        {
+            if (hexagram.lineChanged(i))
+            {
+                int l = i + dir;
+
+                hexagram.unchangeLine(i);
+                hexagram.changeLine(l);
+            }
+        }
     }
 
     private void loadHexagram(Hexagram left)
@@ -94,12 +146,15 @@ public class Result implements Initializable, TextFactoryCallback
 
     private Runnable _lastText;
     private TextFactory _textFactory = new TextFactory();
+    private int _line;
 
+    @FXML private Button _up;
+    @FXML private Button _down;
     @FXML private Browser _browser;
     @FXML private HexagramDecomposition _decompositionLeft;
     @FXML private HexagramDecomposition _decompositionRight;
-    @FXML private TextField _calcQuery;
-    @FXML private TextField _calcQueryLength;
-    @FXML private TextField _calcDate;
-    @FXML private TextField _calcLine;
+    @FXML private TextField _calcQueryUp;
+    @FXML private TextField _calcQueryDown;
+    @FXML private TextField _calcQueryUpLength;
+    @FXML private TextField _calcQueryDownLength;
 }

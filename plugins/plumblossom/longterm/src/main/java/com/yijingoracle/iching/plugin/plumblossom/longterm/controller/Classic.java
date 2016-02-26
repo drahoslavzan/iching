@@ -1,4 +1,4 @@
-package com.yijingoracle.iching.plugin.plumblossom.universal.controller;
+package com.yijingoracle.iching.plugin.plumblossom.longterm.controller;
 
 import com.yijingoracle.iching.core.*;
 import javafx.fxml.FXML;
@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class Result implements Initializable, TextFactoryCallback
+public class Classic implements Initializable, TextFactoryCallback
 {
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
@@ -29,16 +29,32 @@ public class Result implements Initializable, TextFactoryCallback
         }
     }
 
-    public void loadResult(Hexagram left, String query, int queryLength, String date, int line)
+    public void loadResult(Hexagram left, String queryUp, int queryUpLength, String queryDown, int queryDownLength, int line)
     {
         loadHexagram(left);
 
-        _calcQuery.setText(query);
-        _calcQueryLength.setText(String.valueOf(queryLength));
-        _calcDate.setText(date);
+        _calcQueryUp.setText(queryUp);
+        _calcQueryUpLength.setText(String.valueOf(queryUpLength));
+        _calcQueryDown.setText(queryDown);
+        _calcQueryDownLength.setText(String.valueOf(queryDownLength));
         _calcLine.setText(String.valueOf(line));
 
         loadHexagramText(left);
+    }
+
+    private void moveHexagramLines(Hexagram hexagram, int dir)
+    {
+        int lStart = dir < 0 ? 2 : (Hexagram.LINES - 1);
+        int lStop = dir < 0 ? (Hexagram.LINES + 1) : 0;
+
+        for (int i = lStart; i != lStop; i -= dir)
+        {
+            if (hexagram.lineChanged(i))
+            {
+                hexagram.unchangeLine(i);
+                hexagram.changeLine(i + dir);
+            }
+        }
     }
 
     private void loadHexagram(Hexagram left)
@@ -98,8 +114,9 @@ public class Result implements Initializable, TextFactoryCallback
     @FXML private Browser _browser;
     @FXML private HexagramDecomposition _decompositionLeft;
     @FXML private HexagramDecomposition _decompositionRight;
-    @FXML private TextField _calcQuery;
-    @FXML private TextField _calcQueryLength;
-    @FXML private TextField _calcDate;
+    @FXML private TextField _calcQueryUp;
+    @FXML private TextField _calcQueryDown;
+    @FXML private TextField _calcQueryUpLength;
+    @FXML private TextField _calcQueryDownLength;
     @FXML private TextField _calcLine;
 }

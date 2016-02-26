@@ -51,6 +51,15 @@ public class Result implements Initializable, TextFactoryCallback
     {
         if (_lastText != null)
             _lastText.run();
+
+        Hexagram hexLeft = _decompositionLeft.getHexagram();
+        Hexagram hexRight = _decompositionRight.getHexagram();
+
+        if (hexLeft != null && hexRight != null)
+        {
+            _decompositionLeft.setHexagramTitle(_textFactory.getText().getHexagramTitle(hexLeft.getId()));
+            _decompositionRight.setHexagramTitle(_textFactory.getText().getHexagramTitle(hexRight.getId()));
+        }
     }
 
     private synchronized void loadHexagramText(Hexagram hex)

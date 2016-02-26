@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import jfxtras.scene.control.LocalDateTimeTextField;
@@ -27,17 +28,19 @@ public class Method implements Initializable
     {
         try
         {
+            FXMLLoader.setDefaultClassLoader(getClass().getClassLoader());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/universal/fxml/Result.fxml"));
+            ResourceBundle bundle = ResourceBundle.getBundle("universal/plugin", new Locale("en"));
+            loader.setResources(bundle);
+
+            _query.setTooltip(new Tooltip(bundle.getString("compute")));
+
             _date.setDateTimeFormatter(DateTimeFormatter.ofPattern(DATE_FORMAT));
             _date.setLocalDateTime(LocalDateTime.now());
 
             URL method = getClass().getResource("/universal/description.html");
 
             _browser.loadUrl(method);
-
-            FXMLLoader.setDefaultClassLoader(getClass().getClassLoader());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/universal/fxml/Result.fxml"));
-            ResourceBundle bundle = ResourceBundle.getBundle("universal/plugin", new Locale("en"));
-            loader.setResources(bundle);
 
             _node = loader.load();
             _result = loader.getController();
