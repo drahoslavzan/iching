@@ -107,10 +107,9 @@ public class Hexagram
 
     private void changeLine(int line, boolean mark)
     {
-        if(line < 1 || line > LINES)
-            throw new IndexOutOfBoundsException(String.format("Hexagram line %d is out of bounds", line));
+        int i = getLineIndexWithGuard(line);
 
-        _changedLines[line - 1] = mark;
+        _changedLines[i] = mark;
     }
 
     private static final HashMap<String, Integer> LINES_TO_HEXAGRAM = new HashMap<>();

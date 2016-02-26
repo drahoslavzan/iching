@@ -6,13 +6,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import com.yijingoracle.iching.core.AppPlugin;
 import com.yijingoracle.iching.core.Hexagram;
+import com.yijingoracle.iching.core.Trigram;
 import com.yijingoracle.iching.plugin.plumblossom.universal.Plugin;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import jfxtras.scene.control.LocalDateTimeTextField;
@@ -26,12 +27,20 @@ public class Method implements Initializable
     {
         try
         {
-            _date.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd MMMM yyyy    hh a"));
+            _date.setDateTimeFormatter(DateTimeFormatter.ofPattern(DATE_FORMAT));
             _date.setLocalDateTime(LocalDateTime.now());
 
-            URL method = getClass().getResource("/universal.html");
+            URL method = getClass().getResource("/universal/description.html");
 
             _browser.loadUrl(method);
+
+            FXMLLoader.setDefaultClassLoader(getClass().getClassLoader());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/universal/fxml/Result.fxml"));
+            ResourceBundle bundle = ResourceBundle.getBundle("universal/plugin", new Locale("en"));
+            loader.setResources(bundle);
+
+            _node = loader.load();
+            _result = loader.getController();
         }
         catch(Exception e)
         {
@@ -43,17 +52,15 @@ public class Method implements Initializable
     {
         if(event.getCode() == KeyCode.ENTER)
         {
+            String text = _query.getText();
+
             if (_subscriber != null)
             {
-                Node node = CreateResult();
-                _subscriber.onResult(node);
+                if(computeHexagramAndLoadResult(text))
+                    _subscriber.onResult(_node);
             }
 
             event.consume();
-        }
-        else
-        {
-            _text += event.getText();
         }
     }
 
@@ -62,36 +69,54 @@ public class Method implements Initializable
         _subscriber = subscriber;
     }
 
-    private Node CreateResult()
+    private String filterText(String text)
     {
-        Node node;
-
-        try
-        {
-            FXMLLoader.setDefaultClassLoader(getClass().getClassLoader());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Result.fxml"));
-            ResourceBundle bundle = ResourceBundle.getBundle("plugin", new Locale("en"));
-            loader.setResources(bundle);
-
-            node = loader.load();
-            Result result = loader.getController();
-
-            Hexagram hex = new Hexagram(28);
-            hex.changeLine(2);
-            result.loadResult(hex, 10, _date.toString());
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e.getMessage());
-        }
-
-        return node;
+        return text.replaceAll("[^a-zA-Z0-9 ]", "").replaceAll("  +", " ");
     }
 
-    private String _text = "";
+    private int getLengthWithoutWhitespace(String text)
+    {
+        return text.replaceAll(" ", "").length();
+    }
+
+    private boolean computeHexagramAndLoadResult(String text)
+    {
+        String query = filterText(text);
+        int queryLength = getLengthWithoutWhitespace(query);
+
+        if (queryLength < 1)
+            return false;
+
+        LocalDateTime date = _date.getLocalDateTime();
+
+        int dateSum = date.getYear() + date.getMonthValue() + date.getDayOfMonth();
+        int top = modulateNumber(queryLength, Trigram.COUNT);
+        int bottom = modulateNumber(dateSum, Trigram.COUNT);
+        int line = modulateNumber(dateSum + date.getHour(), Hexagram.LINES);
+
+        int hexIndex = Hexagram.getHexagramIdFromTrigrams(Trigram.getNameFromEarlyHeavenValue(top),
+            Trigram.getNameFromEarlyHeavenValue(bottom));
+
+        Hexagram hex = new Hexagram(hexIndex);
+        hex.changeLine(line);
+
+        String dateStr = _date.getLocalDateTime().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
+
+        _result.loadResult(hex, query, queryLength, dateStr, line);
+
+        return true;
+    }
+
+    private int modulateNumber(int num, int mod) { return ((num - 1) % mod) + 1; }
+
+    private final String DATE_FORMAT = "dd MMMM yyyy    hh a";
+
     private Plugin _subscriber;
+    private Node _node;
+    private Result _result;
 
     @FXML private Browser _browser;
+    @FXML private TextField _query;
     @FXML private LocalDateTimeTextField _date;
 }
 

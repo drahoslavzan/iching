@@ -4,5 +4,5 @@ import com.yijingoracle.iching.core.Text;
 
 public interface TextFactoryCallback
 {
-    void OnTextChanged(Text text);
+    void onTextChanged(Text text);
 }

@@ -55,6 +55,11 @@ public class HexagramDecomposition extends VBox
         _initialized = true;
     }
 
+    public Hexagram getHexagram()
+    {
+        return _hexagram.getHexagram();
+    }
+
     public final EventHandler<SelectEvent> getOnSelectElement()
     {
         return _onSelect;

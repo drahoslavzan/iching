@@ -27,7 +27,7 @@ public class Plugin implements AppPlugin
             loader.setDefaultClassLoader(getClass().getClassLoader());
 
             loader.setResources(_bundle);
-            node = loader.load(getClass().getResource("/fxml/Method.fxml").openStream());
+            node = loader.load(getClass().getResource("/universal/fxml/Method.fxml").openStream());
 
             Method controller = loader.getController();
 
@@ -63,7 +63,7 @@ public class Plugin implements AppPlugin
     {
         try
         {
-            _bundle = ResourceBundle.getBundle("plugin", new Locale("en"));
+            _bundle = ResourceBundle.getBundle("universal/plugin", new Locale("en"));
             _name = _bundle.getString("name");
         }
         catch (Exception e)

@@ -20,7 +20,7 @@ public class HexagramPreview implements Initializable, TextFactoryCallback
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
-        _textFactory.Register(this);
+        _textFactory.register(this);
 
         fillPreview();
 
@@ -81,7 +81,7 @@ public class HexagramPreview implements Initializable, TextFactoryCallback
     }
 
     @Override
-    public synchronized void OnTextChanged(Text text)
+    public synchronized void onTextChanged(Text text)
     {
         if (_lastText != null)
             _lastText.run();

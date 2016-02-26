@@ -3,7 +3,10 @@ package com.yijingoracle.iching.plugin.plumblossom.universal.controller;
 import com.yijingoracle.iching.core.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +21,7 @@ public class Result implements Initializable, TextFactoryCallback
         {
             _decompositionRight.setSelector(_decompositionLeft.getSelector());
 
-            _textFactory.Register(this);
+            _textFactory.register(this);
         }
         catch(Exception e)
         {
@@ -26,21 +29,28 @@ public class Result implements Initializable, TextFactoryCallback
         }
     }
 
-    public void loadResult(Hexagram left, int queryLength, String date)
+    public void loadResult(Hexagram left, String query, int queryLength, String date, int line)
+    {
+        loadHexagram(left);
+
+        _calcQuery.setText(query);
+        _calcQueryLength.setText(String.valueOf(queryLength));
+        _calcDate.setText(date);
+        _calcLine.setText(String.valueOf(line));
+
+        loadHexagramText(left);
+    }
+
+    private void loadHexagram(Hexagram left)
     {
         Hexagram right = left.getChangingHexagram();
 
         _decompositionRight.setHexagram(right, _textFactory.getText().getHexagramTitle(right.getId()));
         _decompositionLeft.setHexagram(left, _textFactory.getText().getHexagramTitle(left.getId()));
-
-        _calcQueryLength.setText(String.valueOf(queryLength));
-        _calcDate.setText(date);
-
-        loadHexagramText(left);
     }
 
     @Override
-    public synchronized void OnTextChanged(Text text)
+    public synchronized void onTextChanged(Text text)
     {
         if (_lastText != null)
             _lastText.run();
@@ -79,6 +89,8 @@ public class Result implements Initializable, TextFactoryCallback
     @FXML private Browser _browser;
     @FXML private HexagramDecomposition _decompositionLeft;
     @FXML private HexagramDecomposition _decompositionRight;
+    @FXML private TextField _calcQuery;
     @FXML private TextField _calcQueryLength;
     @FXML private TextField _calcDate;
+    @FXML private TextField _calcLine;
 }

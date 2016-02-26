@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import jfxtras.scene.control.*?>
+<?import com.yijingoracle.iching.core.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" spacing="10"
+      fx:controller="com.yijingoracle.iching.plugin.plumblossom.universal.controller.Method">
+
+    <Browser styleClass="browser-method" fx:id="_browser" VBox.vgrow="ALWAYS"/>
+
+    <TextField HBox.hgrow="ALWAYS" onKeyPressed="#onKeyPressed" fx:id="_query" styleClass="query" promptText="%queryPrompt"/>
+
+    <LocalDateTimeTextField fx:id="_date"/>
+</VBox>

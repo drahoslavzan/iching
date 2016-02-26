@@ -12,8 +12,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -124,8 +124,9 @@ public class Main extends Application implements AppPluginCallback
             browser.loadUrl(new URL("http://google.sk"));
 
             Tab tab = new Tab(bundle.getString("morePlugins"));
-            tab.setStyle("-fx-background-color: #ff5555;");
+            tab.setStyle("-fx-background-color: #eebbbb;");
             tab.setContent(browser);
+
             _tabs.getTabs().add(tab);
         }
         catch (Exception e)
@@ -140,13 +141,18 @@ public class Main extends Application implements AppPluginCallback
 
         try
         {
+            Image tabIcon = new Image(getClass().getResourceAsStream("/image/method.png"));
+            ImageView tabIconView = new ImageView(tabIcon);
+            tabIconView.setFitWidth(18);
+            tabIconView.setFitHeight(18);
+
             plugin.register(this);
 
             Tab tab = new Tab();
 
-            tab.setStyle("-fx-background-color: #55ff55;");
             tab.setContent(plugin.getMethod());
             tab.setText(plugin.getName());
+            tab.setGraphic(tabIconView);
 
             _tabs.getTabs().add(tab);
         }

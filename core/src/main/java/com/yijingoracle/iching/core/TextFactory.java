@@ -9,12 +9,12 @@ public final class TextFactory
     public static void setText(Text text)
     {
         _text = text;
-        _subscribers.forEach(s -> s.OnTextChanged(text));
+        _subscribers.forEach(s -> s.onTextChanged(text));
     }
 
     public static Text getText() { return _text; }
 
-    public static void Register(TextFactoryCallback subscriber)
+    public static void register(TextFactoryCallback subscriber)
     {
         _subscribers.add(subscriber);
     }

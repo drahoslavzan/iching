@@ -11,7 +11,7 @@ class LineCanvas extends Canvas
     {
         _count = count;
         VSPACING = 0.25 / (count - 1);
-        HEIGHT = (1.0 - 2 * VMARGIN - (count - 1) * VSPACING) / count;
+        HEIGHT = (1.0 - (count - 1) * VSPACING) / count;
     }
 
     public void clear()
@@ -32,8 +32,13 @@ class LineCanvas extends Canvas
 
         double width = getWidth();
         double height = getHeight();
-        double x = HMARGIN * width;
-        double y = VMARGIN * height + i * (HEIGHT + VSPACING) * height;
+
+        double margin = MARGIN * (width < height ? width : height);
+        width -= 2 * margin;
+        height -= 2 * margin;
+
+        double x = margin;
+        double y = margin + i * (HEIGHT + VSPACING) * height;
 
         _gc.fillRect(x, y, WIDTH * width, HEIGHT * height);
     }
@@ -44,8 +49,13 @@ class LineCanvas extends Canvas
 
         double width = getWidth();
         double height = getHeight();
-        double x = HMARGIN * width;
-        double y = VMARGIN * height + i * (HEIGHT + VSPACING) * height;
+
+        double margin = MARGIN * (width < height ? width : height);
+        width -= 2 * margin;
+        height -= 2 * margin;
+
+        double x = margin;
+        double y = margin + i * (HEIGHT + VSPACING) * height;
         double w = (WIDTH - HSPACING) * width / 2.0;
 
         _gc.fillRect(x, y, w, HEIGHT * height);
@@ -58,8 +68,13 @@ class LineCanvas extends Canvas
 
         double width = getWidth();
         double height = getHeight();
-        double x = HMARGIN * width;
-        double y = VMARGIN * height + i * (HEIGHT + VSPACING) * height;
+
+        double margin = MARGIN * (width < height ? width : height);
+        width -= 2 * margin;
+        height -= 2 * margin;
+
+        double x = margin;
+        double y = margin + i * (HEIGHT + VSPACING) * height;
         double w = (WIDTH - HSPACING) * width / 2.0;
         double min = Math.min(HSPACING * width, HEIGHT * height) + (VSPACING / 2.0) * width;
 
@@ -73,18 +88,23 @@ class LineCanvas extends Canvas
 
         double width = getWidth();
         double height = getHeight();
-        double x = HMARGIN * width;
-        double y = VMARGIN * height + i * (HEIGHT + VSPACING) * height;
+
+        double margin = MARGIN * (width < height ? width : height);
+        width -= 2 * margin;
+        height -= 2 * margin;
+
+        double x = margin;
+        double y = margin + i * (HEIGHT + VSPACING) * height;
         double w = (WIDTH - HSPACING) * width / 2.0;
         double min = Math.min(HSPACING * width, HEIGHT * height) + (VSPACING / 2.0) * width;
 
         _gc.strokeLine(w + x + (HSPACING / 2.0) * width - min / 2.0,
                 y + (HEIGHT / 2.0) * height - min / 2.0,
-                HMARGIN * width + w + (HSPACING / 2.0) * width + min / 2.0,
+                margin + w + (HSPACING / 2.0) * width + min / 2.0,
                 y + (HEIGHT / 2.0) * height + min / 2.0);
-        _gc.strokeLine(HMARGIN * width + w + (HSPACING / 2.0) * width - min / 2.0,
+        _gc.strokeLine(margin + w + (HSPACING / 2.0) * width - min / 2.0,
                 y + (HEIGHT / 2.0) * height + min / 2.0,
-                HMARGIN * width + w + (HSPACING / 2.0) * width + min / 2.0,
+                margin + w + (HSPACING / 2.0) * width + min / 2.0,
                 y + (HEIGHT / 2.0) * height - min / 2.0);
     }
 
@@ -102,10 +122,9 @@ class LineCanvas extends Canvas
         return _count - (i + 1);
     }
 
-    private final double HMARGIN  = 0.0;
-    private final double VMARGIN  = 0.0;
+    private final double MARGIN   = 0.1;
     private final double HSPACING = 0.30;
-    private final double WIDTH    = 1.0 - 2 * HMARGIN;
+    private final double WIDTH    = 1.0;
     private double VSPACING;
     private double HEIGHT;
 

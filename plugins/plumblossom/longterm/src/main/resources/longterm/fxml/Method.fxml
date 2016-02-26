@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.yijingoracle.iching.core.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" spacing="10"
+      fx:controller="com.yijingoracle.iching.plugin.plumblossom.longterm.controller.Method">
+
+    <Browser styleClass="browser-method" fx:id="_browser" VBox.vgrow="ALWAYS"/>
+
+    <TextField HBox.hgrow="ALWAYS" onKeyPressed="#onKeyPressed" fx:id="_queryUp" styleClass="query" promptText="%queryPrompt"/>
+    <TextField HBox.hgrow="ALWAYS" onKeyPressed="#onKeyPressed" fx:id="_queryDown" styleClass="query" promptText="%queryPrompt"/>
+</VBox>

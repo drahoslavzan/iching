@@ -73,13 +73,13 @@ public class TrigramPreview implements Initializable, TextFactoryCallback
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
-        _textFactory.Register(this);
+        _textFactory.register(this);
 
         fillPreview();
     }
 
     @Override
-    public void OnTextChanged(Text text)
+    public void onTextChanged(Text text)
     {
         if (_lastText != null)
             _lastText.run();

@@ -5,27 +5,49 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.Scene?>
+<?import javafx.scene.image.*?>
 
 <Scene xmlns:fx="http://javafx.com/fxml">
     <VBox>
         <TabPane fx:id="_tabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
             <Tab text="%tabAbout">
-                <fx:include source="tabs/About.fxml"/>
+                <content>
+                    <fx:include source="tabs/About.fxml"/>
+                </content>
             </Tab>
             <Tab text="%tabTrigramPreviewTitle">
-                <fx:include source="tabs/TrigramPreview.fxml"/>
+                <graphic>
+                    <ImageView fitWidth="20" preserveRatio="True">
+                        <image>
+                            <Image url="/image/trigrams.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+                <content>
+                    <fx:include source="tabs/TrigramPreview.fxml"/>
+                </content>
             </Tab>
             <Tab text="%tabHexagramPreviewTitle">
-                <fx:include source="tabs/HexagramPreview.fxml"/>
+                <graphic>
+                    <ImageView fitWidth="20" preserveRatio="True">
+                        <image>
+                            <Image url="/image/hexagrams.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+                <content>
+                    <fx:include source="tabs/HexagramPreview.fxml"/>
+                </content>
             </Tab>
         </TabPane>
         <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
             <VBox.margin>
                 <Insets left="5" right="5" top="5" bottom="5"/>
             </VBox.margin>
-            <Label text="Texts: "/>
+            <Label text="%text"/>
+            <Label text=": "/>
             <ComboBox fx:id="_texts" HBox.hgrow="ALWAYS" minWidth="150"/>
-            <Hyperlink text="... get more texts" fx:id="_linkTexts">
+            <Hyperlink text="%moreTexts" fx:id="_linkTexts">
                 <Const fx:constant="SITE"/>
             </Hyperlink>
         </HBox>
