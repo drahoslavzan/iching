@@ -1,19 +1,18 @@
 package com.yijingoracle.iching.app;
 
+import com.yijingoracle.iching.core.AppPlugin;
+import com.yijingoracle.iching.core.Const;
+import com.yijingoracle.iching.core.util.Dialog;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
-import com.yijingoracle.iching.core.AppPlugin;
-import com.yijingoracle.iching.core.Const;
-import com.yijingoracle.iching.core.util.Dialog;
 
 
 class PluginLoader
@@ -24,11 +23,7 @@ class PluginLoader
 
         try
         {
-            Path exePath = Paths.get(PluginLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-
-            File loc = new File(exePath.getParent() + File.separator + Const.PLUGIN_PATH);
-
-            File[] flist = loc.listFiles(file -> file.getPath().toLowerCase().endsWith(".jar"));
+            File[] flist = FileLoader.loadFilesFromDirectoryRelativeToJar(Const.PLUGIN_PATH, ".jar");
 
             if (flist == null)
             {

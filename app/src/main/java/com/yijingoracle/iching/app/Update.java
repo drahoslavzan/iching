@@ -9,10 +9,14 @@ public class Update
     public class Plugin
     {
         private String id;
+        private String name;
         private String version;
+        private String download;
 
         public String getId() { return id; }
         public String getVersion() { return version; }
+        public String getName() { return name; }
+        public String getDownload() { return download; }
     };
 
     public class PluginList { public List<Update.Plugin> plugins = new ArrayList<>(); }

@@ -8,14 +8,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -23,6 +22,7 @@ import javafx.stage.StageStyle;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Main extends Application implements AppPluginCallback, UpdateCheckerCallback
@@ -110,7 +110,7 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         {
             synchronized (_sync)
             {
-                while(!_appRunning || _plugins == null) _sync.wait();
+                while(!_appRunning || !_pluginsLoaded) _sync.wait();
             }
 
             if (!update.getAppVersion().equals(Const.VERSION))
@@ -131,11 +131,37 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
                 Platform.runLater(() -> Dialog.messageBox(title, header, fp, iconView));
             }
 
-            int n = update.getPlugins().size() - _plugins.size();
+            List<Update.Plugin> pluginList = update.getPlugins();
 
-            if (n <= 0) return;
+            for (Update.Plugin plugin : pluginList)
+            {
+                Map.Entry<AppPlugin, Tab> entry = _plugins.entrySet().stream().filter(p -> p.getKey().getId().equals(plugin.getId())).findFirst().orElse(null);
 
-            Platform.runLater(() -> addMorePluginsTab(n));
+                if (entry == null)
+                    Platform.runLater(() -> addClickTab(plugin.getName(), plugin.getDownload()));
+                else if (!entry.getKey().getVersion().equals(plugin.getVersion()))
+                {
+                    Platform.runLater(() ->
+                    {
+                        Hyperlink link = new Hyperlink(plugin.getDownload());
+                        link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(plugin.getDownload()));
+                        Label label = new Label(String.format("There is a new version %s available:", plugin.getVersion()));
+                        label.setStyle("-fx-background-color: #eebbbb;");
+
+                        HBox hbox = new HBox(5);
+                        hbox.setAlignment(Pos.CENTER_LEFT);
+                        hbox.getChildren().addAll(label, link);
+
+                        Tab tab = entry.getValue();
+                        Node node = tab.getContent();
+
+                        VBox vbox = new VBox(10);
+                        vbox.getChildren().addAll(hbox, node);
+                        vbox.setVgrow(node, Priority.ALWAYS);
+                        tab.setContent(vbox);
+                    });
+                }
+            }
         }
         catch(Exception e)
         {
@@ -226,11 +252,12 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         {
             PluginLoader pl = new PluginLoader();
 
-            _plugins = pl.loadPlugins();
-            _plugins.forEach(this::insertPlugin);
+            List<AppPlugin> plugins = pl.loadPlugins();
+            plugins.forEach(this::insertPlugin);
 
             synchronized (_sync)
             {
+                _pluginsLoaded = true;
                 _sync.notify();
             }
         }
@@ -240,29 +267,30 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         }
     }
 
-    private void addMorePluginsTab(int n)
+    private void addClickTab(String name, String path)
     {
         try
         {
             ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
 
-            String mpTxt = bundle.getString("morePlugins");
-            Tab tabMorePlugins = new Tab(String.format("%s (%d)", mpTxt, n));
-            tabMorePlugins.setStyle("-fx-background-color: #eebbbb;");
-            tabMorePlugins.setClosable(false);
+            Tab tabClick = new Tab(name);
+            tabClick.setStyle("-fx-background-color: #eebbbb;");
+            tabClick.setGraphic(getMethodTabIcon());
+            tabClick.setClosable(false);
+            tabClick.setTooltip(new Tooltip(bundle.getString("getPlugin")));
 
             _tabs.getSelectionModel().selectedItemProperty().addListener((arg0, prev, recent) ->
             {
-                if (recent.equals(tabMorePlugins))
+                if (recent.equals(tabClick))
                 {
                     SingleSelectionModel<Tab> selectionModel = _tabs.getSelectionModel();
                     selectionModel.select(prev);
 
-                    DesktopLauncher.launchDesktopBrowser(Const.SITE_PLUGINS);
+                    DesktopLauncher.launchDesktopBrowser(path);
                 }
             });
 
-            _tabs.getTabs().add(tabMorePlugins);
+            _tabs.getTabs().add(tabClick);
         }
         catch (Exception e)
         {
@@ -276,21 +304,17 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
 
         try
         {
-            Image tabIcon = new Image(getClass().getResourceAsStream("/image/method.png"));
-            ImageView tabIconView = new ImageView(tabIcon);
-            tabIconView.setFitWidth(18);
-            tabIconView.setFitHeight(18);
-
             plugin.register(this);
 
             Tab tab = new Tab();
 
             tab.setContent(plugin.getMethod());
             tab.setText(plugin.getName());
-            tab.setGraphic(tabIconView);
+            tab.setGraphic(getMethodTabIcon());
             tab.setClosable(false);
 
             _tabs.getTabs().add(tab);
+            _plugins.put(plugin, tab);
         }
         catch (Exception e)
         {
@@ -298,13 +322,24 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         }
     }
 
+    private ImageView getMethodTabIcon()
+    {
+        Image tabIcon = new Image(getClass().getResourceAsStream("/image/method.png"));
+        ImageView tabIconView = new ImageView(tabIcon);
+        tabIconView.setFitWidth(18);
+        tabIconView.setFitHeight(18);
+
+        return tabIconView;
+    }
+
     private static int SPLASH_WIDTH;
     private static int SPLASH_HEIGHT;
     private Object _sync = new Object();
     private boolean _appRunning = false;
+    private boolean _pluginsLoaded = false;
 
     private TabPane _tabs;
-    private List<AppPlugin> _plugins;
+    private Map<AppPlugin, Tab> _plugins = new HashMap<>();
     private ComboBox<String> _textCombo;
     private Dictionary<String, Text> _texts = new Hashtable<>();
 }

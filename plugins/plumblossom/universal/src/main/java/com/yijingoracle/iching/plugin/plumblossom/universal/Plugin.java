@@ -11,6 +11,12 @@ import java.util.ResourceBundle;
 public class Plugin implements AppPlugin
 {
     @Override
+    public String getId() { return "plumblossom-universal"; }
+
+    @Override
+    public String getVersion() { return "1.0"; }
+
+    @Override
     public String getName()
     {
         return _name;

@@ -7,8 +7,6 @@ import javafx.application.Platform;
 
 import java.io.File;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -23,10 +21,7 @@ public class TextLoader
 
         try
         {
-            Path exePath = Paths.get(TextLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-
-            File loc = new File(exePath.getParent() + File.separator + Const.TEXT_PATH);
-            File[] flist = loc.listFiles(file -> file.getPath().toLowerCase().endsWith(".zip"));
+            File[] flist = FileLoader.loadFilesFromDirectoryRelativeToJar(Const.TEXT_PATH, ".zip");
 
             if (flist == null)
             {
