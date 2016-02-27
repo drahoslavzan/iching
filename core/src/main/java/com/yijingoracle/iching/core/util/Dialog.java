@@ -1,7 +1,9 @@
 package com.yijingoracle.iching.core.util;
 
+import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,19 @@ public class Dialog
         }
 
         return result;
+    }
+
+    public static void messageBox(String title, String header, Node content, ImageView icon)
+    {
+        Alert alert = new Alert(AlertType.INFORMATION);
+
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.getDialogPane().contentProperty().set(content);
+
+        if (icon != null) alert.setGraphic(icon);
+
+        alert.showAndWait();
     }
 
     public static void showException(Exception e)

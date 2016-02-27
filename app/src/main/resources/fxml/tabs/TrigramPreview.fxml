@@ -9,7 +9,11 @@
 <ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.yijingoracle.iching.app.controller.TrigramPreview"
             fitToWidth="True" fitToHeight="True">
     <VBox spacing="15">
-        <TextField fx:id="_query" styleClass="query" onKeyPressed="#onQueryKeyPressed" promptText="Query ..." HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="_query" styleClass="query" onKeyPressed="#onQueryKeyPressed" promptText="Query ..." HBox.hgrow="ALWAYS">
+            <tooltip>
+                <Tooltip text="%compute"/>
+            </tooltip>
+        </TextField>
 
         <GridPane fx:id="_preview" VBox.vgrow="NEVER" hgap="15">
             <VBox.margin>

@@ -3,6 +3,7 @@ package com.yijingoracle.iching.app;
 import com.yijingoracle.iching.core.Const;
 import com.yijingoracle.iching.core.Text;
 import com.yijingoracle.iching.core.util.Dialog;
+import javafx.application.Platform;
 
 import java.io.File;
 import java.io.InputStream;
@@ -44,7 +45,7 @@ public class TextLoader
         }
         catch (Exception e)
         {
-            Dialog.showException(e);
+            Platform.runLater(() -> Dialog.showException(e));
         }
 
         return ret;
@@ -82,7 +83,7 @@ public class TextLoader
         }
         catch (Exception e)
         {
-            Dialog.showException(e, file.getName());
+            Platform.runLater(() -> Dialog.showException(e));
         }
 
         return null;

@@ -2,7 +2,7 @@ apply plugin: 'application'
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile group: 'org.jfxtras', name: 'jfxtras-labs', version: '8.0-r1'
+    compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.7'
     compile project(':core')
 }
 

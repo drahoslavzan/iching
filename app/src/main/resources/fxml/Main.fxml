@@ -9,13 +9,13 @@
 
 <Scene xmlns:fx="http://javafx.com/fxml">
     <VBox>
-        <TabPane fx:id="_tabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-            <Tab text="%tabAbout">
+        <TabPane fx:id="_tabs" tabClosingPolicy="SELECTED_TAB" VBox.vgrow="ALWAYS">
+            <Tab closable="false" text="%tabAbout">
                 <content>
                     <fx:include source="tabs/About.fxml"/>
                 </content>
             </Tab>
-            <Tab text="%tabTrigramPreviewTitle">
+            <Tab closable="false" text="%tabTrigramPreviewTitle">
                 <graphic>
                     <ImageView fitWidth="20" preserveRatio="True">
                         <image>
@@ -27,7 +27,7 @@
                     <fx:include source="tabs/TrigramPreview.fxml"/>
                 </content>
             </Tab>
-            <Tab text="%tabHexagramPreviewTitle">
+            <Tab closable="false" text="%tabHexagramPreviewTitle">
                 <graphic>
                     <ImageView fitWidth="20" preserveRatio="True">
                         <image>

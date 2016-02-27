@@ -10,6 +10,10 @@
            orientation="HORIZONTAL" dividerPositions="0.25">
 
     <ScrollPane fx:id="_preview" fitToWidth="True" prefWidth="300" minWidth="250" maxWidth="400" prefHeight="480" >
+        <tooltip>
+            <Tooltip text="%hexagramSearch"/>
+        </tooltip>
+
         <padding>
             <Insets left="30" top="30" bottom="30" right="30"/>
         </padding>

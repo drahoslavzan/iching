@@ -4,6 +4,7 @@ package com.yijingoracle.iching.core;
 public class Const
 {
     public static final String SITE = "http://yijingoracle.com";
+    public static final String SITE_APP_DOWNLOAD = SITE + "/download";
     public static final String SITE_PLUGINS = SITE + "/plugins";
     public static final String SITE_TEXTS = SITE + "/texts";
 
