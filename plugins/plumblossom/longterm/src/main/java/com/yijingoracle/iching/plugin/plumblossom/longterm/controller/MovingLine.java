@@ -35,7 +35,7 @@ public class MovingLine implements Initializable, TextFactoryCallback
                     hex.changeLine(_line);
                 }
 
-                loadHexagram(hex);
+                loadHexagramRight(hex);
             });
 
             _down.setOnAction(e ->
@@ -48,7 +48,7 @@ public class MovingLine implements Initializable, TextFactoryCallback
                     --_line;
                 }
 
-                loadHexagram(hex);
+                loadHexagramRight(hex);
             });
 
             _decompositionRight.setSelector(_decompositionLeft.getSelector());
@@ -66,14 +66,12 @@ public class MovingLine implements Initializable, TextFactoryCallback
         _line = 1;
         left.changeLine(_line);
 
-        loadHexagram(left);
-
         _calcQueryUp.setText(queryUp);
         _calcQueryUpLength.setText(String.valueOf(queryUpLength));
         _calcQueryDown.setText(queryDown);
         _calcQueryDownLength.setText(String.valueOf(queryDownLength));
 
-        loadHexagramText(left);
+        loadHexagramLeft(left);
     }
 
     private void moveHexagramLines(Hexagram hexagram, int dir)
@@ -93,12 +91,24 @@ public class MovingLine implements Initializable, TextFactoryCallback
         }
     }
 
-    private void loadHexagram(Hexagram left)
+    private void loadHexagramLeft(Hexagram left)
     {
         Hexagram right = left.getChangingHexagram();
 
         _decompositionRight.setHexagram(right, _textFactory.getText().getHexagramTitle(right.getId()));
         _decompositionLeft.setHexagram(left, _textFactory.getText().getHexagramTitle(left.getId()));
+
+        loadHexagramText(left);
+    }
+
+    private void loadHexagramRight(Hexagram left)
+    {
+        Hexagram right = left.getChangingHexagram();
+
+        _decompositionLeft.setHexagram(left, _textFactory.getText().getHexagramTitle(left.getId()));
+        _decompositionRight.setHexagram(right, _textFactory.getText().getHexagramTitle(right.getId()));
+
+        loadHexagramText(right);
     }
 
     @Override

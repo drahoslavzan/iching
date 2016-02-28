@@ -37,7 +37,7 @@ public class HexagramDecomposition extends VBox
         setOnClick(_lt.getParent(), () -> fireEvent(new SelectEvent(_lt.getTrigram())));
     }
 
-    public void setHexagram(Hexagram hex, String title)
+    public void updateHexagram(Hexagram hex, String title)
     {
         _hexagram.setHexagram(hex);
 
@@ -50,10 +50,14 @@ public class HexagramDecomposition extends VBox
         _lct.setTrigram(new Trigram(decs.getLowerCentralTrigram()));
         _lt.setTrigram(new Trigram(decs.getLowerTrigram()));
 
-        _selector.clearSelect();
-        _selector.selectNode(_hexagram.getParent(), () -> {});
-
         _initialized = true;
+    }
+
+    public void setHexagram(Hexagram hex, String title)
+    {
+        updateHexagram(hex, title);
+
+        _selector.selectNode(_hexagram.getParent(), () -> {});
     }
 
     public Hexagram getHexagram()

@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.yijingoracle.iching.core.Const;
 import javafx.scene.image.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.fxml.*;
 import com.yijingoracle.iching.app.controller.ResultWindow;
@@ -27,7 +28,7 @@ class ResultWindowFactory
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ResultWindow.fxml"), bundle);
 
             Stage stage = loader.load();
-            stage.initOwner(_owner);
+            //stage.initOwner(_owner);
 
             _window = loader.getController();
 

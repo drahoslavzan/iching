@@ -34,6 +34,11 @@ public class NodeSelectGroup
         return true;
     }
 
+    public Node getSelectedNode()
+    {
+        return _lastNodeSelected;
+    }
+
     public void selectNode(Node node, Runnable action)
     {
         if (selectNode(node) && action != null)

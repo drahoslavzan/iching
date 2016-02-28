@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,11 @@ public class Dialog
         alert.setHeaderText(header);
         alert.getDialogPane().contentProperty().set(content);
 
-        if (icon != null) alert.setGraphic(icon);
+        if (icon != null)
+        {
+            alert.setGraphic(icon);
+            ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(icon.getImage());
+        }
 
         alert.showAndWait();
     }

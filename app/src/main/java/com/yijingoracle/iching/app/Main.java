@@ -18,11 +18,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.net.URL;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class Main extends Application implements AppPluginCallback, UpdateCheckerCallback
@@ -203,9 +201,13 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
 
         final Rectangle2D bounds = Screen.getPrimary().getBounds();
 
+        ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
+
         Stage stage = new Stage();
 
         stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle(bundle.getString("name"));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/image/icon.png")));
         stage.setScene(splashScene);
         stage.setX(bounds.getMinX() + bounds.getWidth() / 2 - SPLASH_WIDTH / 2);
         stage.setY(bounds.getMinY() + bounds.getHeight() / 2 - SPLASH_HEIGHT / 2);
