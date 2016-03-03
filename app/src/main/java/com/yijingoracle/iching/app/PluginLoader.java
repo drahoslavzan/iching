@@ -1,68 +1,140 @@
 package com.yijingoracle.iching.app;
 
-import com.yijingoracle.iching.core.AppPlugin;
+import com.yijingoracle.iching.core.MethodPlugin;
 import com.yijingoracle.iching.core.Const;
-import com.yijingoracle.iching.core.util.Dialog;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ServiceLoader;
+import java.nio.file.Files;
+import java.util.*;
 
 
 class PluginLoader
 {
-    public List<AppPlugin> loadPlugins()
+    public static MethodPlugin installMethodPlugin(File file)
     {
-        List<AppPlugin> ret = new ArrayList<>();
-
         try
         {
-            File[] flist = FileLoader.loadFilesFromDirectoryRelativeToJar(Const.PLUGIN_PATH, ".jar");
+            if (!file.getName().endsWith(Const.PLUGIN_SUFFIX))
+                throw new RuntimeException(String.format("File does not end with '%s' suffix", Const.PLUGIN_SUFFIX));
 
-            if (flist == null)
+            MethodPlugin plugin = getMethodPluginFromFile(file);
+
+            if (plugin != null)
             {
-                return ret;
+                copyPlugin(file);
+                return plugin;
             }
-
-            URL[] urls = new URL[flist.length];
-            for (int i = 0; i < flist.length; i++)
-                urls[i] = flist[i].toURI().toURL();
-
-            URLClassLoader ucl = new URLClassLoader(urls);
-
-            final ServiceLoader<AppPlugin> plugins = ServiceLoader.load(AppPlugin.class, ucl);
-
-            for (final AppPlugin plugin : plugins)
-                ret.add(plugin);
         }
         catch (Exception e)
         {
-            Dialog.showException(e);
+        }
+
+        throw new RuntimeException("Not a valid plugin");
+    }
+
+    public static boolean isMethodPluginFile(File file)
+    {
+        try
+        {
+            if (!file.getName().endsWith(Const.PLUGIN_SUFFIX))
+                throw new RuntimeException(String.format("File does not end with '%s' suffix", Const.PLUGIN_SUFFIX));
+
+            MethodPlugin plugin = getMethodPluginFromFile(file);
+
+            if (plugin != null)
+                return true;
+        }
+        catch (Exception e)
+        {
+            // Ignored
+        }
+
+        return false;
+    }
+
+    public static void uninstallMethodPlugin(File file)
+    {
+        try
+        {
+            if (!file.getName().endsWith(Const.PLUGIN_SUFFIX))
+                throw new RuntimeException(String.format("File does not end with '%s' suffix", Const.PLUGIN_SUFFIX));
+
+            Files.delete(file.toPath());
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static List<MethodPlugin> loadMethodPlugins()
+    {
+        List<MethodPlugin> ret = new ArrayList<>();
+
+        try
+        {
+            URL[] urls = getUrlPathsToFilesInPluginFolder();
+
+            URLClassLoader ucl = new URLClassLoader(urls);
+
+            final ServiceLoader<MethodPlugin> plugins = ServiceLoader.load(MethodPlugin.class, ucl);
+
+            for (final MethodPlugin plugin : plugins)
+            {
+                MethodPlugin exist = ret.stream().filter(p -> p.getId().equals(plugin)).findFirst().orElse(null);
+
+                if (exist != null)
+                {
+                    if (exist.getVersion().compareToIgnoreCase(plugin.getVersion()) >= 0)
+                        continue;
+
+                    ret.remove(exist);
+                }
+
+                ret.add(plugin);
+            }
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e.getMessage());
         }
 
         return ret;
     }
 
-    public void installPlugin(String id)
+    private static URLClassLoader getClassLoaderForFile(File file) throws java.net.MalformedURLException
     {
-        try
-        {
-            URL remote = new URL(Const.SITE_PLUGINS + "/" + id);
-            ReadableByteChannel rbc = Channels.newChannel(remote.openStream());
+        URL[] urls = new URL[] { file.toURI().toURL() };
+        return new URLClassLoader(urls);
+    }
 
-            String local = id + ".jar";
-            FileOutputStream fos = new FileOutputStream("." + File.separator + Const.PLUGIN_PATH + File.separator + local);
-            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        }
-        catch(Exception e)
-        {
-            Dialog.showException(e);
-        }
+    private static MethodPlugin getMethodPluginFromFile(File file) throws java.net.MalformedURLException
+    {
+        URLClassLoader ucl = getClassLoaderForFile(file);
+
+        final ServiceLoader<MethodPlugin> plugins = ServiceLoader.load(MethodPlugin.class, ucl);
+
+        return plugins.iterator().next();
+    }
+
+    private static URL[] getUrlPathsToFilesInPluginFolder() throws java.net.MalformedURLException
+    {
+        File[] fList = FileLoader.loadFilesFromDirectoryRelativeToJar(Const.PLUGIN_PATH, Const.PLUGIN_SUFFIX);
+
+        if (fList == null)
+            return new URL[0];
+
+        URL[] urls = new URL[fList.length];
+        for (int i = 0; i < fList.length; i++)
+            urls[i] = fList[i].toURI().toURL();
+
+        return urls;
+    }
+
+    private static void copyPlugin(File file)
+    {
+        FileLoader.copyFileToDirectoryRelativeToJar(file, Const.PLUGIN_PATH);
     }
 }

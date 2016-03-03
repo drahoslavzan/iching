@@ -3,6 +3,7 @@ package com.yijingoracle.iching.core.util;
 import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -12,6 +13,55 @@ import java.util.List;
 
 public class Dialog
 {
+    public static void messageBox(String title, String header, Node content)
+    {
+        Alert alert = new Alert(AlertType.INFORMATION);
+
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.getDialogPane().contentProperty().set(content);
+
+        setAlertIcon(alert);
+
+        alert.showAndWait();
+    }
+
+    public static void showException(Exception e)
+    {
+        Alert alert = getAlert(e, null);
+
+        setAlertIcon(alert);
+
+        alert.showAndWait();
+    }
+
+    public static void showException(Exception e, String msg)
+    {
+        Alert alert = getAlert(e, msg);
+
+        setAlertIcon(alert);
+
+        alert.showAndWait();
+    }
+
+    public static void setIcon(Image icon)
+    {
+        _icon = new ImageView(icon);
+        _graphic = new ImageView(icon);
+
+        _graphic.setFitWidth(30);
+        _graphic.setFitHeight(30);
+    }
+
+    private static void setAlertIcon(Alert alert)
+    {
+        if (_icon != null)
+        {
+            alert.setGraphic(_graphic);
+            ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(_icon.getImage());
+        }
+    }
+
     private static List<String> getExceptionMessageChain(Throwable throwable)
     {
         List<String> result = new ArrayList<>();
@@ -23,37 +73,6 @@ public class Dialog
         }
 
         return result;
-    }
-
-    public static void messageBox(String title, String header, Node content, ImageView icon)
-    {
-        Alert alert = new Alert(AlertType.INFORMATION);
-
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.getDialogPane().contentProperty().set(content);
-
-        if (icon != null)
-        {
-            alert.setGraphic(icon);
-            ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(icon.getImage());
-        }
-
-        alert.showAndWait();
-    }
-
-    public static void showException(Exception e)
-    {
-        Alert alert = getAlert(e, null);
-
-        alert.showAndWait();
-    }
-
-    public static void showException(Exception e, String msg)
-    {
-        Alert alert = getAlert(e, msg);
-
-        alert.showAndWait();
     }
 
     private static Alert getAlert(Exception e, String msg)
@@ -69,4 +88,7 @@ public class Dialog
 
         return alert;
     }
+
+    private static ImageView _icon;
+    private static ImageView _graphic;
 }

@@ -21,16 +21,16 @@ public class TextLoader
 
         try
         {
-            File[] flist = FileLoader.loadFilesFromDirectoryRelativeToJar(Const.TEXT_PATH, ".zip");
+            File[] fList = FileLoader.loadFilesFromDirectoryRelativeToJar(Const.TEXT_PATH, Const.TEXT_SUFFIX);
 
-            if (flist == null)
+            if (fList == null)
             {
                 return ret;
             }
 
-            for (File file : flist)
+            for (File file : fList)
             {
-                Text t = processFile(file);
+                Text t = getTextFromFile(file);
 
                 if (t != null)
                 {
@@ -40,13 +40,55 @@ public class TextLoader
         }
         catch (Exception e)
         {
-            Platform.runLater(() -> Dialog.showException(e));
+            throw new RuntimeException(e.getMessage());
         }
 
         return ret;
     }
 
-    private Text processFile(File file)
+    public Text installText(File file)
+    {
+        try
+        {
+            if (!file.getName().endsWith(Const.TEXT_SUFFIX))
+                throw new RuntimeException(String.format("File does not end with '%s' suffix", Const.TEXT_SUFFIX));
+
+            Text text = getTextFromFile(file);
+
+            if (text != null)
+            {
+                copyText(file);
+                return text;
+            }
+        }
+        catch (Exception e)
+        {
+        }
+
+        throw new RuntimeException("Not a valid text");
+    }
+
+    public boolean isTextFile(File file)
+    {
+        try
+        {
+            if (!file.getName().endsWith(Const.TEXT_SUFFIX))
+                throw new RuntimeException(String.format("File does not end with '%s' suffix", Const.TEXT_SUFFIX));
+
+            Text text = getTextFromFile(file);
+
+            if (text != null)
+                return true;
+        }
+        catch (Exception e)
+        {
+            // Ignored
+        }
+
+        return false;
+    }
+
+    private Text getTextFromFile(File file)
     {
         try
         {
@@ -70,7 +112,7 @@ public class TextLoader
 
             Text text = new Text();
 
-            text.setName(name == null ? "???" : name);
+            text.setName(name == null ? file.getName() : name);
             text.renderHexagrams(xmlHexagrams, xslHexagram);
             text.renderTrigrams(xmlTrigrams, xslTrigram);
 
@@ -78,9 +120,15 @@ public class TextLoader
         }
         catch (Exception e)
         {
-            Platform.runLater(() -> Dialog.showException(e));
+            Platform.runLater(() -> Dialog.showException(e, file.toString()));
         }
 
         return null;
     }
+
+    private static void copyText(File file)
+    {
+        FileLoader.copyFileToDirectoryRelativeToJar(file, Const.TEXT_PATH);
+    }
+
 }

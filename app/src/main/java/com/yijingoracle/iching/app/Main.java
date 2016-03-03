@@ -14,16 +14,21 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import java.util.List;
+import java.util.stream.Collectors;
 
 
-public class Main extends Application implements AppPluginCallback, UpdateCheckerCallback
+public class Main extends Application implements MethodPluginCallback, UpdateCheckerCallback
 {
     @Override
     public void start(Stage stage)
@@ -32,52 +37,29 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         {
             ResultWindowFactory.setOwner(stage);
 
+            Image icon = new Image(getClass().getResourceAsStream("/image/icon.png"));
+            Dialog.setIcon(icon);
+
+            Scene root = getMainScene();
+
             ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
-            Scene root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"), bundle);
-
-            ((Hyperlink) root.lookup("#_linkTexts")).setOnAction(event -> DesktopLauncher.launchDesktopBrowser(Const.SITE_TEXTS));
-            _tabs = (TabPane) root.lookup("#_tabs");
-            _textCombo = (ComboBox<String>) root.lookup("#_texts");
-
-            URL style = getClass().getResource("/app.css");
-            root.getStylesheets().add(style.toExternalForm());
 
             stage.setScene(root);
             stage.setTitle(bundle.getString("name"));
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/image/icon.png")));
+            stage.getIcons().add(icon);
             stage.setMinWidth(Const.MIN_WIDTH);
             stage.setMinHeight(Const.MIN_HEIGHT);
             stage.setWidth(Const.DEFAULT_WIDTH);
             stage.setHeight(Const.DEFAULT_HEIGHT);
 
-            Stage splash = showSplashScreen();
+            Stage splash = getSplashScreen();
+            splash.show();
 
-            new Thread(() ->
+            loadResourcesAndPerformFinalUiAction(() ->
             {
-                loadTexts();
-
-                Platform.runLater(this::loadPlugins);
-
-                try
-                {
-                    //Thread.sleep(1000);
-                }
-                catch(Exception e)
-                {
-                }
-
-                Platform.runLater(() ->
-                {
-                    splash.close();
-                    stage.show();
-                });
-
-                synchronized (_sync)
-                {
-                    _appRunning = true;
-                    _sync.notify();
-                }
-            }).start();
+                splash.close();
+                stage.show();
+            });
 
             UpdateChecker.checkForUpdates(this);
         }
@@ -89,7 +71,7 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
     }
 
     @Override
-    public void onResult(AppPlugin plugin)
+    public void onResult(MethodPlugin plugin)
     {
         ResultWindowFactory rwf = new ResultWindowFactory();
 
@@ -111,55 +93,8 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
                 while(!_appRunning || !_pluginsLoaded) _sync.wait();
             }
 
-            if (!update.getAppVersion().equals(Const.VERSION))
-            {
-                Image icon = new Image(getClass().getResourceAsStream("/image/method.png"));
-                ImageView iconView = new ImageView(icon);
-
-                ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
-
-                String title = bundle.getString("updateTitle");
-                String header = String.format("%s: %s %s", bundle.getString("updateVersion"), bundle.getString("name"), update.getAppVersion());
-
-                FlowPane fp = new FlowPane();
-                Hyperlink link = new Hyperlink(Const.SITE_APP_DOWNLOAD);
-                link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(Const.SITE_APP_DOWNLOAD));
-                fp.getChildren().addAll(link);
-
-                Platform.runLater(() -> Dialog.messageBox(title, header, fp, iconView));
-            }
-
-            List<Update.Plugin> pluginList = update.getPlugins();
-
-            for (Update.Plugin plugin : pluginList)
-            {
-                Map.Entry<AppPlugin, Tab> entry = _plugins.entrySet().stream().filter(p -> p.getKey().getId().equals(plugin.getId())).findFirst().orElse(null);
-
-                if (entry == null)
-                    Platform.runLater(() -> addClickTab(plugin.getName(), plugin.getDownload()));
-                else if (!entry.getKey().getVersion().equals(plugin.getVersion()))
-                {
-                    Platform.runLater(() ->
-                    {
-                        Hyperlink link = new Hyperlink(plugin.getDownload());
-                        link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(plugin.getDownload()));
-                        Label label = new Label(String.format("There is a new version %s available:", plugin.getVersion()));
-                        label.setStyle("-fx-background-color: #eebbbb;");
-
-                        HBox hbox = new HBox(5);
-                        hbox.setAlignment(Pos.CENTER_LEFT);
-                        hbox.getChildren().addAll(label, link);
-
-                        Tab tab = entry.getValue();
-                        Node node = tab.getContent();
-
-                        VBox vbox = new VBox(10);
-                        vbox.getChildren().addAll(hbox, node);
-                        vbox.setVgrow(node, Priority.ALWAYS);
-                        tab.setContent(vbox);
-                    });
-                }
-            }
+            updateApplication(update);
+            updatePlugins(update);
         }
         catch(Exception e)
         {
@@ -172,16 +107,213 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         launch(args);
     }
 
+    private Scene getMainScene() throws IOException
+    {
+        ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
+        Scene scene = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"), bundle);
+
+        ((Hyperlink) scene.lookup("#_linkTexts")).setOnAction(event -> DesktopLauncher.launchDesktopBrowser(Const.SITE_TEXTS));
+        _tabs = (TabPane) scene.lookup("#_tabs");
+        _textCombo = (ComboBox<String>) scene.lookup("#_texts");
+
+        URL style = getClass().getResource("/app.css");
+        scene.getStylesheets().add(style.toExternalForm());
+
+        allowDragAndDropForPlugins(_tabs);
+        allowDragAndDropForTexts(_textCombo);
+
+        return scene;
+    }
+
+    private void allowDragAndDropForTexts(Node node)
+    {
+        node.setOnDragOver(event ->
+        {
+            Dragboard db = event.getDragboard();
+
+            if (db.hasFiles())
+            {
+                List<File> files = db.getFiles();
+                ArrayList<File> del = files.stream().filter(file -> !new TextLoader().isTextFile(file)).collect(Collectors.toCollection(ArrayList::new));
+                del.forEach(files::remove);
+
+                if (!files.isEmpty()) event.acceptTransferModes(TransferMode.COPY);
+            }
+            else
+            {
+                event.consume();
+            }
+        });
+
+        node.setOnDragDropped(event ->
+        {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+
+            if (db.hasFiles())
+            {
+                success = true;
+                List<File> files = db.getFiles();
+                ArrayList<File> del = files.stream().filter(file -> !new TextLoader().isTextFile(file)).collect(Collectors.toCollection(ArrayList::new));
+                del.forEach(files::remove);
+
+                files.forEach(this::installAndLoadText);
+            }
+
+            event.setDropCompleted(success);
+            event.consume();
+        });
+    }
+
+    private void allowDragAndDropForPlugins(Node node)
+    {
+        node.setOnDragOver(event ->
+        {
+            Dragboard db = event.getDragboard();
+
+            if (db.hasFiles())
+            {
+                List<File> files = db.getFiles();
+                ArrayList<File> del = files.stream().filter(file -> !PluginLoader.isMethodPluginFile(file)).collect(Collectors.toCollection(ArrayList::new));
+                del.forEach(files::remove);
+
+                if (!files.isEmpty()) event.acceptTransferModes(TransferMode.COPY);
+            }
+            else
+            {
+                event.consume();
+            }
+        });
+
+        node.setOnDragDropped(event ->
+        {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+
+            if (db.hasFiles())
+            {
+                success = true;
+                List<File> files = db.getFiles();
+                ArrayList<File> del = files.stream().filter(file -> !PluginLoader.isMethodPluginFile(file)).collect(Collectors.toCollection(ArrayList::new));
+                del.forEach(files::remove);
+
+                files.forEach(this::installAndLoadPlugin);
+            }
+
+            event.setDropCompleted(success);
+            event.consume();
+        });
+    }
+
+    private void installAndLoadText(File file)
+    {
+        TextLoader tl = new TextLoader();
+
+        try
+        {
+            Text text = tl.installText(file);
+
+            insertAndSelectText(text);
+        }
+        catch(Exception e)
+        {
+            Dialog.showException(e, file.getPath());
+        }
+
+        FlowPane fp = new FlowPane();
+        Label label = new Label("Text installed successfully");
+        fp.getChildren().addAll(label);
+
+        Dialog.messageBox("Success", String.format("%s", file.getName()), fp);
+    }
+
+    private void installAndLoadPlugin(File file)
+    {
+        PluginLoader pl = new PluginLoader();
+
+        try
+        {
+            MethodPlugin plugin = pl.installMethodPlugin(file);
+
+            insertAndSelectPlugin(plugin);
+        }
+        catch(Exception e)
+        {
+            Dialog.showException(e, file.getPath());
+        }
+
+        FlowPane fp = new FlowPane();
+        Label label = new Label("Plugin installed successfully");
+        fp.getChildren().addAll(label);
+
+        Dialog.messageBox("Success", String.format("%s", file.getName()), fp);
+    }
+
+    private void updateApplication(Update update)
+    {
+        if (!update.getAppVersion().equals(Const.VERSION))
+        {
+            ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
+
+            String title = bundle.getString("updateTitle");
+            String header = String.format("%s: %s %s", bundle.getString("updateVersion"), bundle.getString("name"), update.getAppVersion());
+
+            FlowPane fp = new FlowPane();
+            Hyperlink link = new Hyperlink(update.getDownload());
+            link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(update.getDownload()));
+            fp.getChildren().addAll(link);
+
+            Platform.runLater(() -> Dialog.messageBox(title, header, fp));
+        }
+    }
+
+    private void updatePlugins(Update update)
+    {
+        List<Update.Plugin> pluginList = update.getPlugins();
+
+        for (Update.Plugin plugin : pluginList)
+        {
+            Map.Entry<MethodPlugin, Tab> entry = _plugins.entrySet().stream().filter(p -> p.getKey().getId().equals(plugin.getId())).findFirst().orElse(null);
+
+            if (entry == null)
+            {
+                Platform.runLater(() -> insertNotPresentPlugin(plugin));
+            }
+            else if (entry.getKey().getVersion().compareToIgnoreCase(plugin.getVersion()) < 0)
+            {
+                Platform.runLater(() ->
+                {
+                    Hyperlink link = new Hyperlink(plugin.getDownload());
+                    link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(plugin.getDownload()));
+                    Label label = new Label(String.format("There is a new version %s available:", plugin.getVersion()));
+                    label.setStyle("-fx-background-color: #eebbbb;");
+
+                    HBox hbox = new HBox(5);
+                    hbox.setAlignment(Pos.CENTER_LEFT);
+                    hbox.getChildren().addAll(label, link);
+
+                    Tab tab = entry.getValue();
+                    Node node = tab.getContent();
+
+                    VBox vbox = new VBox(10);
+                    vbox.getChildren().addAll(hbox, node);
+                    vbox.setVgrow(node, Priority.ALWAYS);
+                    tab.setContent(vbox);
+                });
+            }
+        }
+    }
+
     private Pane getSplashLayout()
     {
         Image img = new Image(getClass().getResourceAsStream("/image/splash.png"));
         ImageView splash = new ImageView(img);
 
-        SPLASH_WIDTH = (int) img.getWidth();
-        SPLASH_HEIGHT = (int) img.getHeight();
+        _splashWidth = (int) img.getWidth();
+        _splashHeight = (int) img.getHeight();
 
         ProgressBar loadProgress = new ProgressBar();
-        loadProgress.setPrefWidth(SPLASH_WIDTH);
+        loadProgress.setPrefWidth(_splashWidth);
 
         ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
 
@@ -195,7 +327,7 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         return splashLayout;
     }
 
-    private Stage showSplashScreen()
+    private Stage getSplashScreen()
     {
         Scene splashScene = new Scene(getSplashLayout());
 
@@ -209,10 +341,8 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         stage.setTitle(bundle.getString("name"));
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/image/icon.png")));
         stage.setScene(splashScene);
-        stage.setX(bounds.getMinX() + bounds.getWidth() / 2 - SPLASH_WIDTH / 2);
-        stage.setY(bounds.getMinY() + bounds.getHeight() / 2 - SPLASH_HEIGHT / 2);
-
-        stage.show();
+        stage.setX(bounds.getMinX() + bounds.getWidth() / 2 - _splashWidth / 2);
+        stage.setY(bounds.getMinY() + bounds.getHeight() / 2 - _splashHeight / 2);
 
         return stage;
     }
@@ -225,11 +355,7 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
 
             List<Text> texts = tl.loadTexts();
 
-            texts.forEach((t) ->
-            {
-                _texts.put(t.getName(), t);
-                _textCombo.getItems().add(t.getName());
-            });
+            texts.forEach(t -> insertAndSelectText(t));
 
             if (!texts.isEmpty())
             {
@@ -248,14 +374,35 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         }
     }
 
+    private boolean insertAndSelectText(Text text)
+    {
+        try
+        {
+            _texts.put(text.getName(), text);
+            _textCombo.getItems().remove(text.getName());
+            _textCombo.getItems().add(text.getName());
+
+            TextFactory.setText(text);
+            _textCombo.setValue(text.getName());
+        }
+        catch (Exception e)
+        {
+            Dialog.showException(e);
+            return false;
+        }
+
+        return true;
+    }
+
     private void loadPlugins()
     {
         try
         {
             PluginLoader pl = new PluginLoader();
 
-            List<AppPlugin> plugins = pl.loadPlugins();
-            plugins.forEach(this::insertPlugin);
+            List<MethodPlugin> plugins = pl.loadMethodPlugins();
+            plugins.forEach(this::insertAndSelectPlugin);
+            _tabs.getSelectionModel().select(0);
 
             synchronized (_sync)
             {
@@ -269,13 +416,13 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         }
     }
 
-    private void addClickTab(String name, String path)
+    private void insertNotPresentPlugin(Update.Plugin plugin)
     {
         try
         {
             ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
 
-            Tab tabClick = new Tab(name);
+            Tab tabClick = new Tab(plugin.getName());
             tabClick.setStyle("-fx-background-color: #eebbbb;");
             tabClick.setGraphic(getMethodTabIcon());
             tabClick.setClosable(false);
@@ -288,11 +435,31 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
                     SingleSelectionModel<Tab> selectionModel = _tabs.getSelectionModel();
                     selectionModel.select(prev);
 
-                    DesktopLauncher.launchDesktopBrowser(path);
+                    DesktopLauncher.launchDesktopBrowser(plugin.getDownload());
                 }
             });
 
             _tabs.getTabs().add(tabClick);
+            _plugins.put(new MethodPlugin()
+            {
+                 @Override
+                 public String getId() { return plugin.getId(); }
+
+                 @Override
+                 public String getVersion() { return ""; }
+
+                 @Override
+                 public String getName() { return plugin.getName(); }
+
+                 @Override
+                 public Node getMethod() { return null; }
+
+                 @Override
+                 public Node getResult() { return null; }
+
+                 @Override
+                 public void register(MethodPluginCallback subscriber) {}
+             }, tabClick);
         }
         catch (Exception e)
         {
@@ -300,12 +467,26 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         }
     }
 
-    private void insertPlugin(AppPlugin plugin)
+    private boolean insertAndSelectPlugin(MethodPlugin plugin)
     {
         assert _tabs != null;
 
         try
         {
+            int pos = 3;
+
+            MethodPlugin found = _plugins.keySet().stream().filter(p -> p.getId().equals(plugin.getId())).findFirst().orElse(null);
+
+            if (found != null)
+            {
+                if (found.getVersion().compareToIgnoreCase(plugin.getVersion()) >= 0)
+                    return false;
+
+                Tab tab = _plugins.remove(found);
+                pos = _tabs.getTabs().indexOf(tab);
+                _tabs.getTabs().remove(tab);
+            }
+
             plugin.register(this);
 
             Tab tab = new Tab();
@@ -315,13 +496,17 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
             tab.setGraphic(getMethodTabIcon());
             tab.setClosable(false);
 
-            _tabs.getTabs().add(tab);
+            _tabs.getTabs().add(pos, tab);
+            _tabs.getSelectionModel().select(tab);
             _plugins.put(plugin, tab);
         }
         catch (Exception e)
         {
             Dialog.showException(e);
+            return false;
         }
+
+        return true;
     }
 
     private ImageView getMethodTabIcon()
@@ -334,14 +519,71 @@ public class Main extends Application implements AppPluginCallback, UpdateChecke
         return tabIconView;
     }
 
-    private static int SPLASH_WIDTH;
-    private static int SPLASH_HEIGHT;
+    private void loadResourcesAndPerformFinalUiAction(Runnable action)
+    {
+        new Thread(() ->
+        {
+            long loadTimestamp = System.currentTimeMillis();
+
+            Platform.runLater(this::loadPlugins);
+
+            loadTexts();
+
+            tryWaitForPluginsLoaded();
+
+            long loadTime = System.currentTimeMillis() - loadTimestamp;
+
+            trySleepFor(SPLASH_SHOW_TIME - loadTime);
+
+            Platform.runLater(action);
+
+            synchronized (_sync)
+            {
+                _appRunning = true;
+                _sync.notify();
+            }
+        }).start();
+    }
+
+    private void tryWaitForPluginsLoaded()
+    {
+        try
+        {
+            synchronized (_sync)
+            {
+                while (!_pluginsLoaded) _sync.wait();
+            }
+        }
+        catch(Exception e)
+        {
+            // Ignored
+        }
+    }
+
+    private void trySleepFor(long milliseconds)
+    {
+        if (milliseconds <= 0) return;
+
+        try
+        {
+            Thread.sleep(milliseconds);
+        }
+        catch(Exception e)
+        {
+            // Ignored
+        }
+    }
+
+    private final long SPLASH_SHOW_TIME = 2000;
+
+    private static int _splashWidth;
+    private static int _splashHeight;
     private Object _sync = new Object();
     private boolean _appRunning = false;
     private boolean _pluginsLoaded = false;
 
     private TabPane _tabs;
-    private Map<AppPlugin, Tab> _plugins = new HashMap<>();
+    private Map<MethodPlugin, Tab> _plugins = new HashMap<>();
     private ComboBox<String> _textCombo;
     private Dictionary<String, Text> _texts = new Hashtable<>();
 }

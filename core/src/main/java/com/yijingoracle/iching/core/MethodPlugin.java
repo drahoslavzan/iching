@@ -3,7 +3,7 @@ package com.yijingoracle.iching.core;
 import javafx.scene.Node;
 
 
-public interface AppPlugin
+public interface MethodPlugin
 {
     String getId();
     String getVersion();
@@ -12,5 +12,5 @@ public interface AppPlugin
     Node getMethod();
     Node getResult();
 
-    void register(AppPluginCallback subscriber);
+    void register(MethodPluginCallback subscriber);
 }

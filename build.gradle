@@ -6,6 +6,26 @@ subprojects {
     repositories {
         mavenCentral()
     }
+
+/*
+    dependencies {
+        classpath ':proguard:'
+  }
+*/
+}
+
+/*
+task proguard(type: proguard.gradle.ProGuardTask)
+{
+  configuration 'proguard.txt'
+
+  injars 'build/libs/proguard-gradle-example.jar'
+  outjars 'build/libs/proguard-gradle-example.out.jar'
+}
+*/
+
+task deploy {
+    println "Deploy";
 }
 
 task copyJars(type: Copy, dependsOn: subprojects.jar) {
@@ -19,3 +39,4 @@ task copyDeps(type: Copy) {
 }
 
 task copyFiles(dependsOn: [copyJars])
+

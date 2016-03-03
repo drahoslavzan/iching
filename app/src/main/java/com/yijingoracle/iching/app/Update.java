@@ -22,8 +22,10 @@ public class Update
     public class PluginList { public List<Update.Plugin> plugins = new ArrayList<>(); }
 
     private String version;
+    private String download;
     private PluginList plugins = new PluginList();
 
     public String getAppVersion() { return version; }
+    public String getDownload() { return download; }
     public List<Plugin> getPlugins() { return plugins.plugins; }
 }

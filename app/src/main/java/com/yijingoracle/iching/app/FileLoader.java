@@ -1,13 +1,12 @@
 package com.yijingoracle.iching.app;
 
-
-import com.yijingoracle.iching.core.Const;
-
 import java.io.File;
-import java.io.FileOutputStream;
 import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 
 public class FileLoader
 {
@@ -15,11 +14,23 @@ public class FileLoader
     {
         try
         {
-            String path = FileLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-            File jarFile = new File(path);
-            File loc = new File(jarFile.getParent() + File.separator + directory);
+            File loc = new File(getJarFolder() + directory);
 
             return loc.listFiles(file -> file.getPath().toLowerCase().endsWith(suffix));
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static void copyFileToDirectoryRelativeToJar(File file, String directory)
+    {
+        try
+        {
+            Path dest = Paths.get(getJarFolder() + directory + File.separator + file.getName());
+
+            Files.copy(file.toPath(), dest, StandardCopyOption.REPLACE_EXISTING);
         }
         catch (Exception e)
         {
@@ -43,5 +54,11 @@ public class FileLoader
         {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    private static String getJarFolder() throws java.net.URISyntaxException
+    {
+        String path = FileLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+        return new File(path).getParent() + File.separator;
     }
 }

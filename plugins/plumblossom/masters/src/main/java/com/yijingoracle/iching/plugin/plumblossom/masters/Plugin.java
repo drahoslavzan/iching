@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 
-public class Plugin implements AppPlugin
+public class Plugin implements MethodPlugin
 {
     @Override
     public String getId() { return "plumblossom-masters"; }
@@ -60,7 +60,7 @@ public class Plugin implements AppPlugin
     }
 
     @Override
-    public void register(AppPluginCallback subscriber)
+    public void register(MethodPluginCallback subscriber)
     {
         _subscriber = subscriber;
     }
@@ -78,7 +78,7 @@ public class Plugin implements AppPlugin
         }
     }
 
-    private AppPluginCallback _subscriber;
+    private MethodPluginCallback _subscriber;
     private ResourceBundle _bundle;
     private String _name;
     private Node _result;
