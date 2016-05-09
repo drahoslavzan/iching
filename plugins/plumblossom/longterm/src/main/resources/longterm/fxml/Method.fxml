@@ -2,10 +2,10 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import com.yijingoracle.iching.core.*?>
+<?import com.goiching.iching.core.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml" spacing="10"
-      fx:controller="com.yijingoracle.iching.plugin.plumblossom.longterm.controller.Method">
+      fx:controller="com.goiching.iching.plugin.plumblossom.longterm.controller.Method">
 
     <Browser styleClass="browser-method" fx:id="_browser" VBox.vgrow="ALWAYS"/>
 

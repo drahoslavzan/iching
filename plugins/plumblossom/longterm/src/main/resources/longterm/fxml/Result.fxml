@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.yijingoracle.iching.plugin.plumblossom.longterm.controller.Result"
+            fx:controller="com.goiching.iching.plugin.plumblossom.longterm.controller.Result"
             fitToWidth="True" fitToHeight="True">
 
   <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">

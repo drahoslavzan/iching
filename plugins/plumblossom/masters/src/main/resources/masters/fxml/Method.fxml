@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.yijingoracle.iching.core.*?>
+<?import com.goiching.iching.core.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml" fitToWidth="true" fitToHeight="true"
-            fx:controller="com.yijingoracle.iching.plugin.plumblossom.masters.controller.Method">
+            fx:controller="com.goiching.iching.plugin.plumblossom.masters.controller.Method">
 
     <VBox spacing="10">
         <Browser styleClass="browser-method" fx:id="_browser" VBox.vgrow="ALWAYS"/>

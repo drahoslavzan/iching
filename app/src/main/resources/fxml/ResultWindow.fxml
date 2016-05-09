@@ -6,7 +6,7 @@
 
 <Stage xmlns:fx="http://javafx.com/fxml"
        fx:id="_stage"
-       fx:controller="com.yijingoracle.iching.app.controller.ResultWindow">
+       fx:controller="com.goiching.iching.app.controller.ResultWindow">
 
     <scene>
         <Scene>
