@@ -13,18 +13,20 @@
 
     <Text text="%name" styleClass="about-title"/>
 
-    <AutoScalingStackPane VBox.vgrow="ALWAYS">
-        <ImageView layoutX="0.0"
-                   layoutY="0.0"
-                   fitHeight="10.0"
-                   fitWidth="10.0"
-                   pickOnBounds="true"
-                   preserveRatio="true">
-            <Image
-                url="/image/iching.png"
-                backgroundLoading="true"/>
-        </ImageView>
-    </AutoScalingStackPane>
+    <VBox VBox.vgrow="ALWAYS" fx:id="_aboutCentral">
+        <AutoScalingStackPane VBox.vgrow="ALWAYS">
+            <ImageView layoutX="0.0"
+                       layoutY="0.0"
+                       fitHeight="10.0"
+                       fitWidth="10.0"
+                       pickOnBounds="true"
+                       preserveRatio="true">
+                <Image
+                    url="/image/iching.png"
+                    backgroundLoading="true"/>
+            </ImageView>
+        </AutoScalingStackPane>
+    </VBox>
 
     <HBox alignment="BOTTOM_LEFT">
         <Text>

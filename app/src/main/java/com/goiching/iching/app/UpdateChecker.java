@@ -23,7 +23,10 @@ class UpdateChecker
                 xstream.alias("iching", Update.class);
                 xstream.alias("plugin", Update.Plugin.class);
                 xstream.alias("plugins", Update.PluginList.class);
+                xstream.alias("info", Update.Info.class);
+                xstream.alias("news", Update.NewsList.class);
                 xstream.addImplicitCollection(Update.PluginList.class, "plugins");
+                xstream.addImplicitCollection(Update.NewsList.class, "news");
 
                 InputStream file = getRemoteUpdateFile(Const.SITE_UPDATE);
                 Update update = (Update) xstream.fromXML(file);
@@ -37,7 +40,7 @@ class UpdateChecker
         }).start();
     }
 
-    private static InputStream getRemoteUpdateFile(String file) throws IOException
+    public static InputStream getRemoteUpdateFile(String file) throws IOException
     {
         URL url = new URL(file);
         return url.openStream();

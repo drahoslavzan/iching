@@ -2,7 +2,6 @@ package com.goiching.iching.app;
 
 import com.goiching.iching.app.controller.ResultWindow;
 import com.goiching.iching.core.*;
-import com.goiching.iching.core.*;
 import com.goiching.iching.core.util.Dialog;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -24,9 +23,15 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.zip.ZipFile;
 
 
 public class Main extends Application implements MethodPluginCallback, UpdateCheckerCallback
@@ -94,8 +99,9 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
                 while(!_appRunning || !_pluginsLoaded) _sync.wait();
             }
 
-            updateApplication(update);
+            updateNews(update);
             updatePlugins(update);
+            updateApplication(update);
         }
         catch(Exception e)
         {
@@ -116,6 +122,7 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
         ((Hyperlink) scene.lookup("#_linkTexts")).setOnAction(event -> DesktopLauncher.launchDesktopBrowser(Const.SITE_TEXTS));
         _tabs = (TabPane) scene.lookup("#_tabs");
         _textCombo = (ComboBox<String>) scene.lookup("#_texts");
+        _aboutCentral = (VBox) scene.lookup("#_aboutCentral");
 
         URL style = getClass().getResource("/app.css");
         scene.getStylesheets().add(style.toExternalForm());
@@ -250,22 +257,88 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
         Dialog.messageBox("Success", String.format("%s", file.getName()), fp);
     }
 
+    private static boolean isJarValid(final File file)
+    {
+        ZipFile zipfile = null;
+
+        try
+        {
+            zipfile = new ZipFile(file);
+            return true;
+        }
+        catch (IOException e)
+        {
+            return false;
+        }
+        finally
+        {
+            try
+            {
+                if (zipfile != null)
+                    zipfile.close();
+            } catch (IOException e)
+            {
+            }
+        }
+    }
+
     private void updateApplication(Update update)
     {
         if (!update.getAppVersion().equals(Const.VERSION))
         {
-            ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
+            try
+            {
+                Path path = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).toPath();
+                File temp = File.createTempFile("iching-udpate", ".tmp");
 
-            String title = bundle.getString("updateTitle");
-            String header = String.format("%s: %s %s", bundle.getString("updateVersion"), bundle.getString("name"), update.getAppVersion());
+                temp.deleteOnExit();
 
-            FlowPane fp = new FlowPane();
-            Hyperlink link = new Hyperlink(update.getDownload());
-            link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(update.getDownload()));
-            fp.getChildren().addAll(link);
+                InputStream file = UpdateChecker.getRemoteUpdateFile(update.getLink());
 
-            Platform.runLater(() -> Dialog.messageBox(title, header, fp));
+                Files.copy(file, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                if (isJarValid(temp))
+                    Files.copy(temp.toPath(), path, StandardCopyOption.REPLACE_EXISTING);
+            }
+            catch(URISyntaxException ex)
+            {
+            }
+            catch(IOException ex)
+            {
+                ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
+
+                String title = bundle.getString("updateTitle");
+                String header = String.format("%s: %s %s", bundle.getString("updateVersion"), bundle.getString("name"), update.getAppVersion());
+
+                FlowPane fp = new FlowPane();
+                Hyperlink link = new Hyperlink(update.getLink());
+                link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(update.getLink()));
+                fp.getChildren().addAll(link);
+
+                Platform.runLater(() -> Dialog.messageBox(title, header, fp));
+            }
         }
+    }
+
+    private void updateNews(Update update)
+    {
+        List<Update.Info> news = update.getNews();
+
+        if (news.isEmpty())
+            return;
+
+        FlowPane box = new FlowPane();
+
+        box.getStyleClass().add("about-news");
+
+        for (Update.Info info : news)
+        {
+            Hyperlink link = new Hyperlink(info.getName());
+            link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(update.getLink()));
+            box.getChildren().add(link);
+        }
+
+        Platform.runLater(() -> _aboutCentral.getChildren().add(0, box));
     }
 
     private void updatePlugins(Update update)
@@ -282,18 +355,19 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
             }
             else if (entry.getKey().getVersion().compareToIgnoreCase(plugin.getVersion()) < 0)
             {
+                Hyperlink link = new Hyperlink(plugin.getLink());
+                link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(plugin.getLink()));
+                Label label = new Label(String.format("There is a new version %s available:", plugin.getVersion()));
+                label.setStyle("-fx-background-color: #eebbbb;");
+
+                HBox hbox = new HBox(5);
+                hbox.setAlignment(Pos.CENTER_LEFT);
+                hbox.getChildren().addAll(label, link);
+
+                Tab tab = entry.getValue();
+
                 Platform.runLater(() ->
                 {
-                    Hyperlink link = new Hyperlink(plugin.getDownload());
-                    link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(plugin.getDownload()));
-                    Label label = new Label(String.format("There is a new version %s available:", plugin.getVersion()));
-                    label.setStyle("-fx-background-color: #eebbbb;");
-
-                    HBox hbox = new HBox(5);
-                    hbox.setAlignment(Pos.CENTER_LEFT);
-                    hbox.getChildren().addAll(label, link);
-
-                    Tab tab = entry.getValue();
                     Node node = tab.getContent();
 
                     VBox vbox = new VBox(10);
@@ -436,7 +510,7 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
                     SingleSelectionModel<Tab> selectionModel = _tabs.getSelectionModel();
                     selectionModel.select(prev);
 
-                    DesktopLauncher.launchDesktopBrowser(plugin.getDownload());
+                    DesktopLauncher.launchDesktopBrowser(plugin.getLink());
                 }
             });
 
@@ -587,5 +661,6 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
     private Map<MethodPlugin, Tab> _plugins = new HashMap<>();
     private ComboBox<String> _textCombo;
     private Dictionary<String, Text> _texts = new Hashtable<>();
+    private VBox _aboutCentral;
 }
 

@@ -50,6 +50,14 @@
     -fx-font-weight: bold;
 }
 
+.about-news
+{
+    -fx-padding: 20, 20, 0, 20;
+    -fx-hgap: 20;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
 .about-foot
 {
     -fx-font-size: 1.5em;

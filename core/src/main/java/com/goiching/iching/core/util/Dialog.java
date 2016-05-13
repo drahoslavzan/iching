@@ -3,12 +3,14 @@ package com.goiching.iching.core.util;
 import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class Dialog
@@ -24,6 +26,22 @@ public class Dialog
         setAlertIcon(alert);
 
         alert.showAndWait();
+    }
+
+    public static ButtonType messageBox(String title, String header, Node content, List<ButtonType> buttons)
+    {
+        Alert alert = new Alert(AlertType.INFORMATION);
+
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.getDialogPane().contentProperty().set(content);
+        alert.getButtonTypes().setAll(buttons);
+
+        setAlertIcon(alert);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return result.get();
     }
 
     public static void showException(Exception e)
