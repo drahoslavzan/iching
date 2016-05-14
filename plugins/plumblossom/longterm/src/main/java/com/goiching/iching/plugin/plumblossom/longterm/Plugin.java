@@ -26,6 +26,9 @@ public class Plugin implements MethodPlugin
     }
 
     @Override
+    public String getHash() { return HASH; }
+
+    @Override
     public Node getMethod()
     {
         Node node;
@@ -79,11 +82,15 @@ public class Plugin implements MethodPlugin
         {
             throw new RuntimeException(e.getMessage());
         }
+
+        throw new RuntimeException("AAAAA");
     }
 
     private MethodPluginCallback _subscriber;
     private ResourceBundle _bundle;
     private String _name;
     private Node _result;
+
+    private static final String HASH = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
 }
 

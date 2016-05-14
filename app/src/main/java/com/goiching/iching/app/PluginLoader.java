@@ -4,6 +4,7 @@ import com.goiching.iching.core.MethodPlugin;
 import com.goiching.iching.core.Const;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -39,7 +40,7 @@ class PluginLoader
         try
         {
             if (!file.getName().endsWith(Const.PLUGIN_SUFFIX))
-                throw new RuntimeException(String.format("File does not end with '%s' suffix", Const.PLUGIN_SUFFIX));
+                return false;
 
             MethodPlugin plugin = getMethodPluginFromFile(file);
 
@@ -73,32 +74,34 @@ class PluginLoader
     {
         List<MethodPlugin> ret = new ArrayList<>();
 
-        try
+        URL[] urls = getUrlPathsToFilesInPluginFolder();
+
+        for (URL url : urls)
         {
-            URL[] urls = getUrlPathsToFilesInPluginFolder();
-
-            URLClassLoader ucl = new URLClassLoader(urls);
-
-            final ServiceLoader<MethodPlugin> plugins = ServiceLoader.load(MethodPlugin.class, ucl);
-
-            for (final MethodPlugin plugin : plugins)
+            try
             {
-                MethodPlugin exist = ret.stream().filter(p -> p.getId().equals(plugin)).findFirst().orElse(null);
+                URLClassLoader ucl = new URLClassLoader(new URL[] { url });
 
-                if (exist != null)
+                final ServiceLoader<MethodPlugin> plugins = ServiceLoader.load(MethodPlugin.class, ucl);
+
+                for (final MethodPlugin plugin : plugins)
                 {
-                    if (exist.getVersion().compareToIgnoreCase(plugin.getVersion()) >= 0)
-                        continue;
+                    MethodPlugin exist = ret.stream().filter(p -> p.getId().equals(plugin)).findFirst().orElse(null);
 
-                    ret.remove(exist);
+                    if (exist != null)
+                    {
+                        if (exist.getVersion().compareToIgnoreCase(plugin.getVersion()) >= 0)
+                            continue;
+
+                        ret.remove(exist);
+                    }
+
+                    ret.add(plugin);
                 }
-
-                ret.add(plugin);
             }
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e.getMessage());
+            catch (Exception e)
+            {
+            }
         }
 
         return ret;
@@ -119,18 +122,26 @@ class PluginLoader
         return plugins.iterator().next();
     }
 
-    private static URL[] getUrlPathsToFilesInPluginFolder() throws java.net.MalformedURLException
+    private static URL[] getUrlPathsToFilesInPluginFolder()
     {
-        File[] fList = FileLoader.loadFilesFromDirectoryRelativeToJar(Const.PLUGIN_PATH, Const.PLUGIN_SUFFIX);
+        try
+        {
+            File[] fList = FileLoader.loadFilesFromDirectoryRelativeToJar(Const.PLUGIN_PATH, Const.PLUGIN_SUFFIX);
 
-        if (fList == null)
-            return new URL[0];
+            if (fList == null)
+                return new URL[0];
 
-        URL[] urls = new URL[fList.length];
-        for (int i = 0; i < fList.length; i++)
-            urls[i] = fList[i].toURI().toURL();
+            URL[] urls = new URL[fList.length];
+            for (int i = 0; i < fList.length; i++)
+                urls[i] = fList[i].toURI().toURL();
 
-        return urls;
+            return urls;
+        }
+        catch(MalformedURLException e)
+        {
+        }
+
+        return new URL[0];
     }
 
     private static void copyPlugin(File file)

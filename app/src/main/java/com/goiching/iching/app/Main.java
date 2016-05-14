@@ -24,8 +24,7 @@ import javafx.stage.StageStyle;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -257,53 +256,16 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
         Dialog.messageBox("Success", String.format("%s", file.getName()), fp);
     }
 
-    private static boolean isJarValid(final File file)
-    {
-        ZipFile zipfile = null;
-
-        try
-        {
-            zipfile = new ZipFile(file);
-            return true;
-        }
-        catch (IOException e)
-        {
-            return false;
-        }
-        finally
-        {
-            try
-            {
-                if (zipfile != null)
-                    zipfile.close();
-            } catch (IOException e)
-            {
-            }
-        }
-    }
-
     private void updateApplication(Update update)
     {
-        if (!update.getAppVersion().equals(Const.VERSION))
+        if (update.getAppVersion().compareToIgnoreCase(Const.VERSION) < 0)
         {
             try
             {
-                Path path = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).toPath();
-                File temp = File.createTempFile("iching-udpate", ".tmp");
-
-                temp.deleteOnExit();
-
-                InputStream file = UpdateChecker.getRemoteUpdateFile(update.getLink());
-
-                Files.copy(file, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-                if (isJarValid(temp))
-                    Files.copy(temp.toPath(), path, StandardCopyOption.REPLACE_EXISTING);
+                Path path = FileLoader.getPathToJar(Main.class);
+                FileLoader.downloadJarFile(update.getLink(), path);
             }
-            catch(URISyntaxException ex)
-            {
-            }
-            catch(IOException ex)
+            catch(Exception ex)
             {
                 ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
 
@@ -324,7 +286,7 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
     {
         List<Update.Info> news = update.getNews();
 
-        if (news.isEmpty())
+        if (news == null || news.isEmpty())
             return;
 
         FlowPane box = new FlowPane();
@@ -341,9 +303,30 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
         Platform.runLater(() -> _aboutCentral.getChildren().add(0, box));
     }
 
+    private void updatePlugin(String link, String id)
+    {
+        try
+        {
+            File dl = FileLoader.downloadJarFile(link);
+            File dest = new File(dl.getParent() + File.separator + id + Const.PLUGIN_SUFFIX);
+
+            Files.move(dl.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            dest.deleteOnExit();
+
+            PluginLoader.installMethodPlugin(dest);
+        }
+        catch(Exception e)
+        {
+            //Platform.runLater(() -> Dialog.showException(e));
+        }
+    }
+
     private void updatePlugins(Update update)
     {
         List<Update.Plugin> pluginList = update.getPlugins();
+
+        if (pluginList == null || pluginList.isEmpty())
+            return;
 
         for (Update.Plugin plugin : pluginList)
         {
@@ -355,26 +338,7 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
             }
             else if (entry.getKey().getVersion().compareToIgnoreCase(plugin.getVersion()) < 0)
             {
-                Hyperlink link = new Hyperlink(plugin.getLink());
-                link.setOnAction(e -> DesktopLauncher.launchDesktopBrowser(plugin.getLink()));
-                Label label = new Label(String.format("There is a new version %s available:", plugin.getVersion()));
-                label.setStyle("-fx-background-color: #eebbbb;");
-
-                HBox hbox = new HBox(5);
-                hbox.setAlignment(Pos.CENTER_LEFT);
-                hbox.getChildren().addAll(label, link);
-
-                Tab tab = entry.getValue();
-
-                Platform.runLater(() ->
-                {
-                    Node node = tab.getContent();
-
-                    VBox vbox = new VBox(10);
-                    vbox.getChildren().addAll(hbox, node);
-                    vbox.setVgrow(node, Priority.ALWAYS);
-                    tab.setContent(vbox);
-                });
+                updatePlugin(String.format("%s?%s", plugin.getLink(), entry.getKey().getHash()), plugin.getId());
             }
         }
     }
@@ -445,7 +409,7 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
         }
         catch (Exception e)
         {
-            Dialog.showException(e);
+            Platform.runLater(() -> Dialog.showException(e));
         }
     }
 
@@ -478,16 +442,18 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
             List<MethodPlugin> plugins = pl.loadMethodPlugins();
             plugins.forEach(this::insertAndSelectPlugin);
             _tabs.getSelectionModel().select(0);
-
+        }
+        catch (Exception e)
+        {
+            Platform.runLater(() -> Dialog.showException(e));
+        }
+        finally
+        {
             synchronized (_sync)
             {
                 _pluginsLoaded = true;
                 _sync.notify();
             }
-        }
-        catch (Exception e)
-        {
-            Dialog.showException(e);
         }
     }
 
@@ -521,10 +487,13 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
                  public String getId() { return plugin.getId(); }
 
                  @Override
-                 public String getVersion() { return ""; }
+                 public String getVersion() { return "0.0"; }
 
                  @Override
                  public String getName() { return plugin.getName(); }
+
+                 @Override
+                 public String getHash() { return null; }
 
                  @Override
                  public Node getMethod() { return null; }

@@ -8,6 +8,7 @@ public interface MethodPlugin
     String getId();
     String getVersion();
     String getName();
+    String getHash();
 
     Node getMethod();
     Node getResult();

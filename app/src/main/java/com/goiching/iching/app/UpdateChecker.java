@@ -28,7 +28,7 @@ class UpdateChecker
                 xstream.addImplicitCollection(Update.PluginList.class, "plugins");
                 xstream.addImplicitCollection(Update.NewsList.class, "news");
 
-                InputStream file = getRemoteUpdateFile(Const.SITE_UPDATE);
+                InputStream file = FileLoader.getRemoteStream(new URL(Const.SITE_UPDATE));
                 Update update = (Update) xstream.fromXML(file);
 
                 callback.onUpdate(update);
