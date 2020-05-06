@@ -40,7 +40,10 @@ class LineCanvas extends Canvas
         double x = margin;
         double y = margin + i * (HEIGHT + VSPACING) * height;
 
-        _gc.fillRect(x, y, WIDTH * width, HEIGHT * height);
+        double ww = WIDTH * width;
+        double hh = HEIGHT * height;
+
+        _gc.fillRoundRect(x, y, ww, hh, 0.15 * ww, 0.9 * hh);
     }
 
     public void drawYinLine(int i)
@@ -58,8 +61,10 @@ class LineCanvas extends Canvas
         double y = margin + i * (HEIGHT + VSPACING) * height;
         double w = (WIDTH - HSPACING) * width / 2.0;
 
-        _gc.fillRect(x, y, w, HEIGHT * height);
-        _gc.fillRect(w + x + HSPACING * width, y, w, HEIGHT * height);
+        double hh = HEIGHT * height;
+
+        _gc.fillRoundRect(x, y, w, hh, 0.4 * w, 0.9 * hh);
+        _gc.fillRoundRect(w + x + HSPACING * width, y, w, hh, 0.4 * w, 0.9 * hh);
     }
 
     public void circleLine(int i)

@@ -23,6 +23,10 @@
     -fx-background-color: #3c3c3c;
 }
 
+.scroll-pane {
+    -fx-background-color:transparent;
+}
+
 .tab .tab-label
 { 
     -fx-alignment: center;
@@ -76,6 +80,9 @@
     -fx-border-color: black;
     -fx-background-color: white;
     -fx-cursor: hand;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-overflow: hidden;
     -fx-alignment: center;
     -fx-min-width: 100;
     -fx-pref-width: 100;
@@ -108,6 +115,8 @@
 {
     -fx-border-width: 2px;
     -fx-border-color: black;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
     -fx-background-color: lightyellow;
     -fx-cursor: hand;
     -fx-alignment: center;
@@ -135,6 +144,8 @@
     -fx-border-width: 2px;
     -fx-border-color: black;
     -fx-background-color: white;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
     -fx-alignment: center;
     -fx-min-width: 100;
     -fx-pref-width: 100;
@@ -147,6 +158,8 @@
     -fx-border-width: 2px;
     -fx-border-color: black;
     -fx-background-color: red;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
     -fx-alignment: center;
     -fx-min-width: 100;
     -fx-pref-width: 100;
@@ -158,6 +171,8 @@
 {
     -fx-border-width: 2px;
     -fx-border-color: black;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
     -fx-background-color: lightyellow;
 }
 

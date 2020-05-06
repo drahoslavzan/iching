@@ -1,9 +1,15 @@
 package com.goiching.iching.plugin.plumblossom.masters;
 
-import com.goiching.iching.core.*;
+import com.goiching.iching.core.MethodPlugin;
+import com.goiching.iching.core.MethodPluginCallback;
 import com.goiching.iching.plugin.plumblossom.masters.controller.Method;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+
+import java.io.InputStream;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -37,6 +43,12 @@ public class Plugin implements MethodPlugin
 
             loader.setResources(_bundle);
             node = loader.load(getClass().getResource("/masters/fxml/Method.fxml").openStream());
+
+            VBox content = new VBox();
+            content.getChildren().add(_license);
+            content.getChildren().add(node);
+            content.setVgrow(node, Priority.ALWAYS);
+            node = content;
 
             Method controller = loader.getController();
 
@@ -74,6 +86,10 @@ public class Plugin implements MethodPlugin
         {
             _bundle = ResourceBundle.getBundle("masters/plugin", new Locale("en"));
             _name = _bundle.getString("name");
+
+            InputStream file = getClass().getResource("/" + getId()).openStream();
+            String info = License.checkLicenseAndGetUserInfo(file, getHash());
+            _license = License.getUserInfoContainer(info);
         }
         catch (Exception e)
         {
@@ -85,6 +101,7 @@ public class Plugin implements MethodPlugin
     private ResourceBundle _bundle;
     private String _name;
     private Node _result;
+    private HBox _license;
 
     private static final String HASH = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
 }

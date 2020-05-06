@@ -247,6 +247,7 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
         catch(Exception e)
         {
             Dialog.showException(e, file.getPath());
+            return;
         }
 
         FlowPane fp = new FlowPane();
@@ -317,6 +318,7 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
         }
         catch(Exception e)
         {
+            System.out.println(e);
             //Platform.runLater(() -> Dialog.showException(e));
         }
     }
@@ -452,7 +454,7 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
             synchronized (_sync)
             {
                 _pluginsLoaded = true;
-                _sync.notify();
+                _sync.notifyAll();
             }
         }
     }
@@ -584,7 +586,7 @@ public class Main extends Application implements MethodPluginCallback, UpdateChe
             synchronized (_sync)
             {
                 _appRunning = true;
-                _sync.notify();
+                _sync.notifyAll();
             }
         }).start();
     }

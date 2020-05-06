@@ -30,6 +30,7 @@ class PluginLoader
         }
         catch (Exception e)
         {
+            throw new RuntimeException(e.getMessage());
         }
 
         throw new RuntimeException("Not a valid plugin");
@@ -98,6 +99,9 @@ class PluginLoader
 
                     ret.add(plugin);
                 }
+            }
+            catch (ServiceConfigurationError e)
+            {
             }
             catch (Exception e)
             {

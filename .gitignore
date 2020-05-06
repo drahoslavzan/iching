@@ -1,5 +1,8 @@
+bkp/
+out/
 *~
 *.sw?
+*.iml
 .gradle
 .idea
 gradle*
