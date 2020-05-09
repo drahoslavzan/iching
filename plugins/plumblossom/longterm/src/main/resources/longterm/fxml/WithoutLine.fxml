@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.goiching.iching.core.Browser?>
-<?import com.goiching.iching.core.HexagramDecomposition?>
+<?import app.ichingoracle.core.Browser?>
+<?import app.ichingoracle.core.HexagramDecomposition?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.goiching.iching.plugin.plumblossom.longterm.controller.WithoutLine"
+            fx:controller="app.ichingoracle.plugin.plumblossom.longterm.controller.WithoutLine"
             fitToWidth="True" fitToHeight="True">
 
     <VBox alignment="CENTER">

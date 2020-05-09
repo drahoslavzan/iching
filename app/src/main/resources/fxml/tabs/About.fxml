@@ -4,13 +4,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.Hyperlink?>
-<?import com.goiching.iching.core.util.*?>
-<?import com.goiching.iching.core.Const?>
+<?import app.ichingoracle.core.util.*?>
+<?import app.ichingoracle.core.Const?>
 
 
 <?import javafx.geometry.Insets?>
 <VBox xmlns:fx="http://javafx.co/fxml" alignment="CENTER" minHeight="300"
-      fx:controller="com.goiching.iching.app.controller.About">
+      fx:controller="app.ichingoracle.app.controller.About">
 
     <Text text="%name" styleClass="about-title"/>
 

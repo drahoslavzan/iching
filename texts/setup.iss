@@ -3,8 +3,8 @@
 
 #define MyAppName "IChing-Oracle"
 #define MyAppVersion "1.0"
-#define MyAppPublisher "goiching"
-#define MyAppURL "http://goiching.com"
+#define MyAppPublisher "ichingoracle"
+#define MyAppURL "https://ichingoracle.app"
 #define MyAppExeName "iching.jar"
 #define JREInstall "jre-8u74-windows-i586-iftw.exe"
 #define Icon "application.ico"

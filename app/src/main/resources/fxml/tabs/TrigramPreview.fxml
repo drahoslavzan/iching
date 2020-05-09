@@ -3,10 +3,10 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import com.goiching.iching.core.*?>
+<?import app.ichingoracle.core.*?>
 
 
-<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.goiching.iching.app.controller.TrigramPreview"
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.ichingoracle.app.controller.TrigramPreview"
             fitToWidth="True" fitToHeight="True">
     <VBox spacing="15">
         <TextField fx:id="_query" styleClass="query" onKeyPressed="#onQueryKeyPressed" promptText="Query ..." HBox.hgrow="ALWAYS">

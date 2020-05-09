@@ -2,11 +2,11 @@
 
 <?import javafx.scene.layout.*?>
 <?import jfxtras.scene.control.*?>
-<?import com.goiching.iching.core.*?>
+<?import app.ichingoracle.core.*?>
 <?import javafx.scene.control.Button?>
 
 <VBox xmlns:fx="http://javafx.com/fxml" spacing="10"
-      fx:controller="com.goiching.iching.plugin.plumblossom.mysteries.controller.Method">
+      fx:controller="app.ichingoracle.plugin.plumblossom.mysteries.controller.Method">
 
     <Browser styleClass="browser-method" fx:id="_browser" VBox.vgrow="ALWAYS"/>
 

@@ -3,10 +3,10 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<?import com.goiching.iching.core.*?>
+<?import app.ichingoracle.core.*?>
 
 
-<SplitPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.goiching.iching.app.controller.HexagramPreview"
+<SplitPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.ichingoracle.app.controller.HexagramPreview"
            orientation="HORIZONTAL" dividerPositions="0.25">
 
     <ScrollPane fx:id="_preview" fitToWidth="True" prefWidth="300" minWidth="250" maxWidth="400" prefHeight="480" >

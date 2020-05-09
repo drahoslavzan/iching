@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.goiching.iching.core.Browser?>
-<?import com.goiching.iching.core.HexagramDecomposition?>
-<?import com.goiching.iching.core.util.Arrow?>
+<?import app.ichingoracle.core.Browser?>
+<?import app.ichingoracle.core.HexagramDecomposition?>
+<?import app.ichingoracle.core.util.Arrow?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
@@ -10,7 +10,7 @@
 <?import javafx.scene.control.Label?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.goiching.iching.plugin.plumblossom.universal.controller.Result"
+            fx:controller="app.ichingoracle.plugin.plumblossom.universal.controller.Result"
             fitToWidth="True" fitToHeight="True">
 
     <VBox alignment="CENTER">
