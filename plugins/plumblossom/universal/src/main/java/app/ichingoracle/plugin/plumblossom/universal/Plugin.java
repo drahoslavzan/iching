@@ -44,11 +44,13 @@ public class Plugin implements MethodPlugin
             loader.setResources(_bundle);
             node = loader.load(getClass().getResource("/universal/fxml/Method.fxml").openStream());
 
+            /*
             VBox content = new VBox();
             content.getChildren().add(_license);
             content.getChildren().add(node);
             content.setVgrow(node, Priority.ALWAYS);
             node = content;
+            */
 
             Method controller = loader.getController();
 
