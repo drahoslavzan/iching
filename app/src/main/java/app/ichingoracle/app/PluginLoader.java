@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 
@@ -20,20 +21,16 @@ class PluginLoader
             if (!file.getName().endsWith(Const.PLUGIN_SUFFIX))
                 throw new RuntimeException(String.format("File does not end with '%s' suffix", Const.PLUGIN_SUFFIX));
 
-            MethodPlugin plugin = getMethodPluginFromFile(file);
+            final Path dest = copyPlugin(file);
 
-            if (plugin != null)
-            {
-                copyPlugin(file);
-                return plugin;
-            }
+            MethodPlugin plugin = getMethodPluginFromFile(dest.toFile());
+
+            return plugin;
         }
         catch (Exception e)
         {
             throw new RuntimeException(e.getMessage());
         }
-
-        throw new RuntimeException("Not a valid plugin");
     }
 
     public static boolean isMethodPluginFile(File file)
@@ -43,10 +40,15 @@ class PluginLoader
             if (!file.getName().endsWith(Const.PLUGIN_SUFFIX))
                 return false;
 
-            MethodPlugin plugin = getMethodPluginFromFile(file);
+            URLClassLoader ucl = getClassLoaderForFile(file);
 
-            if (plugin != null)
-                return true;
+            final ServiceLoader<MethodPlugin> plugins = ServiceLoader.load(MethodPlugin.class, ucl);
+
+            final boolean is =  plugins.iterator().next() != null;
+
+            ucl.close();
+
+            return is;
         }
         catch (Exception e)
         {
@@ -79,9 +81,10 @@ class PluginLoader
 
         for (URL url : urls)
         {
+            URLClassLoader ucl = null;
             try
             {
-                URLClassLoader ucl = new URLClassLoader(new URL[] { url });
+                ucl = new URLClassLoader(new URL[] { url });
 
                 final ServiceLoader<MethodPlugin> plugins = ServiceLoader.load(MethodPlugin.class, ucl);
 
@@ -148,8 +151,8 @@ class PluginLoader
         return new URL[0];
     }
 
-    private static void copyPlugin(File file)
+    private static Path copyPlugin(File file)
     {
-        FileLoader.copyFileToDirectoryRelativeToJar(file, Const.PLUGIN_PATH);
+        return FileLoader.copyFileToDirectoryRelativeToJar(file, Const.PLUGIN_PATH);
     }
 }

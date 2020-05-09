@@ -28,13 +28,15 @@ public class FileLoader
         }
     }
 
-    public static void copyFileToDirectoryRelativeToJar(File file, String directory)
+    public static Path copyFileToDirectoryRelativeToJar(File file, String directory)
     {
         try
         {
             Path dest = Paths.get(getRunningFolder() + directory + File.separator + file.getName());
 
             Files.copy(file.toPath(), dest, StandardCopyOption.REPLACE_EXISTING);
+
+            return dest;
         }
         catch (Exception e)
         {
