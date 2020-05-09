@@ -1,5 +1,10 @@
 bkp/
 out/
+deploy/bin/
+deploy/plugins/
+deploy/texts/
+deploy/*.exe
+deploy/*.jar
 *~
 *.sw?
 *.iml
