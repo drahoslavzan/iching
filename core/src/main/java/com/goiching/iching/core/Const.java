@@ -3,10 +3,14 @@ package com.goiching.iching.core;
 
 public class Const
 {
-    public static final String SITE = "goiching.com";
-    public static final String SITE_HTTP = "http://" + SITE;
-    public static final String SITE_TEXTS = "http://software." + SITE + "/iching/texts";
-    public static final String SITE_UPDATE = "http://software." + SITE + "/iching/update.xml";
+    private static final boolean DEBUG = true;
+    private static final String SITE_HTTP_PREFIX = DEBUG ? "http://" : "https://";
+
+    public static final String SITE = DEBUG ? "localhost:8080" : "ichingoracle.app";
+    public static final String SITE_HTTP = SITE_HTTP_PREFIX + SITE;
+    public static final String SITE_DL = DEBUG ? SITE_HTTP : (SITE_HTTP_PREFIX + "dl." + SITE);
+    public static final String SITE_TEXTS = SITE_DL + "/texts";
+    public static final String SITE_UPDATE = SITE_DL + "/update.xml";
 
     public static final String VERSION = "1.0";
     public static final String PLUGIN_PATH = "plugins";

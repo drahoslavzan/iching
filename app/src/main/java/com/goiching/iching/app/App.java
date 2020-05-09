@@ -6,6 +6,7 @@ import com.goiching.iching.core.util.Dialog;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -345,11 +346,17 @@ public class App extends Application implements MethodPluginCallback, UpdateChec
 
     private Pane getSplashLayout()
     {
-        Image img = new Image(getClass().getResourceAsStream("/image/splash.png"));
+        Image img = new Image(getClass().getResourceAsStream("/image/iching.png"));
         ImageView splash = new ImageView(img);
+        VBox imgLayout = new VBox();
 
-        _splashWidth = (int) img.getWidth();
-        _splashHeight = (int) img.getHeight();
+        _splashWidth = (int) (img.getWidth() / 4.0);
+        _splashHeight = (int) (img.getHeight() / 4.0);
+
+        splash.setFitWidth(_splashWidth);
+        splash.setFitHeight(_splashHeight);
+        imgLayout.getChildren().add(splash);
+        imgLayout.setPadding(new Insets(30));
 
         ProgressBar loadProgress = new ProgressBar();
         loadProgress.setPrefWidth(_splashWidth);
@@ -358,7 +365,7 @@ public class App extends Application implements MethodPluginCallback, UpdateChec
 
         Label progressText = new Label(bundle.getString("loading"));
         VBox splashLayout = new VBox();
-        splashLayout.getChildren().addAll(splash, loadProgress, progressText);
+        splashLayout.getChildren().addAll(imgLayout, loadProgress, progressText);
         progressText.setAlignment(Pos.CENTER);
         splashLayout.setStyle("-fx-padding: 5; -fx-background-color: cornsilk; -fx-border-width:5; -fx-border-color: linear-gradient(to bottom, chocolate, derive(chocolate, 50%));");
         splashLayout.setEffect(new DropShadow());

@@ -8,6 +8,7 @@
 <?import com.goiching.iching.core.Const?>
 
 
+<?import javafx.geometry.Insets?>
 <VBox xmlns:fx="http://javafx.co/fxml" alignment="CENTER" minHeight="300"
       fx:controller="com.goiching.iching.app.controller.About">
 
@@ -26,6 +27,9 @@
                     backgroundLoading="true"/>
             </ImageView>
         </AutoScalingStackPane>
+        <padding>
+            <Insets top="30" bottom="30"/>
+        </padding>
     </VBox>
 
     <HBox alignment="BOTTOM_LEFT">
