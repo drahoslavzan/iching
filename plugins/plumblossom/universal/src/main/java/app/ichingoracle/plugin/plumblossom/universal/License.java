@@ -87,7 +87,7 @@ public class License
             byte[] binLicense = Base64.getDecoder().decode(message);
 
             Cipher rc4 = Cipher.getInstance("RC4");
-            SecretKeySpec rc4Key = new SecretKeySpec(KEY.getBytes(), "RC4");
+            SecretKeySpec rc4Key = new SecretKeySpec(HKEY.getBytes(), "RC4");
             rc4.init(Cipher.DECRYPT_MODE, rc4Key);
             String license = new String(rc4.update(binLicense));
 
@@ -100,5 +100,6 @@ public class License
         return "";
     }
 
-    private static final String KEY = "ichingoracle";
+    private static final String HKEY = "92e770c4-ea01-4cc6-9d84-cadc2d7b327e";
+    static String HLOCAL = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
 }

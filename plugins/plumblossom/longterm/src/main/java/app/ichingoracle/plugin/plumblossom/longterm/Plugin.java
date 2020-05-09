@@ -32,7 +32,7 @@ public class Plugin implements MethodPlugin
     }
 
     @Override
-    public String getHash() { return HASH; }
+    public String getHash() { return License.HLOCAL; }
 
     @Override
     public Node getMethod()
@@ -90,7 +90,7 @@ public class Plugin implements MethodPlugin
             _bundle = ResourceBundle.getBundle("longterm/plugin", new Locale("en"));
             _name = _bundle.getString("name");
 
-            InputStream file = getClass().getResource("/" + getId()).openStream();
+            InputStream file = getClass().getResource("/info").openStream();
             String info = License.checkLicenseAndGetUserInfo(file, getHash());
             _license = License.getUserInfoContainer(info);
         }
@@ -105,7 +105,5 @@ public class Plugin implements MethodPlugin
     private String _name;
     private HBox _license;
     private Node _result;
-
-    private static final String HASH = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
 }
 

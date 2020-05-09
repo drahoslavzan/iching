@@ -6,6 +6,8 @@ import app.ichingoracle.plugin.plumblossom.mysteries.controller.Method;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 import java.io.InputStream;
 import java.util.Locale;
@@ -27,7 +29,7 @@ public class Plugin implements MethodPlugin
     }
 
     @Override
-    public String getHash() { return HASH; }
+    public String getHash() { return License.HLOCAL; }
 
     @Override
     public Node getMethod()
@@ -42,13 +44,11 @@ public class Plugin implements MethodPlugin
             loader.setResources(_bundle);
             node = loader.load(getClass().getResource("/mysteries/fxml/Method.fxml").openStream());
 
-            /*
             VBox content = new VBox();
             content.getChildren().add(_license);
             content.getChildren().add(node);
             content.setVgrow(node, Priority.ALWAYS);
             node = content;
-            */
 
             Method controller = loader.getController();
 
@@ -87,7 +87,7 @@ public class Plugin implements MethodPlugin
             _bundle = ResourceBundle.getBundle("mysteries/plugin", new Locale("en"));
             _name = _bundle.getString("name");
 
-            InputStream file = getClass().getResource("/" + getId()).openStream();
+            InputStream file = getClass().getResource("/info").openStream();
             String info = License.checkLicenseAndGetUserInfo(file, getHash());
             _license = License.getUserInfoContainer(info);
         }
@@ -102,7 +102,5 @@ public class Plugin implements MethodPlugin
     private String _name;
     private Node _result;
     private HBox _license;
-
-    private static final String HASH = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
 }
 
