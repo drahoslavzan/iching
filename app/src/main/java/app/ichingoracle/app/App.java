@@ -356,10 +356,11 @@ public class App extends Application implements MethodPluginCallback, UpdateChec
         splash.setFitWidth(_splashWidth);
         splash.setFitHeight(_splashHeight);
         imgLayout.getChildren().add(splash);
-        imgLayout.setPadding(new Insets(30));
+        final int imgPad = 30;
+        imgLayout.setPadding(new Insets(imgPad));
 
         ProgressBar loadProgress = new ProgressBar();
-        loadProgress.setPrefWidth(_splashWidth);
+        loadProgress.setPrefWidth(_splashWidth + 2 * imgPad);
 
         ResourceBundle bundle = ResourceBundle.getBundle("app", new Locale("en"));
 
