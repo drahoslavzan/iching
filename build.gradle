@@ -1,10 +1,23 @@
-allprojects { apply plugin: "idea" }
+
+plugins {
+    id 'idea'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
 
 subprojects {
     apply plugin: 'java'
- 
-    repositories {
-        mavenCentral()
+    apply plugin: 'org.openjfx.javafxplugin'
+
+    javafx {
+        version = "13"
+        modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.web' ]
+        //configuration = 'compileOnly'
     }
 
 /*

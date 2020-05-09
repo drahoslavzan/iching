@@ -1,11 +1,9 @@
 apply plugin: 'application'
-//apply plugin: 'gradle-one-jar'
-//apply from: 'http://dl.bintray.com/content/shemnon/javafx-gradle/javafx.plugin'
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
     compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.+'
-    compile group: 'org.jfxtras', name: 'jfxtras-labs', version: '8.+'
+    //compile group: 'org.jfxtras', name: 'jfxtras-labs', version: '8.+'
     compile project(':core')
 }
 
@@ -51,10 +49,7 @@ javafx {
 mainClassName = 'com.goiching.iching.app.Main'
 
 jar {
-    baseName = 'iching'
-    version = '1.0'
-
-    manifest { 
+    manifest {
         attributes "Main-Class": "$mainClassName"
     }  
 
