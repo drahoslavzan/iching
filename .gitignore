@@ -3,6 +3,7 @@ out/
 *~
 *.sw?
 *.iml
+*.icp
 .gradle
 .idea
 build
