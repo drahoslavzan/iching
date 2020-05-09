@@ -31,7 +31,7 @@
                 <graphic>
                     <ImageView fitWidth="20" preserveRatio="True">
                         <image>
-                            <Image url="/image/hexagrams.png"/>
+                            <Image url="/image/trigrams.png"/>
                         </image>
                     </ImageView>
                 </graphic>

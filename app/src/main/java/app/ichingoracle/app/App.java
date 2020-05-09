@@ -562,7 +562,7 @@ public class App extends Application implements MethodPluginCallback, UpdateChec
 
     private ImageView getMethodTabIcon()
     {
-        Image tabIcon = new Image(getClass().getResourceAsStream("/image/method.png"));
+        Image tabIcon = new Image(getClass().getResourceAsStream("/image/icon.png"));
         ImageView tabIconView = new ImageView(tabIcon);
         tabIconView.setFitWidth(18);
         tabIconView.setFitHeight(18);

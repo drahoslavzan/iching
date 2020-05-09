@@ -40,7 +40,7 @@ public class Method implements Initializable
             URL method = getClass().getResource("/mysteries/description.html");
             _browser.loadUrl(method);
 
-            Image btnIcon = new Image(getClass().getResourceAsStream("/image/method.png"));
+            Image btnIcon = new Image(getClass().getResourceAsStream("/image/icon.png"));
             ImageView btnIconView = new ImageView(btnIcon);
             btnIconView.setFitWidth(18);
             btnIconView.setFitHeight(18);
