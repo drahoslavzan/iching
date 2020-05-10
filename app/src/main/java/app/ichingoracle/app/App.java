@@ -258,7 +258,7 @@ public class App extends Application implements MethodPluginCallback, UpdateChec
 
     private void updateApplication(Update update)
     {
-        if (update.getAppVersion().compareToIgnoreCase(Const.VERSION) < 0)
+        if (update.getAppVersion().compareToIgnoreCase(Const.VERSION) > 0)
         {
             try
             {

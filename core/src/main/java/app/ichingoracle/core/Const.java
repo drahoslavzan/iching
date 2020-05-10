@@ -3,12 +3,12 @@ package app.ichingoracle.core;
 
 public class Const
 {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final String SITE_HTTP_PREFIX = DEBUG ? "http://" : "https://";
 
-    public static final String SITE = DEBUG ? "localhost:8080" : "ichingoracle.app";
+    public static final String SITE = DEBUG ? "localhost:3000" : "ichingoracle.app";
     public static final String SITE_HTTP = SITE_HTTP_PREFIX + SITE;
-    public static final String SITE_DL = DEBUG ? SITE_HTTP : (SITE_HTTP_PREFIX + "dl." + SITE);
+    public static final String SITE_DL = SITE_HTTP;
     public static final String SITE_TEXTS = SITE_DL + "/texts";
     public static final String SITE_UPDATE = SITE_DL + "/update.xml";
 
